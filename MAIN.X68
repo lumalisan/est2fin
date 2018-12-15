@@ -1,7 +1,7 @@
 ; =============================================================================
-; TITLE    : EXAMPLE GAME
-; AUTHOR   :
-; CREATION :
+; TITLE    : EXAMPLE GAME - TOTALLY NOT GOOGLE CHROME'S DINOSAUR
+; AUTHORS  : LISANDRO ROCHA & IZAR CASTORINA
+; CREATION : 
 ; =============================================================================
 
             ORG     $1000
@@ -40,3 +40,8 @@ START       JSR     SYSINIT
             INCLUDE "SYSVAR.X68"
             INCLUDE "VAR.X68"
             END    START
+
+*~Font name~Courier New~
+*~Font size~10~
+*~Tab type~0~
+*~Tab size~4~
