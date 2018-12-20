@@ -164,7 +164,30 @@ KBDREAD
 
             MOVEM.L D0-D7,-(SP)             ; SAVE REGISTERS
 
+            CLR.L   D2                      ; USE D2 TO STORE BITS FOR KBDVAL
+            CLR.L   D3                      ; USE D3 TO STORE BITS FOR KBDEDGE
+
+            MOVE.B  #19,D0                  ; SET TASK NUMBER
             
+.READSET1   ; MONITOR FIRST 4 KEYS
+            MOVE.L  #KBDCHRSP<<24+KBDCHRMK<<16+KDBCHRSH<<8+KBDCHRSH,D1
+.READSP     BTST.L  #24,D1                  ; TEST FOR SPACE
+            BEQ     .READM
+            BSET.L  #KBDFIRE1,D2
+.READM      BTST.L  #16,D1                  ; TEST FOR M
+            BEQ     .READSH
+            BSET.L  #KBDFIRE2,D2
+.READSH     BTST.L  #8,D1                   ; TEST FOR SHIFT
+            BNE     .READP
+            BSET.L  #KBDFIRE3,D2
+.READP      BTST.L  #0,D1                   ; TEST FOR P
+            BEQ     .READSET2
+            BSET.L  #KBDPAUSE,D2
+            BRA     .READSET2
+
+.READSET2   ; MONITOR SECOND 4 KEYS
+
+
 
             MOVEM.L (SP)+,D0-D7             ; RESTORE REGISTERS
             RTE
@@ -293,6 +316,7 @@ DMMFREE
             CLR.W   (A0)
             MOVEM.L (A7)+,D0/A0
             RTS
+
 
 
 
