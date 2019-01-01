@@ -46,7 +46,7 @@ SCRINIT
             ; - SET RESOLUTION TO SCRWIDTH X SCRHEIGHT
 
             MOVE.B  #33,D0
-            MOVE.L  #SCRWIDTH*$10000+SCRHEIGH,D1
+            MOVE.L  #(SCRWIDTH*$10000+SCRHEIGH),D1
             TRAP    #15
 
             ; - SET WINDOWED MODE
@@ -85,7 +85,7 @@ SCRINIT
             MOVE.B  #32,D0
             MOVE.B  #6,D1
             MOVE.L  #SCRTIM,D3
-            MOVE.B  #$10000000,D2
+            MOVE.B  #%10000000,D2
             OR.B    #SCRIRQ,D2
             TRAP    #15
 
@@ -96,7 +96,7 @@ SCRINIT
 
             ; - ENABLE INTS (SET INT BITS IN SR TO 000)
 
-            AND.W #$1111100011111111,SR
+            AND.W #%1111100011111111,SR
 
             RTS
 
@@ -171,7 +171,7 @@ KBDREAD
             MOVE.B  #19,D0                  ; SET TASK NUMBER
             
 .READSET1   ; MONITOR FIRST 4 KEYS
-            MOVE.L  #KBDCHRSP<<24+KBDCHRMK<<16+KDBCHRSH<<8+KBDCHRSH,D1
+            MOVE.L  #KBDCHRSP<<24+KBDCHRMK<<16+KDBCHRSH<<8+KBDCHRPK,D1
 .READSP     BTST.L  #24,D1                  ; TEST FOR SPACE
             BEQ     .READM
             BSET.L  #KBDBITF1,D2
@@ -332,9 +332,6 @@ DMMFREE
             CLR.W   (A0)
             MOVEM.L (A7)+,D0/A0
             RTS
-
-
-
 
 
 *~Font name~Courier New~
