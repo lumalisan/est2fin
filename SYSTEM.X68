@@ -171,7 +171,8 @@ KBDREAD
             MOVE.B  #19,D0                  ; SET TASK NUMBER
             
 .READSET1   ; MONITOR FIRST 4 KEYS
-            MOVE.L  #'KBDCHRSP'<<24+KBDCHRMK<<16+'KDBCHRSH'<<8+KBDCHRPK,D1
+            ;MOVE.L  #KBDCHRSP<<24+KBDCHRMK<<16+KDBCHRSH<<8+KBDCHRPK,D1
+            MOVE.L  #$20<<24+'M'<<16+$10<<8+'P',D1
             TRAP    #15
 .READSP     BTST.L  #24,D1                  ; TEST FOR SPACE
             BEQ     .READM
@@ -180,7 +181,7 @@ KBDREAD
             BEQ     .READSH
             BSET.L  #KBDBITF2,D2
 .READSH     BTST.L  #8,D1                   ; TEST FOR SHIFT
-            BNE     .READP
+            BEQ     .READP
             BSET.L  #KBDBITF3,D2
 .READP      BTST.L  #0,D1                   ; TEST FOR P
             BEQ     .READSET2
@@ -188,7 +189,8 @@ KBDREAD
             BRA     .READSET2
 
 .READSET2   ; MONITOR SECOND 4 KEYS
-            MOVE.L  #'KBDCHRLF'<<24+'KBDCHRUP'<<16+'KDBCHRRT'<<8+'KBDCHRDN',D1
+            ;MOVE.L  #KBDCHRLF<<24+KBDCHRUP<<16+KDBCHRRT<<8+KBDCHRDN,D1
+            MOVE.L  #$25<<24+$26<<16+$27<<8+$28,D1
             TRAP    #15
 .READLEFT   BTST.L  #24,D1                   ; TEST FOR LEFT
             BEQ     .READUP
@@ -197,7 +199,7 @@ KBDREAD
             BEQ     .READRIGH
             BSET.L  #KBDBITUP,D2
 .READRIGH   BTST.L  #8,D1                   ; TEST FOR RIGHT
-            BNE     .READDOWN
+            BEQ     .READDOWN
             BSET.L  #KBDBITRT,D2
 .READDOWN   BTST.L  #0,D1                   ; TEST FOR DOWN
             BEQ     .CONT
@@ -334,6 +336,7 @@ DMMFREE
             CLR.W   (A0)
             MOVEM.L (A7)+,D0/A0
             RTS
+
 
 
 *~Font name~Courier New~
