@@ -171,7 +171,8 @@ KBDREAD
             MOVE.B  #19,D0                  ; SET TASK NUMBER
             
 .READSET1   ; MONITOR FIRST 4 KEYS
-            MOVE.L  #KBDCHRSP<<24+KBDCHRMK<<16+KDBCHRSH<<8+KBDCHRPK,D1
+            MOVE.L  #'KBDCHRSP'<<24+KBDCHRMK<<16+'KDBCHRSH'<<8+KBDCHRPK,D1
+            TRAP    #15
 .READSP     BTST.L  #24,D1                  ; TEST FOR SPACE
             BEQ     .READM
             BSET.L  #KBDBITF1,D2
@@ -187,7 +188,8 @@ KBDREAD
             BRA     .READSET2
 
 .READSET2   ; MONITOR SECOND 4 KEYS
-            MOVE.L  #KBDCHRLF<<24+KBDCHRUP<<16+KDBCHRRT<<8+KBDCHRDN,D1
+            MOVE.L  #'KBDCHRLF'<<24+'KBDCHRUP'<<16+'KDBCHRRT'<<8+'KBDCHRDN',D1
+            TRAP    #15
 .READLEFT   BTST.L  #24,D1                   ; TEST FOR LEFT
             BEQ     .READUP
             BSET.L  #KBDBITLF,D2
