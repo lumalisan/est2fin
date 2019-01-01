@@ -30,7 +30,7 @@ SCRINIT
 ; -----------------------------------------------------------------------------
             ; - DISABLE INTS (SET INT BITS IN SR TO 111)
 
-            OR.W    #$0000011100000000,SR
+            OR.W    #%0000011100000000,SR
 
             ; - DISABLE ALL AUTO-IRQ (SEE TRAP #15 TASK 32)
 
@@ -162,9 +162,11 @@ KBDREAD
 ; -----------------------------------------------------------------------------
             ; TO DO: UPDATE KBDVAL AND KBDEDGE
 
-            MOVEM.L D0-D7,-(SP)             ; SAVE REGISTERS
+            MOVEM.L D0-D3,-(SP)             ; SAVE REGISTERS
 
             CLR.L   D2                      ; USE D2 TO STORE BITS
+            CLR.L   D3                      ; USE D3 TO STORE OLD VALUES
+            MOVE.B  (KBDVAL),D3
 
             MOVE.B  #19,D0                  ; SET TASK NUMBER
             
@@ -185,10 +187,25 @@ KBDREAD
             BRA     .READSET2
 
 .READSET2   ; MONITOR SECOND 4 KEYS
+            MOVE.L  #KBDCHRLF<<24+KBDCHRUP<<16+KDBCHRRT<<8+KBDCHRDN,D1
+.READLEFT   BTST.L  #24,D1                   ; TEST FOR LEFT
+            BEQ     .READUP
+            BSET.L  #KBDBITLF,D2
+.READUP     BTST.L  #16,D1                  ; TEST FOR UP
+            BEQ     .READRIGH
+            BSET.L  #KBDBITUP,D2
+.READRIGH   BTST.L  #8,D1                   ; TEST FOR RIGHT
+            BNE     .READDOWN
+            BSET.L  #KBDBITRT,D2
+.READDOWN   BTST.L  #0,D1                   ; TEST FOR DOWN
+            BEQ     .CONT
+            BSET.L  #KBDBITDN,D2
+            
+.CONT       MOVE.B  D2,(KBDVAL)             ; STORE KEYBOARD VALUES
+            EOR.B   D2,D3                   ; CHECK FOR CHANGES
+            MOVE.B  D3,(KBDEDGE) 
 
-
-
-            MOVEM.L (SP)+,D0-D7             ; RESTORE REGISTERS
+            MOVEM.L (SP)+,D0-D3             ; RESTORE REGISTERS
             RTE
 
 ; =============================================================================
