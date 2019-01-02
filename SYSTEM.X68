@@ -46,7 +46,7 @@ SCRINIT
             ; - SET RESOLUTION TO SCRWIDTH X SCRHEIGHT
 
             MOVE.B  #33,D0
-            MOVE.L  #(SCRWIDTH*$10000+SCRHEIGH),D1
+            MOVE.L  #SCRWIDTH*$10000+SCRHEIGH,D1
             TRAP    #15
 
             ; - SET WINDOWED MODE
@@ -186,7 +186,6 @@ KBDREAD
 .READP      BTST.L  #0,D1                   ; TEST FOR P
             BEQ     .READSET2
             BSET.L  #KBDBITPS,D2
-            BRA     .READSET2
 
 .READSET2   ; MONITOR SECOND 4 KEYS
             MOVE.L  #KBDCHRLF<<24+KBDCHRUP<<16+KBDCHRRT<<8+KBDCHRDN,D1
@@ -336,6 +335,9 @@ DMMFREE
             CLR.W   (A0)
             MOVEM.L (A7)+,D0/A0
             RTS
+
+
+
 
 
 
