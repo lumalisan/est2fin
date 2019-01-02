@@ -1,7 +1,7 @@
 ; =============================================================================
 ; TITLE    : EXAMPLE GAME - TOTALLY NOT GOOGLE CHROME'S DINOSAUR
 ; AUTHORS  : LISANDRO ROCHA & IZAR CASTORINA
-; CREATION : 
+; CREATION : 15/11/18
 ; =============================================================================
 
             ORG     $1000
@@ -10,16 +10,26 @@
 
             INCLUDE "SYSCONST.X68"          ; SYSTEM CONSTANTS
             INCLUDE "SYSTEM.X68"            ; SYSTEM CODE
+            INCLUDE "CONST.X68"             ; USER CONSTANTS
+            INCLUDE "UTIL.X68"              ; UTILITY MACRO AND SUBROUTINES
+            INCLUDE "PLAYER.X68"            ; PLAYER MANAGEMENT
+            INCLUDE "AGENTLST.X68"          ; AGENT LIST MANAGEMENT
+            INCLUDE "ENEMY.X68"             ; ENEMY AGENT MANAGEMENT
+            INCLUDE "SPAWNER.X68"           ; SPAWNER (CREATES ENEMIES)
+            INCLUDE "DESTRUCTION.X68"       ; DESTRUCTION AGENT MANAGEMENT
+            INCLUDE "STATES.X68"            ; GAME STATES MANAGEMENT
             ; TO DO: PUT YOUR GAME-RELATED INCLUDES HERE
 
 ; --- INITIALIZE --------------------------------------------------------------
 
-START       JSR     SYSINIT
+START       JSR     SYSINIT                 ; INITIALIZE SYSTEM CODE
+            JSR     STAINIT                 ; INITIALIZE GAME STATE
             ; TO DO: CALL GAME INITIALIZATION CODE HERE
 
 ; --- UPDATE ------------------------------------------------------------------
 
 .LOOP       TRAP    #KBDTRAP                ; READ KEYBOARD
+            JSR     STAUPD                  ; UPDATE DEPENDING ON THE STATE
             ; TO DO: CALL GAME UPDATE CODE HERE
 
 ; --- WAIT SYNCH --------------------------------------------------------------
@@ -31,6 +41,7 @@ START       JSR     SYSINIT
 ; --- PLOT --------------------------------------------------------------------
 
             ; TO DO: CALL GAME PLOT CODE HERE
+            JSR     STAPLOT                 ; PLOT DEPENDING ON THE STATE
             TRAP    #SCRTRAP                ; SHOW GRAPHICS
             BRA     .LOOP
             SIMHALT
