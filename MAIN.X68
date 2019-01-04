@@ -1,6 +1,6 @@
 ; =============================================================================
 ; TITLE    : EXAMPLE GAME - TOTALLY NOT GOOGLE CHROME'S DINOSAUR
-; AUTHORS  : LISANDRO ROCHA & IZAR CASTORINA
+; AUTHORS  : IZAR CASTORINA & LISANDRO ROCHA
 ; CREATION : 15/11/18
 ; =============================================================================
 

@@ -77,25 +77,33 @@ PLRPLOT
 ; -----------------------------------------------------------------------------
             MOVEM.L D0-D4,-(A7)
 
-            MOVE.L  #PLRNRMCL,D1            ; DECIDE COLOR
+            ; MOVE.L  #PLRNRMCL,D1            ; DECIDE COLOR
             BCLR.B  #PLRPBDMG,(PLRDMG)
             BEQ     .NODMG
+            ; IF THE PLAYER IS DAMAGED PUT THE DAMAGED COLOR IN D1
+            ; Nota Lisandro: No se como haremos para cambiar el color del dinosaurio
             MOVE.L  #PLRDMGCL,D1
-.NODMG      MOVE.B  #80,D0
-            TRAP    #15
-            ADDQ.B  #1,D0
-            TRAP    #15
-            MOVE.W  (PLRPOSX),D1            ; PLOT THE PLAYER
-            MOVE.W  (PLRPOSY),D2
-            MOVE.W  D1,D3
-            MOVE.W  D2,D4
-            ADD.W   #PLRWIDTH,D3
-            ADD.W   #PLRHEIGH,D4
-            MOVE.B  #88,D0
-            TRAP    #15
-            SUB.W   #PLRWIDTH/2,D3
-            MOVE.B  #87,D0
-            TRAP    #15
+            ; COLOR BY BURGUERA
+.NODMG      ; MOVE.B  #80,D0
+            ; TRAP    #15
+            ; ADDQ.B  #1,D0
+            ; TRAP    #15
+            ; DRAW THE PLAYER BY BURGUERA
+            ; MOVE.W  (PLRPOSX),D1
+            ; MOVE.W  (PLRPOSY),D2
+            ; MOVE.W  D1,D3
+            ; MOVE.W  D2,D4
+            ; ADD.W   #PLRWIDTH,D3            ; D3 = X + PLRWIDTH
+            ; ADD.W   #PLRHEIGH,D4            ; D4 = Y + PLRHEIGH
+            ; MOVE.B  #88,D0
+            ; TRAP    #15
+            ; SUB.W   #PLRWIDTH/2,D3
+            ; MOVE.B  #87,D0
+            ; TRAP    #15
+
+            ; DRAW THE PLAYER BY US
+            JSR     DRAWTREX
+
 
             UTLSPEN #PLRTXTCL               ; PLOT THE SCORE TEXT
             UTLSFIL #$00000000
@@ -110,6 +118,44 @@ PLRPLOT
             RTS
 .SCORESTR   DC.B    'SCORE: ',0
 
+; -----------------------------------------------------------------------------
+DRAWTREX
+; DRAW THE PLAYER
+; INPUT    - NONE
+; OUTPUT   - NONE
+; MODIFIES - NONE
+; -----------------------------------------------------------------------------
+            MOVEM.L D0-D4,-(SP)
+            ;Draw t-rex with 5x5 pixels
+            ;Patita izq.
+            DRAWPIX 150,455,155,470,BLACK
+            DRAWPIX 150,450,155,455,OLIVE
+            DRAWPIX 150,415,155,450,BLACK
+            ;Colita
+            DRAWPIX 145,450,150,455,BLACK
+            DRAWPIX 145,445,150,450,OLIVE
+            DRAWPIX 140,445,145,450,BLACK
+            DRAWPIX 140,440,150,445,BLACK
+            ;Parte sombra
+            DRAWPIX 155,415,160,460,OLIVE
+            ;Parte contorno
+            DRAWPIX 155,460,160,465,BLACK
+            DRAWPIX 160,455,185,460,BLACK
+            DRAWPIX 170,460,180,465,BLACK
+            DRAWPIX 170,465,175,470,BLACK
+            DRAWPIX 180,450,185,455,BLACK
+            DRAWPIX 180,445,200,450,BLACK
+            DRAWPIX 200,415,205,445,BLACK
+            DRAWPIX 155,410,200,415,BLACK
+            DRAWPIX 160,420,170,430,BLACK
+            ;Parte interior
+            DRAWPIX 160,415,170,420,LIME
+            DRAWPIX 170,415,200,445,LIME
+            DRAWPIX 160,430,170,445,LIME
+            DRAWPIX 160,445,165,455,LIME
+            DRAWPIX 165,445,180,455,YELLOW
+            MOVEM.L (SP)+,D0-D4
+            RTS
 
 
 

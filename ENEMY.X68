@@ -40,7 +40,7 @@ ENUPD
             SUB.W   D0,(A0)
             MOVE.W  6(A0),D0
             ADD.W   D0,2(A0)
-            CMP.W   #-ENSIZE,(A0)          ; CHECK BOUNCE
+            CMP.W   #-ENSIZE,(A0)           ; CHECK BOUNCE
             BLT     .KILL
             TST.W   2(A0)
             BLE     .BOUNCE

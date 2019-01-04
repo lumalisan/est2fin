@@ -10,7 +10,7 @@ DRAWPIX     MACRO
 ;           - \3 Right X
 ;           - \4 Lower Y
 ;           - \4 Color in format $00BBGGRR
-;           - D5.W Movement in Y
+;           - (PLRPOSY) Movement in Y
 ; Output    - None
 ; Modifies  - D0.B, D1.W, D2.W, D3.W, D4.W
 ; -----------------------------------------------------------------------------
@@ -25,10 +25,10 @@ DRAWPIX     MACRO
             ;Draw the pixel
             MOVE.W  #\1,D1
             MOVE.W  #\2,D2
-            SUB.W   D5,D2
+            SUB.W   (PLRPOSY),D2
             MOVE.W  #\3,D3
             MOVE.W  #\4,D4
-            SUB.W   D5,D4
+            SUB.W   (PLRPOSY),D4
             MOVE.B  #87,D0
             TRAP    #15
             ENDM
