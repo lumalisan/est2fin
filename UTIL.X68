@@ -78,6 +78,28 @@ UTLLOCT     MACRO
 ; =============================================================================
 
 ; -----------------------------------------------------------------------------
+UTLUPDS
+; UPDATES GAME SPEED DEPENDING ON PLAYER SCORE/10
+; INPUT    - NONE
+; OUTPUT   - NONE
+; MODIFIES - NONE
+; -----------------------------------------------------------------------------
+            MOVEM.L D0,-(SP)                ; SAVE REGISTER
+            
+            MOVE.W  (PLRSCORE),D0           
+            DIVU.W  #10,D0                  ; DIVIDE BY 10
+            CMP.W   #30,D0                  ; COMPARE IF >= 30
+            BLE     .MAX
+            MOVE.W  D0,(SPEED)              ; IF < 30, SET AS GAME SPEED
+            BRA     .END
+.MAX        MOVE.W  #30,(SPEED)             ; IF >=30, SET AS 30
+            
+.END        MOVEM.L (SP)+,D0                ; RESTORE REGISTERS
+            RTS
+; -----------------------------------------------------------------------------
+
+
+; -----------------------------------------------------------------------------
 UTLINIT
 ; INITIALIZES UTILITY CODE
 ; INPUT    - NONE
@@ -168,3 +190,8 @@ UTLRAND
             DC.B    236, 127, 126, 3  , 207, 45 , 193, 2
             DC.B    148, 91 , 35 , 242, 139, 205, 248, 237
             DC.B    116, 51 , 236, 185, 15 , 213, 221, 6
+
+*~Font name~Courier New~
+*~Font size~10~
+*~Tab type~0~
+*~Tab size~4~
