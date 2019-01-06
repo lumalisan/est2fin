@@ -70,6 +70,7 @@ BLACK       EQU     $00000000
 OLIVE       EQU     $000E9274
 LIME        EQU     $001BBF9A
 YELLOW      EQU     $0058F5D8
+GREEN       EQU     $00008000
 
 *~Font name~Courier New~
 *~Font size~10~
