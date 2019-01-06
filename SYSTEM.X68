@@ -28,6 +28,7 @@ SCRINIT
 ; OUTPUT   - NONE
 ; MODIFIES - D0,D1,D2,D3
 ; -----------------------------------------------------------------------------
+           
             ; - DISABLE INTS (SET INT BITS IN SR TO 111)
 
             OR.W    #%0000011100000000,SR
@@ -97,7 +98,7 @@ SCRINIT
             ; - ENABLE INTS (SET INT BITS IN SR TO 000)
 
             AND.W #%1111100011111111,SR
-
+            
             RTS
 
 ; -----------------------------------------------------------------------------
@@ -127,7 +128,6 @@ SCRUPD
             TRAP    #15
 
             MOVE.B  #11,D0                  ; CLEAR HIDDEN BUFFER
-            CLR.L   D1
             MOVE.W  #$FF00,D1
             TRAP    #15
 
@@ -335,6 +335,8 @@ DMMFREE
             CLR.W   (A0)
             MOVEM.L (A7)+,D0/A0
             RTS
+
+
 
 
 
