@@ -53,7 +53,8 @@ DESTFILCL   EQU     $00CCCCCC               ; DESTRUCTION ITEM FIL COLOR
 INTTITX     EQU     31                      ; TITLE X COORDINATE
 INTTITY     EQU     5                       ; TITLE Y COORDINATE
 INTTITC     EQU     $000000FF               ; TITLE COLOR
-INTPRSY     EQU     26                      ; PRESS JUMP Y COORDINATE
+INTPRSX     EQU     31                      ; PRESS FIRE X COORDINATE
+INTPRSY     EQU     26                      ; PRESS FIRE Y COORDINATE
 INTPRSC     EQU     $00FFFFFF               ; PRESS FIRE COLOR
 
 ; --- GAME OVER STATE RELATED CONSTANTS ---------------------------------------
