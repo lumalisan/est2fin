@@ -105,8 +105,8 @@ PLRPLOT
             JSR     DRAWTREX
 
 
-            UTLSPEN #WHITE                    ; PLOT THE SCORE TEXT
-            UTLSFIL #BLACK
+            UTLSPEN #BLACK                    ; PLOT THE SCORE TEXT
+            UTLSFIL #WHITE
             UTLLOCT PLRTXTX,PLRTXTY
             LEA     .SCORESTR,A1
             CLR.L   D1
