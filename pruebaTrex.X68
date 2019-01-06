@@ -2,7 +2,7 @@
 * Title      : Programa de Prueba Inicial
 * Written by : Lisandro Rocha
 * Date       : 15/11/18
-* Description: Peque�a introducci�n a la pr�ctica final
+* Description: Pequeï¿½a introducciï¿½n a la prï¿½ctica final
 *-----------------------------------------------------------
     ORG    $1000
 
@@ -36,7 +36,7 @@ DRAWPIX     MACRO
             MOVE.B  #87,D0
             TRAP    #15
             ENDM
-            
+
 ; -----------------------------------------------------------------------------
 DRAWSQ      MACRO
 ; Draw a rectangle on the specified coordenates
@@ -65,7 +65,7 @@ DRAWSQ      MACRO
             TRAP    #15
             ENDM
 
-    
+
 PRINT:
             MOVEM.L D0/A1,-(SP)
             MOVE.B  #14,D0
@@ -73,7 +73,7 @@ PRINT:
             TRAP    #15
             MOVEM.L (SP)+,D0/A1
             RTS
-    
+
 TAKEINPUT:
             MOVEM.L D0-D4,-(SP)
             MOVE.B  #19,D0                  ;Put key code in D1.L
@@ -87,7 +87,7 @@ TAKEINPUT:
               ADD.W   #10,D5
             ENDI
             MOVEM.L (SP)+,D0-D4
-            RTS   
+            RTS
 
 WAIT:
             MOVEM.L D0-D2,-(SP)
@@ -97,7 +97,7 @@ WAIT:
 .TIMELOOP
             MOVE.B  #23,D0		;Delay n/100 sec to reduce cpu load
             MOVE.L  #1,D1		;Delay amount 1/100 sec
-            TRAP    #15		;Execute delay	
+            TRAP    #15		;Execute delay
             MOVE.L  #8,D0		;Get time since midnight
             TRAP    #15                     ;Limit Framerate.
             SUB.L   D2,D1
@@ -105,7 +105,7 @@ WAIT:
             BLT     .TIMELOOP
             MOVEM.L (SP)+,D0-D2
             RTS
-            
+
 DRAWTREX:
             MOVEM.L D0-D4,-(SP)
             ;Draw t-rex with 5x5 pixels
@@ -139,6 +139,48 @@ DRAWTREX:
             MOVEM.L (SP)+,D0-D4
             RTS
 
+; -----------------------------------------------------------------------------
+DRAWCACT
+; DRAW THE CACTUS
+; INPUT    - NONE
+; OUTPUT   - NONE
+; MODIFIES - NONE
+; -----------------------------------------------------------------------------
+            MOVEM.L D0-D4,-(SP)
+
+            ; BRAZO IZQ.
+            DRAWPIX 0,390,5,420,GREEN
+            DRAWPIX 5,420,10,425,GREEN
+            DRAWPIX 10,425,15,430,GREEN
+            DRAWPIX 5,385,10,390,GREEN
+            DRAWPIX 5,390,10,420,OLIVE
+            DRAWPIX 10,415,15,425,OLIVE
+            DRAWPIX 15,420,25,430,OLIVE
+            DRAWPIX 10,390,15,415,GREEN
+            DRAWPIX 15,415,20,420,GREEN
+            ; PUNTITA MEDIO
+            DRAWPIX 20,420,25,385,GREEN
+            DRAWPIX 20,430,25,470,GREEN
+            DRAWPIX 15,430,20,435,GREEN
+            DRAWPIX 25,385,35,470,OLIVE
+            DRAWPIX 25,380,35,385,GREEN
+            DRAWPIX 35,385,40,425,GREEN
+            DRAWPIX 35,395,40,470,GREEN
+            ; BRAZO DERECHO
+            DRAWPIX 35,425,45,435,OLIVE
+            DRAWPIX 40,420,45,425,GREEN
+            DRAWPIX 40,435,45,440,GREEN
+            DRAWPIX 45,430,50,435,GREEN
+            DRAWPIX 50,425,55,430,GREEN
+            DRAWPIX 55,400,60,425,GREEN
+            DRAWPIX 50,400,55,425,OLIVE
+            DRAWPIX 50,395,55,400,GREEN
+            DRAWPIX 45,400,50,420,GREEN
+            DRAWPIX 45,420,50,430,OLIVE
+
+            MOVEM.L (SP)+,D0-D4
+            RTS
+
 DRAWFLOOR:
             MOVEM.L D0-D4,-(SP)
             ;Draw the floor rectangle
@@ -153,7 +195,7 @@ SETWINDOW:
             TRAP    #15
             MOVEM.L (SP)+,D0-D4
             RTS
-    
+
 START:
             ;Set screen resolution
             BSR     SETWINDOW
@@ -172,6 +214,7 @@ START:
             ;Draw the t-rex, this subroutine receives in D5.W the actual Y pos
             ;of the player
             BSR     DRAWTREX
+            BSR     DRAWCACT
             ;Draw some obstacles
             ;BSR     DRAWTHINGS
             MOVE.B  #94, D0
@@ -186,16 +229,7 @@ BLACK       EQU     $00000000
 OLIVE       EQU     $000E9274
 LIME        EQU     $001BBF9A
 YELLOW      EQU     $0058F5D8
+GREEN       EQU     $00008000
 
 
     END    START
-
-
-
-
-
-
-*~Font name~Courier New~
-*~Font size~12~
-*~Tab type~0~
-*~Tab size~4~

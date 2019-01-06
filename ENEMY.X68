@@ -109,6 +109,48 @@ ENDEST
             MOVEM.L (A7)+,A1-A3/D0-D4
             RTS
 
+; -----------------------------------------------------------------------------
+DRAWCACT
+; DRAW THE CACTUS
+; INPUT    - NONE
+; OUTPUT   - NONE
+; MODIFIES - NONE
+; -----------------------------------------------------------------------------
+            MOVEM.L D0-D4,-(SP)
+
+            ; BRAZO IZQ.
+            DRAWPIX 0,390,5,420,GREEN
+            DRAWPIX 5,420,10,425,GREEN
+            DRAWPIX 10,425,15,430,GREEN
+            DRAWPIX 5,385,10,390,GREEN
+            DRAWPIX 5,390,10,420,OLIVE
+            DRAWPIX 10,415,15,425,OLIVE
+            DRAWPIX 15,420,25,430,OLIVE
+            DRAWPIX 10,390,15,415,GREEN
+            DRAWPIX 15,415,20,420,GREEN
+            ; PUNTITA MEDIO
+            DRAWPIX 20,420,25,385,GREEN
+            DRAWPIX 20,430,25,470,GREEN
+            DRAWPIX 15,430,20,435,GREEN
+            DRAWPIX 25,385,35,470,OLIVE
+            DRAWPIX 25,380,35,385,GREEN
+            DRAWPIX 35,385,40,425,GREEN
+            DRAWPIX 35,395,40,470,GREEN
+            ; BRAZO DERECHO
+            DRAWPIX 35,425,45,435,OLIVE
+            DRAWPIX 40,420,45,425,GREEN
+            DRAWPIX 40,435,45,440,GREEN
+            DRAWPIX 45,430,50,435,GREEN
+            DRAWPIX 50,425,55,430,GREEN
+            DRAWPIX 55,400,60,425,GREEN
+            DRAWPIX 50,400,55,425,OLIVE
+            DRAWPIX 50,395,55,400,GREEN
+            DRAWPIX 45,400,50,420,GREEN
+            DRAWPIX 45,420,50,430,OLIVE
+
+            MOVEM.L (SP)+,D0-D4
+            RTS
+
 *~Font name~Courier New~
 *~Font size~10~
 *~Tab type~1~
