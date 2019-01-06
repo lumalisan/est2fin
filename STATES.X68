@@ -96,6 +96,7 @@ STAPLAYP
 ; OUTPUT   - NONE
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
+            JSR     BACKPLOT
             JSR     AGLPLOT
             BRA     PLRPLOT
 
