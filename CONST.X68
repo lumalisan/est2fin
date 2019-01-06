@@ -21,7 +21,6 @@ PLRWIDTH    EQU     5                       ; PLAYER WIDTH (PIXELS)
 PLRHEIGH    EQU     5                       ; PLAYER HEIGHT (PIXELS)
 PLRINIEN    EQU     500                     ; PLAYER INITIAL ENERGY (<SCRWIDTH)
 PLRSPEED    EQU     5                       ; PLAYER SPEED (PIXELS PER INT)
-PLRTXTCL    EQU     $00FFFFFF               ; FONT COLOR
 PLRTXTX     EQU     2                       ; SCORE X COORDINATE
 PLRTXTY     EQU     1                       ; SCORE Y COORDINATE
 PLRNRMCL    EQU     $000E9274               ; PLAYER NORMAL COLOR (OLIVE)
