@@ -19,7 +19,7 @@ ENINIT
             ;JSR     UTLRAND
             ;ADD.W   #(SCRHEIGH-255-ENSIZE)/2, D0
             MOVE.W  #SCRWIDTH,(A0)          ; X POSITION
-            MOVE.W  #SCRHEIGH-FLOORHGT,2(A0); Y POSITION (PSEUDO-RANDOM)
+            MOVE.W  #(SCRHEIGH-FLOORHGT),2(A0) ; Y POSITION (PSEUDO-RANDOM)
             ;JSR     UTLRAND
             ;AND.W   #$000F,D0               ; X SPEED (50*GAME SPEED)
             MOVE.W  #50,D0
@@ -95,20 +95,20 @@ ENDEST
 ; OUTPUT   - NONE
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
-            MOVEM.L A1-A3/D0-D4,-(A7)
-            MOVE.W  #ENNFRAG,D4
-.LOOP       LEA     XPLINIT,A1
-            LEA     XPLUPD,A2
-            LEA     XPLPLOT,A3
-            MOVE.W  #XPLTYPE,D0
-            MOVE.W  (A0),D1
-            ADD.W   #ENSIZE/2,D1
-            MOVE.W  2(A0),D2
-            ADD.W   #ENSIZE/2,D2
-            JSR     AGLADD
-            DBRA.W  D4,.LOOP
+            ;MOVEM.L A1-A3/D0-D4,-(A7)
+            ;MOVE.W  #ENNFRAG,D4
+.LOOP       ;LEA     XPLINIT,A1
+            ;LEA     XPLUPD,A2
+            ;LEA     XPLPLOT,A3
+            ;MOVE.W  #XPLTYPE,D0
+            ;MOVE.W  (A0),D1
+            ;ADD.W   #ENSIZE/2,D1
+            ;MOVE.W  2(A0),D2
+            ;ADD.W   #ENSIZE/2,D2
+            ;JSR     AGLADD
+            ;DBRA.W  D4,.LOOP
             JSR     AGLKILL
-            MOVEM.L (A7)+,A1-A3/D0-D4
+            ;MOVEM.L (A7)+,A1-A3/D0-D4
             RTS
 
 ; -----------------------------------------------------------------------------
@@ -152,6 +152,7 @@ DRAWCACT
 
             MOVEM.L (SP)+,D0-D4
             RTS
+
 
 
 *~Font name~Courier New~
