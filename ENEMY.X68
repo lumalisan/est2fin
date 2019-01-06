@@ -16,15 +16,17 @@ ENINIT
 ; NOTE     - ASSUMES SCRHEIGH IS GREATER THAN 255
 ; -----------------------------------------------------------------------------
             MOVE.W  D0,-(A7)
-            JSR     UTLRAND
-            ADD.W   #(SCRHEIGH-255-ENSIZE)/2, D0
+            ;JSR     UTLRAND
+            ;ADD.W   #(SCRHEIGH-255-ENSIZE)/2, D0
             MOVE.W  #SCRWIDTH,(A0)          ; X POSITION
-            MOVE.W  D0,2(A0)                ; Y POSITION (PSEUDO-RANDOM)
-            JSR     UTLRAND
-            AND.W   #$000F,D0               ; X SPEED (PSEUDO-RANDOM)
-            MOVE.W  D0,4(A0)
+            MOVE.W  #SCRHEIGH-FLOORHGT,2(A0); Y POSITION (PSEUDO-RANDOM)
+            ;JSR     UTLRAND
+            ;AND.W   #$000F,D0               ; X SPEED (50*GAME SPEED)
+            MOVE.W  #50,D0
+            MULU.W  (SPEED),D0
+            MOVE.W  D0,4(A0)                 
             SUBQ.W  #7,D0
-            MOVE.W  D0,6(A0)                ; Y SPEED (PSEUDO-RANDOM)
+            ;MOVE.W  D0,6(A0)                ; Y SPEED (PSEUDO-RANDOM)
             MOVE.W  (A7)+,D0
             RTS
 
@@ -108,6 +110,7 @@ ENDEST
             JSR     AGLKILL
             MOVEM.L (A7)+,A1-A3/D0-D4
             RTS
+
 
 *~Font name~Courier New~
 *~Font size~10~
