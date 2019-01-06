@@ -16,7 +16,6 @@
             INCLUDE "AGENTLST.X68"          ; AGENT LIST MANAGEMENT
             INCLUDE "ENEMY.X68"             ; ENEMY AGENT MANAGEMENT
             INCLUDE "SPAWNER.X68"           ; SPAWNER (CREATES ENEMIES)
-            INCLUDE "DESTRUCTION.X68"       ; DESTRUCTION AGENT MANAGEMENT
             INCLUDE "STATES.X68"            ; GAME STATES MANAGEMENT
             ; TO DO: PUT YOUR GAME-RELATED INCLUDES HERE
 
@@ -51,6 +50,7 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM CODE
             INCLUDE "SYSVAR.X68"
             INCLUDE "VAR.X68"
             END    START
+
 
 *~Font name~Courier New~
 *~Font size~10~

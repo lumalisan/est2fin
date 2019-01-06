@@ -56,15 +56,15 @@ PLRUPD
             MOVE.W  #SCRHEIGH-PLRHEIGH,(PLRPOSY)
 .MDONE      BTST.B  #KBDBITF1,(KBDEDGE)
             BEQ     .NOFIRE
-            MOVEM.L A1-A3/D0-D2,-(A7)
-            LEA     SHTINIT,A1
-            LEA     SHTUPD,A2
-            LEA     SHTPLOT,A3
-            MOVE.W  #SHTTYPE,D0
-            MOVE.W  (PLRPOSX),D1
-            MOVE.W  (PLRPOSY),D2
-            JSR     AGLADD
-            MOVEM.L (A7)+,A1-A3/D0-D2
+            ;MOVEM.L A1-A3/D0-D2,-(A7)
+            ;LEA     SHTINIT,A1
+            ;LEA     SHTUPD,A2
+            ;LEA     SHTPLOT,A3
+            ;MOVE.W  #SHTTYPE,D0
+            ;MOVE.W  (PLRPOSX),D1
+            ;MOVE.W  (PLRPOSY),D2
+            ;JSR     AGLADD
+            ;MOVEM.L (A7)+,A1-A3/D0-D2
 .NOFIRE     MOVE.W  (A7)+,D1
             RTS
 
@@ -156,6 +156,7 @@ DRAWTREX
             DRAWPIX 165,445,180,455,YELLOW
             MOVEM.L (SP)+,D0-D4
             RTS
+
 
 
 *~Font name~Courier New~
