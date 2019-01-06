@@ -25,7 +25,7 @@ PLRUPD
 ; -----------------------------------------------------------------------------
             BCLR.B  #PLRUBDMG,(PLRDMG)
             BEQ     .NODMG
-            SUB.W   #ASTDMG,(PLRENER)
+            SUB.W   #ENDMG,(PLRENER)
             BGT     .NODMG
             MOVE.W  #STAGOVR,(STANEXT)      ; IF LIFE IS 0, GAME OVER
 .NODMG      MOVE.W  D1,-(A7)

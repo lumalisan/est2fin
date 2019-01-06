@@ -62,6 +62,30 @@ DRAWSQ      MACRO
             ENDM
 
 ; -----------------------------------------------------------------------------
+UTLSPEN     MACRO
+; WRAPPER FOR SET PEN TRAP 15 TASK.
+; INPUT    - \1 COLOR IN FORMAT $00BBGGRR
+; OUTPUT   - NONE
+; MODIFIES - D0,D1
+; -----------------------------------------------------------------------------
+            MOVE.B  #80,D0
+            MOVE.L  \1,D1
+            TRAP    #15
+            ENDM
+
+; -----------------------------------------------------------------------------
+UTLSFIL     MACRO
+; WRAPPER FOR SET FIL TRAP 15 TASK.
+; INPUT    - \1 COLOR IN FORMAT $00BBGGRR
+; OUTPUT   - NONE
+; MODIFIES - D0,D1
+; -----------------------------------------------------------------------------
+            MOVE.B  #81,D0
+            MOVE.L  \1,D1
+            TRAP    #15
+            ENDM
+
+; -----------------------------------------------------------------------------
 UTLLOCT     MACRO
 ; WRAPPER TO TEXT POSITIONNING FROM TRAP 15
 ; INPUT    - \1 X, \2 Y
@@ -85,15 +109,15 @@ UTLUPDS
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
             MOVEM.L D0,-(SP)                ; SAVE REGISTER
-            
-            MOVE.W  (PLRSCORE),D0           
+
+            MOVE.W  (PLRSCORE),D0
             DIVU.W  #10,D0                  ; DIVIDE BY 10
             CMP.W   #30,D0                  ; COMPARE IF >= 30
             BLE     .MAX
             MOVE.W  D0,(SPEED)              ; IF < 30, SET AS GAME SPEED
             BRA     .END
 .MAX        MOVE.W  #30,(SPEED)             ; IF >=30, SET AS 30
-            
+
 .END        MOVEM.L (SP)+,D0                ; RESTORE REGISTERS
             RTS
 ; -----------------------------------------------------------------------------
