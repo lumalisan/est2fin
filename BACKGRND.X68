@@ -11,7 +11,7 @@ BACKPLOT
 ; -----------------------------------------------------------------------------
             MOVEM.L D0-D4,-(SP)
             DRAWSQ  0,0,640,480,WHITE
-            BSR     DRAWFLOOR
+            BSR     FLRPLOT
             MOVEM.L (SP)+,D0-D4
             RTS
 
