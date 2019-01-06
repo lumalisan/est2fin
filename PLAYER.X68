@@ -36,8 +36,8 @@ PLRUPD
 
             MOVE.B  (KBDVAL),D0             ; PREPARE MOTION COMMAND BY
             OR.B    (KBDEDGE),D0            ; AND UP FROM KBDEDGE.
-            MOVE.B  D0,(PLRMOT)
-            JSR     AGNGRAV                 ; UPDATE GRAVITY
+            ;MOVE.B  D0,(PLRMOT)
+            ;JSR     AGNGRAV                 ; UPDATE GRAVITY
 .END        MOVEM.L (A7)+,D0
             RTS
 
@@ -129,6 +129,7 @@ DRAWTREX
             DRAWPIX 165,445,180,455,YELLOW
             MOVEM.L (SP)+,D0-D4
             RTS
+
 
 
 

@@ -38,7 +38,7 @@ SCRINIT
             MOVE.B  #32,D0
             MOVE.B  #6,D1
             MOVE.B  #0,D2
-            TRAP    #15
+            ;TRAP    #15
 
             ; - INSTALL SCRUPD INTO TRAP SCRTRAP
 
@@ -58,7 +58,6 @@ SCRINIT
             ; - CLEAR VISIBLE BUFFER
 
             MOVE.B  #11,D0
-            CLR.L   D1
             MOVE.W  #$FF00,D1
             TRAP    #15
 
@@ -71,7 +70,6 @@ SCRINIT
             ; - CLEAR HIDDEN BUFFER
 
             MOVE.B  #11,D0
-            CLR.L   D1
             MOVE.W  #$FF00,D1
             TRAP    #15
 
@@ -335,6 +333,8 @@ DMMFREE
             CLR.W   (A0)
             MOVEM.L (A7)+,D0/A0
             RTS
+
+
 
 
 
