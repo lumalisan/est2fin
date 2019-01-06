@@ -28,44 +28,17 @@ PLRUPD
             SUB.W   #ENDMG,(PLRENER)
             BGT     .NODMG
             MOVE.W  #STAGOVR,(STANEXT)      ; IF LIFE IS 0, GAME OVER
-.NODMG      MOVE.W  D1,-(A7)
-            MOVE.B  (KBDVAL),D1             ; PERFORM MOTION AND CHECK BOUNDS.
-            ROR.B   #1,D1
-            BCC     .CHKUP
-            SUB.W   #PLRSPEED,(PLRPOSX)
-            TST.W   (PLRPOSX)
-            BGE     .CHKUP
-            CLR.W   (PLRPOSX)
-.CHKUP      ROR.B   #1,D1
-            BCC     .CHKRT
+.NODMG      MOVEM.L D0,-(A7)
+
+            BTST.B  #KBDBITF1,(KBDEDGE)
+            BEQ     .END
             SUB.W   #PLRSPEED,(PLRPOSY)
-            TST.W   (PLRPOSY)
-            BGE     .CHKRT
-            CLR.W   (PLRPOSY)
-.CHKRT      ROR.B   #1,D1
-            BCC     .CHKDN
-            ADD.W   #PLRSPEED,(PLRPOSX)
-            CMP.W   #SCRWIDTH-PLRWIDTH,(PLRPOSX)
-            BLE     .CHKDN
-            MOVE.W  #SCRWIDTH-PLRWIDTH,(PLRPOSX)
-.CHKDN      ROR.B   #1,D1
-            BCC     .MDONE
-            ADD.W   #PLRSPEED,(PLRPOSY)
-            CMP.W   #SCRHEIGH-PLRHEIGH,(PLRPOSY)
-            BLE     .MDONE
-            MOVE.W  #SCRHEIGH-PLRHEIGH,(PLRPOSY)
-.MDONE      BTST.B  #KBDBITF1,(KBDEDGE)
-            BEQ     .NOFIRE
-            ;MOVEM.L A1-A3/D0-D2,-(A7)
-            ;LEA     SHTINIT,A1
-            ;LEA     SHTUPD,A2
-            ;LEA     SHTPLOT,A3
-            ;MOVE.W  #SHTTYPE,D0
-            ;MOVE.W  (PLRPOSX),D1
-            ;MOVE.W  (PLRPOSY),D2
-            ;JSR     AGLADD
-            ;MOVEM.L (A7)+,A1-A3/D0-D2
-.NOFIRE     MOVE.W  (A7)+,D1
+
+            MOVE.B  (KBDVAL),D0             ; PREPARE MOTION COMMAND BY
+            OR.B    (KBDEDGE),D0            ; AND UP FROM KBDEDGE.
+            MOVE.B  D0,(PLRMOT)
+            JSR     AGNGRAV                 ; UPDATE GRAVITY
+.END        MOVEM.L (A7)+,D0
             RTS
 
 ; -----------------------------------------------------------------------------
@@ -105,8 +78,8 @@ PLRPLOT
             JSR     DRAWTREX
 
 
-            UTLSPEN #BLACK                    ; PLOT THE SCORE TEXT
-            UTLSFIL #WHITE
+            UTLSPEN #OLIVE                    ; PLOT THE SCORE TEXT
+            UTLSFIL #OLIVE
             UTLLOCT PLRTXTX,PLRTXTY
             LEA     .SCORESTR,A1
             CLR.L   D1

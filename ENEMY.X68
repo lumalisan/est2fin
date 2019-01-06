@@ -18,15 +18,15 @@ ENINIT
             MOVE.W  D0,-(A7)
             ;JSR     UTLRAND
             ;ADD.W   #(SCRHEIGH-255-ENSIZE)/2, D0
-            MOVE.W  #SCRWIDTH,(A0)          ; X POSITION
-            MOVE.W  #(SCRHEIGH-FLOORHGT),2(A0) ; Y POSITION (PSEUDO-RANDOM)
+            MOVE.W  #SCRWIDTH,(A0)             ; X POSITION
+            MOVE.W  #(SCRHEIGH-FLOORHGT),2(A0) ; Y POSITION
             ;JSR     UTLRAND
-            ;AND.W   #$000F,D0               ; X SPEED (50*GAME SPEED)
+            ;AND.W   #$000F,D0                ; X SPEED (50*GAME SPEED)
             MOVE.W  #50,D0
             MULU.W  (SPEED),D0
             MOVE.W  D0,4(A0)
             SUBQ.W  #7,D0
-            ;MOVE.W  D0,6(A0)                ; Y SPEED (PSEUDO-RANDOM)
+            ;MOVE.W  D0,6(A0)                  ; Y SPEED (PSEUDO-RANDOM)
             MOVE.W  (A7)+,D0
             RTS
 
@@ -44,11 +44,11 @@ ENUPD
             ADD.W   D0,2(A0)
             CMP.W   #-ENSIZE,(A0)           ; CHECK BOUNCE
             BLT     .KILL
-            TST.W   2(A0)
-            BLE     .BOUNCE
-            CMP.W   #SCRHEIGH-ENSIZE,2(A0)
-            BLT     .COLPLAY
-.BOUNCE     NEG.W   6(A0)
+            ;TST.W   2(A0)
+            ;BLE     .BOUNCE
+            ;CMP.W   #SCRHEIGH-ENSIZE,2(A0)
+            ;BLT     .COLPLAY
+;.BOUNCE     NEG.W   6(A0)
 .COLPLAY    MOVE.W  (A0),D0
             MOVE.W  2(A0),D1
             MOVE.W  #ENSIZE,D4
@@ -70,22 +70,23 @@ ENUPD
 ; -----------------------------------------------------------------------------
 ENPLOT
 ; PLOTS AN ENEMY
-; INPUT    - A0 POINTER TO THE LOCAL MEMORY
+; INPUT    - NONE
 ; OUTPUT   - NONE
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
-            UTLSPEN #ENPENCL
-            UTLSFIL #ENFILCL
-            MOVEM.W D1-D4,-(A7)
-            MOVE.W  (A0),D1
-            MOVE.W  2(A0),D2
-            MOVE.W  D1,D3
-            MOVE.W  D2,D4
-            ADD.W   #ENSIZE,D3
-            ADD.W   #ENSIZE,D4
-            MOVE.B  #88,D0
-            TRAP    #15
-            MOVEM.W (A7)+,D1-D4
+            ;UTLSPEN #ENPENCL
+            ;UTLSFIL #ENFILCL
+            ;MOVEM.W D1-D4,-(A7)
+            ;MOVE.W  (A0),D1
+            ;MOVE.W  2(A0),D2
+            ;MOVE.W  D1,D3
+            ;MOVE.W  D2,D4
+            ;ADD.W   #ENSIZE,D3
+            ;ADD.W   #ENSIZE,D4
+            ;MOVE.B  #88,D0
+            ;TRAP    #15
+            ;MOVEM.W (A7)+,D1-D4
+            JSR     DRAWCACT
             RTS
 
 ; -----------------------------------------------------------------------------
