@@ -2,7 +2,7 @@
 * Title      : Programa de Prueba Inicial
 * Written by : Lisandro Rocha
 * Date       : 15/11/18
-* Description: Pequeï¿½a introducciï¿½n a la prï¿½ctica final
+* Description: Peque�a introducci�n a la pr�ctica final
 *-----------------------------------------------------------
     ORG    $1000
 
@@ -214,7 +214,6 @@ START:
             ;Draw the t-rex, this subroutine receives in D5.W the actual Y pos
             ;of the player
             BSR     DRAWTREX
-            BSR     DRAWCACT
             ;Draw some obstacles
             ;BSR     DRAWTHINGS
             MOVE.B  #94, D0
@@ -229,7 +228,16 @@ BLACK       EQU     $00000000
 OLIVE       EQU     $000E9274
 LIME        EQU     $001BBF9A
 YELLOW      EQU     $0058F5D8
-GREEN       EQU     $00008000
 
 
     END    START
+
+
+
+
+
+
+*~Font name~Courier New~
+*~Font size~12~
+*~Tab type~0~
+*~Tab size~4~
