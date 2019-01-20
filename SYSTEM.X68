@@ -40,7 +40,7 @@ HWINIT
             TRAP #15
             MOVE.L D1,(DISPADDR)            ; SAVE 7-SEGMENT DISPLAY ADDRESS
           
-            MOVE.B #7,D1
+            MOVE.B #3,D1
             TRAP #15
             MOVE.L D1,(SWADDR)              ; SAVE SWITCHES ADDRESS
             
@@ -367,6 +367,7 @@ DMMFREE
             CLR.W   (A0)
             MOVEM.L (A7)+,D0/A0
             RTS
+
 
 
 
