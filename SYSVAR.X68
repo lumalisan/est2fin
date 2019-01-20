@@ -11,7 +11,6 @@
 
 KBDVAL      DS.B    1                       ; KEY PRESSED=1
 KBDEDGE     DS.B    1                       ; KEY CHANGED=1
-
             DS.W    0
 
 ; --- SCREEN RELATED VARIABLES ------------------------------------------------
@@ -19,6 +18,11 @@ KBDEDGE     DS.B    1                       ; KEY CHANGED=1
 SCRINTCT    DS.B    1                       ; INTERRUPT COUNTER/FLAG
 SCRCYCCT    DS.B    1                       ; CYCLE COUNTER
             DS.W    0
+
+; --- HW RELATED VARIABLES ------------------------------------------------
+
+DISPADDR    DS.L    1                       ; 7 SEGMENT DISPLAY ADRESS
+PULSADDR    DS.L    1                       ; SWITCHES ADRESS
 
 ; --- DYNAMIC MEMORY VARIABLES ------------------------------------------------
 
