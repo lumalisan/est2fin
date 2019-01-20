@@ -9,9 +9,11 @@ PLRINIT
 ; OUTPUT   - NONE
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
-            MOVE.W  #PLRWIDTH/2,(PLRPOSX)
-            MOVE.W  #(SCRHEIGH-PLRHEIGH)/2,(PLRPOSY)
-            MOVE.W  #PLRINIEN,(PLRENER)
+            MOVE.W  200,(PLRPOSX)
+            MOVE.W  400,(PLRPOSY)
+            ;MOVE.W  #PLRWIDTH/2,(PLRPOSX)
+            ;MOVE.W  #(SCRHEIGH-PLRHEIGH)/2,(PLRPOSY)
+            ;MOVE.W  #PLRINIEN,(PLRENER)
             CLR.W   (PLRSCORE)
             CLR.W   (PLRDMG)
             RTS
@@ -31,14 +33,26 @@ PLRUPD
 .NODMG      MOVEM.L D0,-(A7)
 
             BTST.B  #KBDBITF1,(KBDEDGE)
-            BEQ     .END
+            BEQ     END
             SUB.W   #PLRSPEED,(PLRPOSY)
 
             MOVE.B  (KBDVAL),D0             ; PREPARE MOTION COMMAND BY
             OR.B    (KBDEDGE),D0            ; AND UP FROM KBDEDGE.
-            ;MOVE.B  D0,(PLRMOT)
-            ;JSR     AGNGRAV                 ; UPDATE GRAVITY
-.END        MOVEM.L (A7)+,D0
+
+            MOVE.L  PLRAC,D2              ; move acceleration rate to D2 for comparison
+            ADD.L   #1,COUNT                ; Add 1 to the count
+ 	*; IF COUNT = BALL ACCELERATION RATE
+            IF.L COUNT <EQ> D2 THEN
+                ADD.L   #1,PLRVS              ; add 1 to ball vertical speed
+                MOVE.L  #0,COUNT                ; reset count to 0
+            ENDI
+
+            MOVE.L          (PLRPOSY),D1               ; Move BALL_Y to D1 
+            ADD.L           PLRVS,D1              ; Add BALL_VS TO D1
+            MOVE.L          D1,(PLRPOSY)               ; Move D1 to BALL_Y
+
+
+END         MOVEM.L (A7)+,D0
             RTS
 
 ; -----------------------------------------------------------------------------
@@ -129,6 +143,7 @@ DRAWTREX
             DRAWPIX 165,445,180,455,YELLOW
             MOVEM.L (SP)+,D0-D4
             RTS
+
 
 
 

@@ -19,7 +19,6 @@ DESTTYPE    EQU     3
 
 PLRWIDTH    EQU     5                       ; PLAYER WIDTH (PIXELS)
 PLRHEIGH    EQU     5                       ; PLAYER HEIGHT (PIXELS)
-PLRINIEN    EQU     500                     ; PLAYER INITIAL ENERGY (<SCRWIDTH)
 PLRSPEED    EQU     5                       ; PLAYER SPEED (PIXELS PER INT)
 PLRTXTX     EQU     2                       ; SCORE X COORDINATE
 PLRTXTY     EQU     1                       ; SCORE Y COORDINATE
