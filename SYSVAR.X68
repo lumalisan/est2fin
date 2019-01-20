@@ -22,7 +22,8 @@ SCRCYCCT    DS.B    1                       ; CYCLE COUNTER
 ; --- HW RELATED VARIABLES ------------------------------------------------
 
 DISPADDR    DS.L    1                       ; 7 SEGMENT DISPLAY ADRESS
-PULSADDR    DS.L    1                       ; SWITCHES ADRESS
+SWADDR      DS.L    1                       ; SWITCHES ADRESS
+CYCLES      DS.L    1                       ; CYCLES COUNTER
 
 ; --- DYNAMIC MEMORY VARIABLES ------------------------------------------------
 

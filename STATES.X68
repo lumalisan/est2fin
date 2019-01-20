@@ -21,7 +21,7 @@ STAUPD
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
             MOVEM.L D0/A0,-(A7)
-            JSR     HWSU
+            JSR     ULTHW
             CLR.L   D0
             MOVE.W  (STANEXT),D0
             CMP.W   (STACUR),D0

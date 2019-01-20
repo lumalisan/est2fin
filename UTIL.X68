@@ -166,6 +166,18 @@ UTLCHCOL
             RTS
 
 ; -----------------------------------------------------------------------------
+UTLHW
+; UPDATES THE HARDWARE WINDOW
+; INPUT    - NONE
+; OUTPUT   - D0.L RANDOM VALUE (ONLY BYTE)
+; MODIFIES - NONE (ASIDE OF OUTPUT)
+; -----------------------------------------------------------------------------
+            MOVE.L  A0,-(A7)
+            
+            MOVE.L  (A7)+,A0
+            RTS
+
+; -----------------------------------------------------------------------------
 UTLRAND
 ; PROVIDES A PSEUDO-RANDOM BYTE
 ; INPUT    - NONE
