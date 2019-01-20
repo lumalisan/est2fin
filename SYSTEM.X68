@@ -17,6 +17,38 @@ SYSINIT
             ANDI.W  #$DFFF,SR               ; SWITCH TO USER
             MOVE.L  A0,-(A7)                ; PUT RETURN ADDRESS
             RTS
+            
+            
+; =============================================================================
+; HARDWARE WINDOW MANAGEMENT (SYSTEM CODE)
+; =============================================================================
+
+; -----------------------------------------------------------------------------
+HWINIT
+; INITIALIZES THE HARDWARE WINDOW AND THE COMPONENTS ADDRESSES
+; INPUT    - NONE
+; OUTPUT   - NONE
+; MODIFIES - NONE
+; -----------------------------------------------------------------------------
+            MOVEM.L D0-D1,-(A7)
+            
+            MOVE.B #32,D0
+            CLR.B  D1
+            TRAP   #15                      ; SHOW HW WINDOW
+            
+    
+            MOVE.B #1,D1
+            TRAP #15
+            MOVE.L D1,(DISPADDR)            ; SAVE 7-SEGMENT DISPLAY ADDRESS
+          
+            MOVE.B #7,D1
+            TRAP #15
+            MOVE.L D1,(SWADDR)              ; SAVE SWITCHES ADDRESS
+            
+            MOVEM.L (SP)+, D0-D1
+            RTS
+        
+
 
 ; =============================================================================
 ; SCREEN MANAGEMENT (SYSTEM CODE)
@@ -334,6 +366,7 @@ DMMFREE
             CLR.W   (A0)
             MOVEM.L (A7)+,D0/A0
             RTS
+
 
 
 
