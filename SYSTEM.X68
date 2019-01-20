@@ -35,7 +35,6 @@ HWINIT
             MOVE.B #32,D0
             CLR.B  D1
             TRAP   #15                      ; SHOW HW WINDOW
-            
     
             MOVE.B #1,D1
             TRAP #15
@@ -44,6 +43,8 @@ HWINIT
             MOVE.B #7,D1
             TRAP #15
             MOVE.L D1,(SWADDR)              ; SAVE SWITCHES ADDRESS
+            
+            CLR.L   (CYCLES)                ; CLEAR CYCLES COUNTER
             
             MOVEM.L (SP)+, D0-D1
             RTS
