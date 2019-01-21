@@ -15,7 +15,6 @@
             INCLUDE "PLAYER.X68"            ; PLAYER MANAGEMENT
             INCLUDE "AGENTLST.X68"          ; AGENT LIST MANAGEMENT
             INCLUDE "BACKGRND.X68"          ; BACKGROUND SUBROUTINES
-            ;INCLUDE "AGENT.X68"             ; AGENTS SUBROUTINES
             INCLUDE "ENEMY.X68"             ; ENEMY AGENT MANAGEMENT
             INCLUDE "SPAWNER.X68"           ; SPAWNER (CREATES ENEMIES)
             INCLUDE "STATES.X68"            ; GAME STATES MANAGEMENT
@@ -52,6 +51,7 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM CODE
             INCLUDE "SYSVAR.X68"
             INCLUDE "VAR.X68"
             END    START
+
 
 
 
