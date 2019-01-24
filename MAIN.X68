@@ -1,5 +1,5 @@
 ; =============================================================================
-; TITLE    : EXAMPLE GAME - TOTALLY NOT GOOGLE CHROME'S DINOSAUR
+; TITLE    : TOTALLY NOT GOOGLE CHROME'S DINOSAUR
 ; AUTHORS  : IZAR CASTORINA & LISANDRO ROCHA
 ; CREATION : 15/11/18
 ; =============================================================================
@@ -51,6 +51,7 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM CODE
             INCLUDE "SYSVAR.X68"
             INCLUDE "VAR.X68"
             END    START
+
 
 
 

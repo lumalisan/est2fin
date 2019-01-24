@@ -17,8 +17,8 @@ DESTTYPE    EQU     3
 
 ; --- PLAYER RELATED CONSTANTS ------------------------------------------------
 
-PLRWIDTH    EQU     5                       ; PLAYER WIDTH (PIXELS)
-PLRHEIGH    EQU     5                       ; PLAYER HEIGHT (PIXELS)
+PLRWIDTH    EQU     65                      ; PLAYER WIDTH (PIXELS)
+PLRHEIGH    EQU     60                      ; PLAYER HEIGHT (PIXELS)
 PLRSPEED    EQU     5                       ; PLAYER SPEED (PIXELS PER INT)
 PLRTXTX     EQU     2                       ; SCORE X COORDINATE
 PLRTXTY     EQU     1                       ; SCORE Y COORDINATE
@@ -69,6 +69,8 @@ OLIVE       EQU     $000E9274
 LIME        EQU     $001BBF9A
 YELLOW      EQU     $0058F5D8
 GREEN       EQU     $00008000
+RANDOM      EQU     $00424554
+
 
 *~Font name~Courier New~
 *~Font size~10~

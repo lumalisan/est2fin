@@ -9,8 +9,10 @@ PLRINIT
 ; OUTPUT   - NONE
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
-            MOVE.W  200,(PLRPOSX)
-            MOVE.W  300,(PLRPOSY)
+            MOVE.W  410,(PLRPOSY)
+            MOVE.W  470,(PLRBOT)
+            MOVE.W  410,(PLRTOP)
+                        
             ;MOVE.W  #PLRWIDTH/2,(PLRPOSX)
             ;MOVE.W  #(SCRHEIGH-PLRHEIGH)/2,(PLRPOSY)
             ;MOVE.W  #PLRINIEN,(PLRENER)
@@ -36,9 +38,22 @@ PLRUPD
             BEQ     END
             ;SUB.W   #PLRSPEED,(PLRPOSY)
 
-            MOVE.B  (KBDVAL),D0             ; PREPARE MOTION COMMAND BY
-            OR.B    (KBDEDGE),D0            ; AND UP FROM KBDEDGE.
+            ;MOVE.B  (KBDVAL),D0             ; PREPARE MOTION COMMAND BY
+            ;OR.B    (KBDEDGE),D0            ; AND UP FROM KBDEDGE.
 
+            BSR     INCPLRSPEED
+            BSR     MOVEPLR
+            BSR     FLOORCOL
+            BSR     TOPCOL
+            ;BSR     ENEMYCOL
+            ;BSR     SCORE
+
+END         MOVEM.L (A7)+,D0
+            RTS
+            
+*******************************************************************************
+*******************************************************************************
+INCPLRSPEED
             MOVE.L  PLRAC,D2                ; move acceleration rate to D2 for comparison
             ADD.L   #1,COUNT                ; Add 1 to the count
  	*; IF COUNT = BALL ACCELERATION RATE
@@ -46,54 +61,51 @@ PLRUPD
                 ADD.L   #1,PLRVS            ; add 1 to PLAYER vertical speed
                 MOVE.L  #0,COUNT            ; reset count to 0
             ENDI
+                RTS
+                
+*******************************************************************************
+*******************************************************************************
+MOVEPLR     *UPDATE PLAYER POSITION
+                MOVE.L          (PLRPOSY),D1          ; MOVE PLAYER Y POSITION TO D1 
+                ADD.L           PLRVS,D1              ; ADD PLAYER VERTICAL SPEED TO D1
+                MOVE.L          D1,(PLRPOSY)          ; MOVE D1 TO PLRPOSY
+                ADD.L           PLRHEIGH,D1
+                MOVE.L          D1,PLRBOT               ; Move D1 to PLRB
+                
+                RTS
 
-            BSR     MOVEPLR
-            BSR     CHECKCOL
-
-
-END         MOVEM.L (A7)+,D0
-            RTS
-
-****************************************************************************************************************
-****************************************************************************************************************       
-CHECKCOL      
-            BSR             FLOORCOL
-            ;BSR             ENEMYCOL
-            ;BSR             SCORE
-            RTS
-****************************************************************************************************************
-****************************************************************************************************************
+*******************************************************************************
+*******************************************************************************
 FLOORCOL
-            MOVE.L          PLRB,D2           ; Move PLAYER bottom to D2
+            MOVE.L          PLRBOT,D2           ; Move PLAYER bottom to D2
             * If PLRBOTTOM > FLOORY
             IF.L D2 <GT> FLOORY THEN                       
-            MOVE.L          FLOORX,D0              ; Move FLOORX to D0
-            MOVE.L          PLRRIGHT,D1         ; Copy FLOORX position to D1
       
-               * IF FLOORX <= PLRXCENTER <= FLOOR RIGHT X
-               IF.L PLRXCENTER <GE> D0 AND.L PLRXCENTER <LE> D1 THEN            
-                 NEG.L           PLRVS                   ; Reverse ball vertical direction
-                 MOVE.L          FLOORDE,D2              ; Move deceleration of ball caused by court hit to D2
-                 ADD.L           D2,PLRVS                ; Decrease speed
-                 MOVE.L          FLOORY,D3               ; Move court top to D3
-                 SUB.L           PLRDI,D3                ; Get new ball top position
-                 MOVE.L          D3,(PLRPOSY)            ; Move ball top to new position 
-               ENDI
+              NEG.L           PLRVS                   ; Reverse ball vertical direction
+              MOVE.L          FLOORDE,D2              ; Move deceleration of ball caused by court hit to D2
+              ADD.L           D2,PLRVS                ; Decrease speed
+              MOVE.L          FLOORY,D3               ; Move court top to D3
+              SUB.L           #10,D3                  ; Get new ball top position
+              MOVE.L          D3,(PLRPOSY)            ; Move ball top to new position 
                
             ENDI
             RTS
             
-****************************************************************************************************************
-****************************************************************************************************************
-MOVEPLR     *UPDATE BALL POSITION
-                MOVE.L          (PLRPOSY),D1    ; MOVE PLAYER Y POSITION TO D1 
-                ADD.L           PLRVS,D1        ; ADD PLAYER VERTICAL SPEED TO D1
-                MOVE.L          D1,(PLRPOSY)    ; MOVE D1 TO PLRPOSY 
-                ADD.L           PLRRAD,D1             ; Add PLRRAD to D1
-                MOVE.L          D1,PLRYCENTER         ; Move D1 to PLRYCENTER
-                ADD.L           PLRRAD,D1             ; Add PLRRAD TO D1
-                MOVE.L          D1,PLRB               ; Move D1 to PLRB
-                RTS
+*******************************************************************************
+*******************************************************************************
+TOPCOL
+            MOVE.L          (PLRPOSY),D2           ; Move PLAYER bottom to D2
+            * If PLRTOP < 0
+            IF.L D2 <LE> #0 THEN                       
+      
+              NEG.L           PLRVS                   ; Reverse ball vertical direction
+              MOVE.L          #0,D3
+              ADD.L           #1,D3                   ; Get new ball top position
+              MOVE.L          D3,(PLRPOSY)            ; Move ball top to new position
+               
+            ENDI
+            RTS
+            
 
 ; -----------------------------------------------------------------------------
 PLRPLOT
@@ -183,6 +195,7 @@ DRAWTREX
             DRAWPIX 165,445,180,455,YELLOW
             MOVEM.L (SP)+,D0-D4
             RTS
+
 
 
 
