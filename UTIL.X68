@@ -199,6 +199,8 @@ UTLCOUNT
             MOVE.L  (CYCLES),D2
             SUB.L   D2,D1
             MOVE.L  D1,(CYCLES)             ; SAVE DIFFERENCE
+            MOVE.B  #30,D0
+            TRAP    #15                     ; RESET CYCLE COUNTER TO AVOID OF
             
             MOVEM.L (A7)+,D0-D2
             RTS
@@ -431,6 +433,7 @@ UTLRAND
             DC.B    236, 127, 126, 3  , 207, 45 , 193, 2
             DC.B    148, 91 , 35 , 242, 139, 205, 248, 237
             DC.B    116, 51 , 236, 185, 15 , 213, 221, 6
+
 
 
 *~Font name~Courier New~

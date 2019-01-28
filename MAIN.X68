@@ -29,14 +29,15 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM CODE
 ; --- UPDATE ------------------------------------------------------------------
 
 .LOOP       TST.B   (PRESSED)
-            BEQ     .CONT
-            JSR     UTLGETC
+            BNE     .CONT
+            JSR     UTLGETC                 ; IF PRESSED, GET CYCLES
            
 .CONT       TRAP    #KBDTRAP                ; READ KEYBOARD
             JSR     STAUPD                  ; UPDATE DEPENDING ON THE STATE
             TST.B   (PRESSED)
-            BEQ     .WINT
-            JSR     UTLCOUNT
+            BNE     .WINT
+            JSR     UTLCOUNT                ; IF PRESSED, CALCULATE CYCLES
+            JSR     UTLHW
             BRA     .WINT            
 
 ; --- WAIT SYNCH --------------------------------------------------------------
@@ -48,15 +49,15 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM CODE
 ; --- PLOT --------------------------------------------------------------------
 
             TST.B   (PRESSED)
-            BNE     .CONT2
-            JSR     UTLGETC
+            BEQ     .CONT2
+            JSR     UTLGETC                 ; IF NOT PRESSED, GET CYCLES
             
 .CONT2      JSR     STAPLOT                 ; PLOT DEPENDING ON THE STATE
             TRAP    #SCRTRAP                ; SHOW GRAPHICS
             TST.B   (PRESSED)
-            BNE     .LOOP
-            JSR     UTLCOUNT
-            
+            BEQ     .LOOP
+            JSR     UTLCOUNT                ; IF NOT PRESSED, CALCULATE CYCLES
+            JSR     UTLHW
             BRA     .LOOP
             SIMHALT
 
@@ -65,6 +66,8 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM CODE
             INCLUDE "SYSVAR.X68"
             INCLUDE "VAR.X68"
             END    START
+
+
 
 
 
