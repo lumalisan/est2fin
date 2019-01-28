@@ -10,10 +10,10 @@ PLRINIT
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
             MOVE.W  #150,(PLRPOSX)
-            ;MOVE.W  #(SCRHEIGH-FLOORHGT),(PLRPOSY)
-            MOVE.W  #0,(PLRPOSY)
-            MOVE.W  #470,(PLRBOT)
-            MOVE.W  #470-PLRHEIGH,(PLRTOP)
+            MOVE.W  #(SCRHEIGH-FLOORHGT),(PLRPOSY)
+            ;MOVE.W  #0,(PLRPOSY)
+            ;MOVE.W  #470,(PLRBOT)
+            ;MOVE.W  #470-PLRHEIGH,(PLRTOP)
 
             ;MOVE.W  #PLRINIEN,(PLRENER)
             CLR.W   (PLRSCORE)
@@ -29,16 +29,20 @@ PLRUPD
 ; -----------------------------------------------------------------------------
             MOVEM.L D0-D3,-(A7)
 
-            BTST.B  #KBDBITF1,(KBDEDGE)
+            ;BTST.B  #KBDBITF1,(KBDEDGE)
+            BTST.B  #KBDBITF1,(KBDVAL)
             BEQ     END
 
             MOVE.B  (KBDVAL),D0             ; PREPARE MOTION COMMAND BY
             OR.B    (KBDEDGE),D0            ; AND UP FROM KBDEDGE.
 
+            MOVE.W  #STAJUMP,(STANEXT)      ; NI IDEA XDDD, LA IDEA ES QUE CUANDO SALTES SE PASE A UN
+                                            ; ESTADO DE SALTO Y CUANDO TOQUE EL SUELO VUELVA AL ESTADO NORMAL
+                                            
             BSR     INCPLRSPEED
             BSR     MOVEPLR
             BSR     FLOORCOL
-            BSR     TOPCOL
+            ;BSR     TOPCOL
 
 END         MOVEM.L (A7)+,D0-D3
             RTS
@@ -58,26 +62,24 @@ INCPLRSPEED
 *******************************************************************************
 *******************************************************************************
 MOVEPLR     *UPDATE PLAYER POSITION
+
                 MOVE.W          (PLRPOSY),D1          ; MOVE PLAYER Y POSITION TO D1
                 ADD.W           PLRVS,D1              ; ADD PLAYER VERTICAL SPEED TO D1
                 MOVE.W          D1,(PLRPOSY)          ; MOVE D1 TO PLRPOSY
-                ADD.W           #PLRHEIGH,D1
-                MOVE.W          D1,PLRBOT               ; Move D1 to PLRB
-
+                ;ADD.W           #PLRHEIGH,D1
+                ;MOVE.W          D1,PLRBOT               ; Move D1 to PLRB
                 RTS
 
 *******************************************************************************
 *******************************************************************************
 FLOORCOL
-            MOVE.W          PLRBOT,D2           ; Move PLAYER bottom to D2
-            * If PLRBOTTOM > FLOORY
+            MOVE.W          (PLRPOSY),D2           ; Move PLAYER bottom to D2
+            * If PLRPOSY > FLOORY
             IF.W D2 <GT> FLOORY THEN
 
               NEG.W           PLRVS                   ; Reverse ball vertical direction
-              ;MOVE.W          FLOORDE,D2              ; Move deceleration of ball caused by court hit to D2
-              ;ADD.W           D2,PLRVS                ; Decrease speed
               MOVE.W          FLOORY,D3               ; Move court top to D3
-              SUB.W           #PLRHEIGH,D3            ; Get new ball top position
+              ;SUB.W           #1,D3                   ; Get new ball top position
               MOVE.W          D3,(PLRPOSY)            ; Move ball top to new position
 
             ENDI
@@ -87,13 +89,12 @@ FLOORCOL
 *******************************************************************************
 TOPCOL
             MOVE.W          (PLRPOSY),D2           ; Move PLAYER bottom to D2
-            * If PLRTOP < 0
-            IF.W D2 <LE> #0 THEN
+            SUB.W           #PLRHEIGH,D2
+            * If PLRTOP < 320
+            IF.W D2 <LT> #0 THEN
 
               NEG.W           PLRVS                   ; Reverse ball vertical direction
-              MOVE.W          #0,D3
-              ADD.W           #1,D3                   ; Get new ball top position
-              MOVE.W          D3,(PLRPOSY)            ; Move ball top to new position
+              MOVE.W          #0,(PLRPOSY)            ; Move ball top to new position
 
             ENDI
             RTS

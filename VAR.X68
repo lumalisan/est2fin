@@ -14,7 +14,7 @@ STANEXT     DS.W    1                       ; NEXT GAME STATE
 PLRPOSX     DS.W    1                       ; PLAYER X POSITION (PIXELS)
 PLRPOSY     DS.W    1                       ; PLAYER Y POSITION (PIXELS)
 
-PLRVS       DC.W    1                       ; PLAYER VERTICAL SPEED
+PLRVS       DC.W    10                       ; PLAYER VERTICAL SPEED
 PLRAC       DC.W    4                       ; PLAYER ACCELERATION
 
 PLRBOT      DS.W    1                       ; PLAYER BOTTOM

@@ -75,7 +75,7 @@ DRAWSQ      MACRO
 ;           - \2 Upper Y
 ;           - \3 Right X
 ;           - \4 Lower Y
-;           - \4 Color in format $00BBGGRR
+;           - \5 Color in format $00BBGGRR
 ; Output    - None
 ; Modifies  - D0.B, D1.W, D2.W, D3.W, D4.W
 ; -----------------------------------------------------------------------------
