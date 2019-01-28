@@ -3,17 +3,19 @@
 ; =============================================================================
 
 ; -----------------------------------------------------------------------------
-DRAWPIX     MACRO
-; Draw a pixel on the specified coordenates
+PLRPIX      MACRO
+; Draw a pixel for the player on the specified coordenates
 ; Input     - \1 Left X
 ;           - \2 Upper Y
 ;           - \3 Right X
 ;           - \4 Lower Y
 ;           - \4 Color in format $00BBGGRR
-;           - (PLRPOSY) Movement in Y
+;           - (PLRPOSY) Pos in Y
 ; Output    - None
-; Modifies  - D0.B, D1.W, D2.W, D3.W, D4.W
+; Modifies  - D0.B, D1.W, D2.W, D3.W, D4.W, D5.W
 ; -----------------------------------------------------------------------------
+            ;Get player Y
+            MOVE.W  (PLRPOSY),D5
             ;Set the color in D1
             MOVE.L  #\5,D1
             ;Set pen color
@@ -25,10 +27,43 @@ DRAWPIX     MACRO
             ;Draw the pixel
             MOVE.W  #\1,D1
             MOVE.W  #\2,D2
-            SUB.W   (PLRPOSY),D2
+            SUB.W   D5,D2
             MOVE.W  #\3,D3
             MOVE.W  #\4,D4
-            SUB.W   (PLRPOSY),D4
+            SUB.W   D5,D4
+            MOVE.B  #87,D0
+            TRAP    #15
+            ENDM
+
+; -----------------------------------------------------------------------------
+ENEPIX      MACRO
+; Draw a pixel for the enemy on the specified coordenates
+; Input     - \1 Left X
+;           - \2 Upper Y
+;           - \3 Right X
+;           - \4 Lower Y
+;           - \4 Color in format $00BBGGRR
+;           - (A0) Pos in X
+; Output    - None
+; Modifies  - D0.B, D1.W, D2.W, D3.W, D4.W, D5.W
+; -----------------------------------------------------------------------------
+            ;Get enemy X
+            MOVE.W  (A0),D5
+            ;Set the color in D1
+            MOVE.L  #\5,D1
+            ;Set pen color
+            MOVE.B  #80,D0
+            TRAP    #15
+            ;Set fill color
+            MOVE.B  #81,D0
+            TRAP    #15
+            ;Draw the pixel
+            MOVE.W  #\1,D1
+            ADD.W   D5,D1
+            MOVE.W  #\2,D2
+            MOVE.W  #\3,D3
+            ADD.W   D5,D3
+            MOVE.W  #\4,D4
             MOVE.B  #87,D0
             TRAP    #15
             ENDM

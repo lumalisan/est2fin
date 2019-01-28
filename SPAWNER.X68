@@ -20,6 +20,7 @@ SPWUPD
             JSR     AGLADD
 .END        MOVEM.L (A7)+,D0/A1-A3
             RTS
+            
 *~Font name~Courier New~
 *~Font size~10~
 *~Tab type~1~

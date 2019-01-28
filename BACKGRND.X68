@@ -12,7 +12,7 @@ BACKPLOT
             MOVEM.L D0-D4,-(SP)
             DRAWSQ  0,0,640,480,WHITE
             BSR     FLRPLOT
-            DRAWPIX 140,410,205,470,RANDOM
+            PLRPIX  140,410,205,470,RANDOM     ;Esto es para debuggear
             MOVEM.L (SP)+,D0-D4
             RTS
 

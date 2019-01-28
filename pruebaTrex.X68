@@ -7,7 +7,7 @@
     ORG    $1000
 
 ; -----------------------------------------------------------------------------
-DRAWPIX     MACRO
+PLRPIX     MACRO
 ; Draw a pixel on the specified coordenates
 ; Input     - \1 Left X
 ;           - \2 Upper Y
@@ -110,32 +110,32 @@ DRAWTREX:
             MOVEM.L D0-D4,-(SP)
             ;Draw t-rex with 5x5 pixels
             ;Patita izq.
-            DRAWPIX 150,455,155,470,BLACK
-            DRAWPIX 150,450,155,455,OLIVE
-            DRAWPIX 150,415,155,450,BLACK
+            PLRPIX 150,455,155,470,BLACK
+            PLRPIX 150,450,155,455,OLIVE
+            PLRPIX 150,415,155,450,BLACK
             ;Colita
-            DRAWPIX 145,450,150,455,BLACK
-            DRAWPIX 145,445,150,450,OLIVE
-            DRAWPIX 140,445,145,450,BLACK
-            DRAWPIX 140,440,150,445,BLACK
+            PLRPIX 145,450,150,455,BLACK
+            PLRPIX 145,445,150,450,OLIVE
+            PLRPIX 140,445,145,450,BLACK
+            PLRPIX 140,440,150,445,BLACK
             ;Parte sombra
-            DRAWPIX 155,415,160,460,OLIVE
+            PLRPIX 155,415,160,460,OLIVE
             ;Parte contorno
-            DRAWPIX 155,460,160,465,BLACK
-            DRAWPIX 160,455,185,460,BLACK
-            DRAWPIX 170,460,180,465,BLACK
-            DRAWPIX 170,465,175,470,BLACK
-            DRAWPIX 180,450,185,455,BLACK
-            DRAWPIX 180,445,200,450,BLACK
-            DRAWPIX 200,415,205,445,BLACK
-            DRAWPIX 155,410,200,415,BLACK
-            DRAWPIX 160,420,170,430,BLACK
+            PLRPIX 155,460,160,465,BLACK
+            PLRPIX 160,455,185,460,BLACK
+            PLRPIX 170,460,180,465,BLACK
+            PLRPIX 170,465,175,470,BLACK
+            PLRPIX 180,450,185,455,BLACK
+            PLRPIX 180,445,200,450,BLACK
+            PLRPIX 200,415,205,445,BLACK
+            PLRPIX 155,410,200,415,BLACK
+            PLRPIX 160,420,170,430,BLACK
             ;Parte interior
-            DRAWPIX 160,415,170,420,LIME
-            DRAWPIX 170,415,200,445,LIME
-            DRAWPIX 160,430,170,445,LIME
-            DRAWPIX 160,445,165,455,LIME
-            DRAWPIX 165,445,180,455,YELLOW
+            PLRPIX 160,415,170,420,LIME
+            PLRPIX 170,415,200,445,LIME
+            PLRPIX 160,430,170,445,LIME
+            PLRPIX 160,445,165,455,LIME
+            PLRPIX 165,445,180,455,YELLOW
             MOVEM.L (SP)+,D0-D4
             RTS
 
@@ -149,34 +149,34 @@ DRAWCACT
             MOVEM.L D0-D4,-(SP)
 
             ; BRAZO IZQ.
-            DRAWPIX 0,390,5,420,GREEN
-            DRAWPIX 5,420,10,425,GREEN
-            DRAWPIX 10,425,15,430,GREEN
-            DRAWPIX 5,385,10,390,GREEN
-            DRAWPIX 5,390,10,420,OLIVE
-            DRAWPIX 10,415,15,425,OLIVE
-            DRAWPIX 15,420,25,430,OLIVE
-            DRAWPIX 10,390,15,415,GREEN
-            DRAWPIX 15,415,20,420,GREEN
+            PLRPIX 0,390,5,420,GREEN
+            PLRPIX 5,420,10,425,GREEN
+            PLRPIX 10,425,15,430,GREEN
+            PLRPIX 5,385,10,390,GREEN
+            PLRPIX 5,390,10,420,OLIVE
+            PLRPIX 10,415,15,425,OLIVE
+            PLRPIX 15,420,25,430,OLIVE
+            PLRPIX 10,390,15,415,GREEN
+            PLRPIX 15,415,20,420,GREEN
             ; PUNTITA MEDIO
-            DRAWPIX 20,420,25,385,GREEN
-            DRAWPIX 20,430,25,470,GREEN
-            DRAWPIX 15,430,20,435,GREEN
-            DRAWPIX 25,385,35,470,OLIVE
-            DRAWPIX 25,380,35,385,GREEN
-            DRAWPIX 35,385,40,425,GREEN
-            DRAWPIX 35,395,40,470,GREEN
+            PLRPIX 20,420,25,385,GREEN
+            PLRPIX 20,430,25,470,GREEN
+            PLRPIX 15,430,20,435,GREEN
+            PLRPIX 25,385,35,470,OLIVE
+            PLRPIX 25,380,35,385,GREEN
+            PLRPIX 35,385,40,425,GREEN
+            PLRPIX 35,395,40,470,GREEN
             ; BRAZO DERECHO
-            DRAWPIX 35,425,45,435,OLIVE
-            DRAWPIX 40,420,45,425,GREEN
-            DRAWPIX 40,435,45,440,GREEN
-            DRAWPIX 45,430,50,435,GREEN
-            DRAWPIX 50,425,55,430,GREEN
-            DRAWPIX 55,400,60,425,GREEN
-            DRAWPIX 50,400,55,425,OLIVE
-            DRAWPIX 50,395,55,400,GREEN
-            DRAWPIX 45,400,50,420,GREEN
-            DRAWPIX 45,420,50,430,OLIVE
+            PLRPIX 35,425,45,435,OLIVE
+            PLRPIX 40,420,45,425,GREEN
+            PLRPIX 40,435,45,440,GREEN
+            PLRPIX 45,430,50,435,GREEN
+            PLRPIX 50,425,55,430,GREEN
+            PLRPIX 55,400,60,425,GREEN
+            PLRPIX 50,400,55,425,OLIVE
+            PLRPIX 50,395,55,400,GREEN
+            PLRPIX 45,400,50,420,GREEN
+            PLRPIX 45,420,50,430,OLIVE
 
             MOVEM.L (SP)+,D0-D4
             RTS

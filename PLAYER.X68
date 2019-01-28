@@ -9,11 +9,11 @@ PLRINIT
 ; OUTPUT   - NONE
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
-            MOVE.W  410,(PLRPOSY)
-            MOVE.W  470,(PLRBOT)
-            MOVE.W  410,(PLRTOP)
-                        
-            ;MOVE.W  #PLRWIDTH/2,(PLRPOSX)
+            MOVE.W  #150,(PLRPOSX)
+            MOVE.W  0,(PLRPOSY)
+            MOVE.W  0,(PLRBOT)
+            MOVE.W  60,(PLRTOP)
+
             ;MOVE.W  #(SCRHEIGH-PLRHEIGH)/2,(PLRPOSY)
             ;MOVE.W  #PLRINIEN,(PLRENER)
             CLR.W   (PLRSCORE)
@@ -27,12 +27,7 @@ PLRUPD
 ; OUTPUT   - NONE (MODIFIES PLAYER DATA)
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
-            ;BCLR.B  #PLRUBDMG,(PLRDMG)
-            ;BEQ     .NODMG
-            ;SUB.W   #ENDMG,(PLRENER)
-            ;BGT     .NODMG
-            ;MOVE.W  #STAGOVR,(STANEXT)      ; IF LIFE IS 0, GAME OVER
-.NODMG      MOVEM.L D0,-(A7)
+            MOVEM.L D0,-(A7)
 
             BTST.B  #KBDBITF1,(KBDEDGE)
             BEQ     END
@@ -50,7 +45,7 @@ PLRUPD
 
 END         MOVEM.L (A7)+,D0
             RTS
-            
+
 *******************************************************************************
 *******************************************************************************
 INCPLRSPEED
@@ -62,16 +57,16 @@ INCPLRSPEED
                 MOVE.L  #0,COUNT            ; reset count to 0
             ENDI
                 RTS
-                
+
 *******************************************************************************
 *******************************************************************************
 MOVEPLR     *UPDATE PLAYER POSITION
-                MOVE.L          (PLRPOSY),D1          ; MOVE PLAYER Y POSITION TO D1 
+                MOVE.L          (PLRPOSY),D1          ; MOVE PLAYER Y POSITION TO D1
                 ADD.L           PLRVS,D1              ; ADD PLAYER VERTICAL SPEED TO D1
                 MOVE.L          D1,(PLRPOSY)          ; MOVE D1 TO PLRPOSY
                 ADD.L           PLRHEIGH,D1
                 MOVE.L          D1,PLRBOT               ; Move D1 to PLRB
-                
+
                 RTS
 
 *******************************************************************************
@@ -79,33 +74,33 @@ MOVEPLR     *UPDATE PLAYER POSITION
 FLOORCOL
             MOVE.L          PLRBOT,D2           ; Move PLAYER bottom to D2
             * If PLRBOTTOM > FLOORY
-            IF.L D2 <GT> FLOORY THEN                       
-      
+            IF.L D2 <GT> FLOORY THEN
+
               NEG.L           PLRVS                   ; Reverse ball vertical direction
               MOVE.L          FLOORDE,D2              ; Move deceleration of ball caused by court hit to D2
               ADD.L           D2,PLRVS                ; Decrease speed
               MOVE.L          FLOORY,D3               ; Move court top to D3
               SUB.L           #10,D3                  ; Get new ball top position
-              MOVE.L          D3,(PLRPOSY)            ; Move ball top to new position 
-               
+              MOVE.L          D3,(PLRPOSY)            ; Move ball top to new position
+
             ENDI
             RTS
-            
+
 *******************************************************************************
 *******************************************************************************
 TOPCOL
             MOVE.L          (PLRPOSY),D2           ; Move PLAYER bottom to D2
             * If PLRTOP < 0
-            IF.L D2 <LE> #0 THEN                       
-      
+            IF.L D2 <LE> #0 THEN
+
               NEG.L           PLRVS                   ; Reverse ball vertical direction
               MOVE.L          #0,D3
               ADD.L           #1,D3                   ; Get new ball top position
               MOVE.L          D3,(PLRPOSY)            ; Move ball top to new position
-               
+
             ENDI
             RTS
-            
+
 
 ; -----------------------------------------------------------------------------
 PLRPLOT
@@ -160,40 +155,40 @@ PLRPLOT
 ; -----------------------------------------------------------------------------
 DRAWTREX
 ; DRAW THE PLAYER
-; INPUT    - NONE
+; INPUT    - (PLRPOSY) Pos in Y
 ; OUTPUT   - NONE
-; MODIFIES - NONE
+; MODIFIES - D0.B, D1.W, D2.W, D3.W, D4.W, D5.W
 ; -----------------------------------------------------------------------------
-            MOVEM.L D0-D4,-(SP)
+            MOVEM.L D0-D5,-(SP)
             ;Draw t-rex with 5x5 pixels
             ;Patita izq.
-            DRAWPIX 150,455,155,470,BLACK
-            DRAWPIX 150,450,155,455,OLIVE
-            DRAWPIX 150,415,155,450,BLACK
+            PLRPIX 150,455,155,470,BLACK
+            PLRPIX 150,450,155,455,OLIVE
+            PLRPIX 150,415,155,450,BLACK
             ;Colita
-            DRAWPIX 145,450,150,455,BLACK
-            DRAWPIX 145,445,150,450,OLIVE
-            DRAWPIX 140,445,145,450,BLACK
-            DRAWPIX 140,440,150,445,BLACK
+            PLRPIX 145,450,150,455,BLACK
+            PLRPIX 145,445,150,450,OLIVE
+            PLRPIX 140,445,145,450,BLACK
+            PLRPIX 140,440,150,445,BLACK
             ;Parte sombra
-            DRAWPIX 155,415,160,460,OLIVE
+            PLRPIX 155,415,160,460,OLIVE
             ;Parte contorno
-            DRAWPIX 155,460,160,465,BLACK
-            DRAWPIX 160,455,185,460,BLACK
-            DRAWPIX 170,460,180,465,BLACK
-            DRAWPIX 170,465,175,470,BLACK
-            DRAWPIX 180,450,185,455,BLACK
-            DRAWPIX 180,445,200,450,BLACK
-            DRAWPIX 200,415,205,445,BLACK
-            DRAWPIX 155,410,200,415,BLACK
-            DRAWPIX 160,420,170,430,BLACK
+            PLRPIX 155,460,160,465,BLACK
+            PLRPIX 160,455,185,460,BLACK
+            PLRPIX 170,460,180,465,BLACK
+            PLRPIX 170,465,175,470,BLACK
+            PLRPIX 180,450,185,455,BLACK
+            PLRPIX 180,445,200,450,BLACK
+            PLRPIX 200,415,205,445,BLACK
+            PLRPIX 155,410,200,415,BLACK
+            PLRPIX 160,420,170,430,BLACK
             ;Parte interior
-            DRAWPIX 160,415,170,420,LIME
-            DRAWPIX 170,415,200,445,LIME
-            DRAWPIX 160,430,170,445,LIME
-            DRAWPIX 160,445,165,455,LIME
-            DRAWPIX 165,445,180,455,YELLOW
-            MOVEM.L (SP)+,D0-D4
+            PLRPIX 160,415,170,420,LIME
+            PLRPIX 170,415,200,445,LIME
+            PLRPIX 160,430,170,445,LIME
+            PLRPIX 160,445,165,455,LIME
+            PLRPIX 165,445,180,455,YELLOW
+            MOVEM.L (SP)+,D0-D5
             RTS
 
 
