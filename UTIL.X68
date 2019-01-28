@@ -9,7 +9,7 @@ PLRPIX      MACRO
 ;           - \2 Upper Y
 ;           - \3 Right X
 ;           - \4 Lower Y
-;           - \4 Color in format $00BBGGRR
+;           - \5 Color in format $00BBGGRR
 ;           - (PLRPOSY) Pos in Y
 ; Output    - None
 ; Modifies  - D0.B, D1.W, D2.W, D3.W, D4.W, D5.W
@@ -27,10 +27,10 @@ PLRPIX      MACRO
             ;Draw the pixel
             MOVE.W  #\1,D1
             MOVE.W  #\2,D2
-            SUB.W   D5,D2
+            ADD.W   D5,D2
             MOVE.W  #\3,D3
             MOVE.W  #\4,D4
-            SUB.W   D5,D4
+            ADD.W   D5,D4
             MOVE.B  #87,D0
             TRAP    #15
             ENDM
@@ -42,7 +42,7 @@ ENEPIX      MACRO
 ;           - \2 Upper Y
 ;           - \3 Right X
 ;           - \4 Lower Y
-;           - \4 Color in format $00BBGGRR
+;           - \5 Color in format $00BBGGRR
 ;           - (A0) Pos in X
 ; Output    - None
 ; Modifies  - D0.B, D1.W, D2.W, D3.W, D4.W, D5.W
@@ -146,12 +146,13 @@ UTLUPDS
             MOVEM.L D0,-(SP)                ; SAVE REGISTER
 
             MOVE.W  (PLRSCORE),D0
-            DIVU.W  #10,D0                  ; DIVIDE BY 10
-            CMP.W   #30,D0                  ; COMPARE IF >= 30
-            BLE     .MAX
+            ;DIVU.W  #10,D0                   ; DIVIDE BY 10
+            ADD.W   #10,D0
+            CMP.W   #50,D0                  ; COMPARE IF >= 30
+            BGE     .MAX
             MOVE.W  D0,(SPEED)              ; IF < 30, SET AS GAME SPEED
             BRA     .END
-.MAX        MOVE.W  #30,(SPEED)             ; IF >=30, SET AS 30
+.MAX        MOVE.W  #50,(SPEED)             ; IF >=30, SET AS 30
 
 .END        MOVEM.L (SP)+,D0                ; RESTORE REGISTERS
             RTS

@@ -10,11 +10,11 @@ PLRINIT
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
             MOVE.W  #150,(PLRPOSX)
-            MOVE.W  0,(PLRPOSY)
-            MOVE.W  0,(PLRBOT)
-            MOVE.W  60,(PLRTOP)
+            ;MOVE.W  #(SCRHEIGH-FLOORHGT),(PLRPOSY)
+            MOVE.W  #0,(PLRPOSY)
+            MOVE.W  #470,(PLRBOT)
+            MOVE.W  #470-PLRHEIGH,(PLRTOP)
 
-            ;MOVE.W  #(SCRHEIGH-PLRHEIGH)/2,(PLRPOSY)
             ;MOVE.W  #PLRINIEN,(PLRENER)
             CLR.W   (PLRSCORE)
             CLR.W   (PLRDMG)
@@ -27,61 +27,58 @@ PLRUPD
 ; OUTPUT   - NONE (MODIFIES PLAYER DATA)
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
-            MOVEM.L D0,-(A7)
+            MOVEM.L D0-D3,-(A7)
 
             BTST.B  #KBDBITF1,(KBDEDGE)
             BEQ     END
-            ;SUB.W   #PLRSPEED,(PLRPOSY)
 
-            ;MOVE.B  (KBDVAL),D0             ; PREPARE MOTION COMMAND BY
-            ;OR.B    (KBDEDGE),D0            ; AND UP FROM KBDEDGE.
+            MOVE.B  (KBDVAL),D0             ; PREPARE MOTION COMMAND BY
+            OR.B    (KBDEDGE),D0            ; AND UP FROM KBDEDGE.
 
             BSR     INCPLRSPEED
             BSR     MOVEPLR
             BSR     FLOORCOL
             BSR     TOPCOL
-            ;BSR     ENEMYCOL
-            ;BSR     SCORE
 
-END         MOVEM.L (A7)+,D0
+END         MOVEM.L (A7)+,D0-D3
             RTS
 
 *******************************************************************************
 *******************************************************************************
 INCPLRSPEED
-            MOVE.L  PLRAC,D2                ; move acceleration rate to D2 for comparison
-            ADD.L   #1,COUNT                ; Add 1 to the count
+            MOVE.W  PLRAC,D2                ; move acceleration rate to D2 for comparison
+            ADD.W   #1,COUNT                ; Add 1 to the count
  	*; IF COUNT = BALL ACCELERATION RATE
-            IF.L COUNT <EQ> D2 THEN
-                ADD.L   #1,PLRVS            ; add 1 to PLAYER vertical speed
-                MOVE.L  #0,COUNT            ; reset count to 0
+            IF.W COUNT <EQ> D2 THEN
+                ADD.W   #1,PLRVS            ; add 1 to PLAYER vertical speed
+                MOVE.W  #0,COUNT            ; reset count to 0
             ENDI
                 RTS
 
 *******************************************************************************
 *******************************************************************************
 MOVEPLR     *UPDATE PLAYER POSITION
-                MOVE.L          (PLRPOSY),D1          ; MOVE PLAYER Y POSITION TO D1
-                ADD.L           PLRVS,D1              ; ADD PLAYER VERTICAL SPEED TO D1
-                MOVE.L          D1,(PLRPOSY)          ; MOVE D1 TO PLRPOSY
-                ADD.L           PLRHEIGH,D1
-                MOVE.L          D1,PLRBOT               ; Move D1 to PLRB
+                MOVE.W          (PLRPOSY),D1          ; MOVE PLAYER Y POSITION TO D1
+                ADD.W           PLRVS,D1              ; ADD PLAYER VERTICAL SPEED TO D1
+                MOVE.W          D1,(PLRPOSY)          ; MOVE D1 TO PLRPOSY
+                ADD.W           #PLRHEIGH,D1
+                MOVE.W          D1,PLRBOT               ; Move D1 to PLRB
 
                 RTS
 
 *******************************************************************************
 *******************************************************************************
 FLOORCOL
-            MOVE.L          PLRBOT,D2           ; Move PLAYER bottom to D2
+            MOVE.W          PLRBOT,D2           ; Move PLAYER bottom to D2
             * If PLRBOTTOM > FLOORY
-            IF.L D2 <GT> FLOORY THEN
+            IF.W D2 <GT> FLOORY THEN
 
-              NEG.L           PLRVS                   ; Reverse ball vertical direction
-              MOVE.L          FLOORDE,D2              ; Move deceleration of ball caused by court hit to D2
-              ADD.L           D2,PLRVS                ; Decrease speed
-              MOVE.L          FLOORY,D3               ; Move court top to D3
-              SUB.L           #10,D3                  ; Get new ball top position
-              MOVE.L          D3,(PLRPOSY)            ; Move ball top to new position
+              NEG.W           PLRVS                   ; Reverse ball vertical direction
+              ;MOVE.W          FLOORDE,D2              ; Move deceleration of ball caused by court hit to D2
+              ;ADD.W           D2,PLRVS                ; Decrease speed
+              MOVE.W          FLOORY,D3               ; Move court top to D3
+              SUB.W           #PLRHEIGH,D3            ; Get new ball top position
+              MOVE.W          D3,(PLRPOSY)            ; Move ball top to new position
 
             ENDI
             RTS
@@ -89,14 +86,14 @@ FLOORCOL
 *******************************************************************************
 *******************************************************************************
 TOPCOL
-            MOVE.L          (PLRPOSY),D2           ; Move PLAYER bottom to D2
+            MOVE.W          (PLRPOSY),D2           ; Move PLAYER bottom to D2
             * If PLRTOP < 0
-            IF.L D2 <LE> #0 THEN
+            IF.W D2 <LE> #0 THEN
 
-              NEG.L           PLRVS                   ; Reverse ball vertical direction
-              MOVE.L          #0,D3
-              ADD.L           #1,D3                   ; Get new ball top position
-              MOVE.L          D3,(PLRPOSY)            ; Move ball top to new position
+              NEG.W           PLRVS                   ; Reverse ball vertical direction
+              MOVE.W          #0,D3
+              ADD.W           #1,D3                   ; Get new ball top position
+              MOVE.W          D3,(PLRPOSY)            ; Move ball top to new position
 
             ENDI
             RTS
@@ -111,33 +108,7 @@ PLRPLOT
 ; -----------------------------------------------------------------------------
             MOVEM.L D0-D4,-(A7)
 
-            ; MOVE.L  #PLRNRMCL,D1            ; DECIDE COLOR
-            BCLR.B  #PLRPBDMG,(PLRDMG)
-            BEQ     .NODMG
-            ; IF THE PLAYER IS DAMAGED PUT THE DAMAGED COLOR IN D1
-            ; Nota Lisandro: No se como haremos para cambiar el color del dinosaurio
-            MOVE.L  #PLRDMGCL,D1
-            ; COLOR BY BURGUERA
-.NODMG      ; MOVE.B  #80,D0
-            ; TRAP    #15
-            ; ADDQ.B  #1,D0
-            ; TRAP    #15
-            ; DRAW THE PLAYER BY BURGUERA
-            ; MOVE.W  (PLRPOSX),D1
-            ; MOVE.W  (PLRPOSY),D2
-            ; MOVE.W  D1,D3
-            ; MOVE.W  D2,D4
-            ; ADD.W   #PLRWIDTH,D3            ; D3 = X + PLRWIDTH
-            ; ADD.W   #PLRHEIGH,D4            ; D4 = Y + PLRHEIGH
-            ; MOVE.B  #88,D0
-            ; TRAP    #15
-            ; SUB.W   #PLRWIDTH/2,D3
-            ; MOVE.B  #87,D0
-            ; TRAP    #15
-
-            ; DRAW THE PLAYER BY US
             JSR     DRAWTREX
-
 
             UTLSPEN #OLIVE                    ; PLOT THE SCORE TEXT
             UTLSFIL #OLIVE
@@ -162,39 +133,34 @@ DRAWTREX
             MOVEM.L D0-D5,-(SP)
             ;Draw t-rex with 5x5 pixels
             ;Patita izq.
-            PLRPIX 150,455,155,470,BLACK
-            PLRPIX 150,450,155,455,OLIVE
-            PLRPIX 150,415,155,450,BLACK
+            PLRPIX 150,-15,155,0,BLACK
+            PLRPIX 150,-20,155,-15,OLIVE
+            PLRPIX 150,-55,155,-20,BLACK
             ;Colita
-            PLRPIX 145,450,150,455,BLACK
-            PLRPIX 145,445,150,450,OLIVE
-            PLRPIX 140,445,145,450,BLACK
-            PLRPIX 140,440,150,445,BLACK
+            PLRPIX 145,-20,150,-15,BLACK
+            PLRPIX 145,-25,150,-20,OLIVE
+            PLRPIX 140,-25,145,-20,BLACK
+            PLRPIX 140,-30,150,-25,BLACK
             ;Parte sombra
-            PLRPIX 155,415,160,460,OLIVE
+            PLRPIX 155,-55,160,-10,OLIVE
             ;Parte contorno
-            PLRPIX 155,460,160,465,BLACK
-            PLRPIX 160,455,185,460,BLACK
-            PLRPIX 170,460,180,465,BLACK
-            PLRPIX 170,465,175,470,BLACK
-            PLRPIX 180,450,185,455,BLACK
-            PLRPIX 180,445,200,450,BLACK
-            PLRPIX 200,415,205,445,BLACK
-            PLRPIX 155,410,200,415,BLACK
-            PLRPIX 160,420,170,430,BLACK
+            PLRPIX 155,-10,160,-5,BLACK
+            PLRPIX 160,-15,185,-10,BLACK
+            PLRPIX 170,-10,180,-5,BLACK
+            PLRPIX 170,-5,175,0,BLACK
+            PLRPIX 180,-20,185,-15,BLACK
+            PLRPIX 180,-25,200,-20,BLACK
+            PLRPIX 200,-55,205,-25,BLACK
+            PLRPIX 155,-60,200,-55,BLACK
+            PLRPIX 160,-50,170,-40,BLACK
             ;Parte interior
-            PLRPIX 160,415,170,420,LIME
-            PLRPIX 170,415,200,445,LIME
-            PLRPIX 160,430,170,445,LIME
-            PLRPIX 160,445,165,455,LIME
-            PLRPIX 165,445,180,455,YELLOW
+            PLRPIX 160,-55,170,-50,LIME
+            PLRPIX 170,-55,200,-25,LIME
+            PLRPIX 160,-40,170,-25,LIME
+            PLRPIX 160,-25,165,-15,LIME
+            PLRPIX 165,-25,180,-15,YELLOW
             MOVEM.L (SP)+,D0-D5
             RTS
-
-
-
-
-
 
 
 *~Font name~Courier New~

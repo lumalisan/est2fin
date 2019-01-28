@@ -27,9 +27,9 @@ PLRENER     DS.W    1                       ; PLAYER ENERGY
 PLRSCORE    DS.W    1                       ; PLAYER SCORE
 PLRDMG      DS.B    1                       ; BIT0: UPD DAMAGE, BIT1 PLOT DMG
             DS.W    0
-            
+
 ; --- FLOOR RELATED VARIABLES ------------------------------------------------
-          
+
 FLOORX      DC.W    0                       ; Court x postion
 FLOORY      DC.W    470                     ; Court y postion
 FLOORW      DC.W    640                     ; Court width
@@ -39,7 +39,7 @@ FLOORDE     DC.W    0                       ; Deceleration caused by court hit
 ; --- UTILITY VARIABLES ------------------------------------------------------
 
 UTLRNDIX    DS.B    1                       ; NEXT INDEX TO RANDOM NUMBER
-SPEED       DC.W    0                       ; GAME SPEED: CONTROLS DIFFICULTY
+SPEED       DC.W    10                      ; GAME SPEED: CONTROLS DIFFICULTY
             DS.W    0                       ;             AND SCROLL
 
 

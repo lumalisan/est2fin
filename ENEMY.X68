@@ -16,11 +16,9 @@ ENINIT
             MOVE.W  D0,-(A7)
             MOVE.W  #SCRWIDTH,(A0)              ; X POSITION EN (A0)
             MOVE.W  #(SCRHEIGH-FLOORHGT),2(A0)  ; Y POSITION EN 2(A0)
-            JSR     UTLRAND
-            AND.W   #$000F,D0                  ; X SPEED (50*GAME SPEED)
-            MOVE.W  #50,D0
-            MULU.W  (SPEED),D0
-            MOVE.W  D0,4(A0)                   ; X SPEED EN 4(A0)
+            ;JSR     UTLRAND
+            ;AND.W   #$000F,D0                   ; X SPEED (PSEUDO-RANDOM)
+            ;MOVE.W  (SPEED),4(A0)                ; X SPEED EN 4(A0)
             MOVE.W  (A7)+,D0
             RTS
 
@@ -32,18 +30,18 @@ ENUPD
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
             MOVE.W  D0,-(A7)
-            ;MOVE.W  4(A0),D0                ; UPDATE COORDINATES IN X
-            ;SUB.W   D0,(A0)
-            SUB.W   #2,(A0)
-            CMP.W   #-ENSIZE,(A0)           ; CHECK BOUNCE
+            MOVE.W  (SPEED),D0                ; UPDATE COORDINATES IN X
+            SUB.W   D0,(A0)
+            ;SUB.W   #10,(A0)
+            CMP.W   #-ENEHEIGH,(A0)           ; KILL ENEMY WHEN OUT OF SCREEN
             BLT     .KILL
 .COLPLAY    MOVE.W  (A0),D0                 ;X POS EN D0
             MOVE.W  2(A0),D1                ;Y POS EN D1
-            MOVE.W  #ENSIZE,D4
-            MOVE.W  D4,D6
             MOVE.W  (PLRPOSX),D2
             MOVE.W  (PLRPOSY),D3
+            MOVE.W  #ENEWIDTH,D4
             MOVE.W  #PLRWIDTH,D5
+            MOVE.W  #ENEHEIGH,D6
             MOVE.W  #PLRHEIGH,D7
             JSR     UTLCHCOL
             TST.B   D0
@@ -53,6 +51,9 @@ ENUPD
 .END        MOVE.W  (A7)+,D0
             RTS
 .KILL       JSR     AGLKILL
+            ;SUMAR UNO A SCORE BY FREE SYNC
+            ADDQ.W  #1,(PLRSCORE)
+            JSR     UTLUPDS
             BRA     .COLPLAY
 
 ; -----------------------------------------------------------------------------

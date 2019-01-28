@@ -31,7 +31,8 @@ PLRPBDMG    EQU     1                       ; PLOT DAMAGE BIT
 
 ; --- ENEMY RELATED CONSTANTS -------------------------------------------------
 
-ENSIZE      EQU     60                      ; ENEMY DIAMETER
+ENEHEIGH    EQU     90                      ; ENEMY HEIGHT
+ENEWIDTH    EQU     60                      ; ENEMY WIDTH
 ENPENCL     EQU     $00FFFFFF               ; ENEMY PEN COLOR
 ENFILCL     EQU     $0000FF00               ; ENEMY FIL COLOR
 ENDMG       EQU     10                      ; ENEMY DAMAGE TO PLAYER
