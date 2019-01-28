@@ -7,9 +7,9 @@ I've come to Assemble you again
 Some people do fucking Crysis and DOOM in 68K... We do Google Chrome's dinosaur.
 
 # STUFF LEFT TO DO:
-  - ~~Create new painting macros/subroutines for: enemies, environment~~ YET.
-  - ~~Create score system~~ YET.
-  - ~~Create start and game over screen~~ YET.
+  - ~~Create new painting macros/subroutines for: enemies, environment~~ YEET.
+  - ~~Create score system~~ YEET.
+  - ~~Create start and game over screen~~ YEET.
   - Implement background parallax :sunrise_over_mountains:
   - FPS Counter :six::zero:
   - Create music and SFX :collision:
