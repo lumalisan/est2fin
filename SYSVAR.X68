@@ -24,12 +24,15 @@ SCRCYCCT    DS.B    1                       ; CYCLE COUNTER
 DISPADDR    DS.L    1                       ; 7 SEGMENT DISPLAY ADRESS
 SWADDR      DS.L    1                       ; SWITCHES ADRESS
 CYCLES      DS.L    1                       ; CYCLES COUNTER
+PRESSED     DS.B    1                       ; SHOWS IF SWITCH HAS BEEN PRESSED
+            DS.W    0
 
 ; --- DYNAMIC MEMORY VARIABLES ------------------------------------------------
 
             ORG     (*+DMMBSIZE-1)&-DMMBSIZE ; ALIGN TO DMMBSIZE
 DMMDATA     DS.B    DMMBSIZE*DMMBNUM        ; DYNAMIC MEMORY ALLOCATION SPACE
             DS.W    0                       ; JUST IN CASE (SIZE IS POW OF TWO)
+
 
 
 *~Font name~Courier New~

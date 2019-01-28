@@ -45,6 +45,7 @@ HWINIT
             MOVE.L D1,(SWADDR)              ; SAVE SWITCHES ADDRESS
             
             CLR.L   (CYCLES)                ; CLEAR CYCLES COUNTER
+            CLR.B   (PRESSED)               ; CLEAR BUTTON PRESS VARIABLE
             
             MOVEM.L (SP)+, D0-D1
             RTS
@@ -367,6 +368,7 @@ DMMFREE
             CLR.W   (A0)
             MOVEM.L (A7)+,D0/A0
             RTS
+
 
 
 

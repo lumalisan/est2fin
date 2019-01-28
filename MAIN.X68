@@ -28,9 +28,16 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM CODE
 
 ; --- UPDATE ------------------------------------------------------------------
 
-.LOOP       TRAP    #KBDTRAP                ; READ KEYBOARD
+.LOOP       TST.B   (PRESSED)
+            BEQ     .CONT
+            JSR     UTLGETC
+           
+.CONT       TRAP    #KBDTRAP                ; READ KEYBOARD
             JSR     STAUPD                  ; UPDATE DEPENDING ON THE STATE
-            ; TO DO: CALL GAME UPDATE CODE HERE
+            TST.B   (PRESSED)
+            BEQ     .WINT
+            JSR     UTLCOUNT
+            BRA     .WINT            
 
 ; --- WAIT SYNCH --------------------------------------------------------------
 
@@ -40,9 +47,16 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM CODE
 
 ; --- PLOT --------------------------------------------------------------------
 
-            ; TO DO: CALL GAME PLOT CODE HERE
-            JSR     STAPLOT                 ; PLOT DEPENDING ON THE STATE
+            TST.B   (PRESSED)
+            BNE     .CONT2
+            JSR     UTLGETC
+            
+.CONT2      JSR     STAPLOT                 ; PLOT DEPENDING ON THE STATE
             TRAP    #SCRTRAP                ; SHOW GRAPHICS
+            TST.B   (PRESSED)
+            BNE     .LOOP
+            JSR     UTLCOUNT
+            
             BRA     .LOOP
             SIMHALT
 
@@ -51,6 +65,7 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM CODE
             INCLUDE "SYSVAR.X68"
             INCLUDE "VAR.X68"
             END    START
+
 
 
 

@@ -1,0 +1,133 @@
+00000000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 20/01/2019 19.10.19
+
+00000000                             1  ; =============================================================================
+00000000                             2  ; SYSTEM CONSTANTS
+00000000                             3  ; =============================================================================
+00000000                             4  
+00000000                             5  ; --- TRAP RELATED CONSTANTS --------------------------------------------------
+00000000                             6  
+00000000  =00000000                  7  KBDTRAP     EQU     0                       ; KEYBOARD UPDATE TRAP
+00000000  =00000001                  8  SCRTRAP     EQU     1                       ; SCREEN REFRESH TRAP
+00000000                             9  
+00000000                            10  ; --- KEY CODES (EASy68K)
+00000000                            11  
+00000000  =00000020                 12  KBDCHRSP    EQU     $20                     ; SPACE KEY
+00000000  =0000004D                 13  KBDCHRMK    EQU     'M'                     ; M KEY
+00000000  =00000010                 14  KBDCHRSH    EQU     $10                     ; SHIFT KEY
+00000000  =00000050                 15  KBDCHRPK    EQU     'P'                     ; P KEY
+00000000  =00000025                 16  KBDCHRLF    EQU     $25                     ; LEFT KEY
+00000000  =00000026                 17  KBDCHRUP    EQU     $26                     ; UP KEY
+00000000  =00000027                 18  KBDCHRRT    EQU     $27                     ; RIGHT KEY
+00000000  =00000028                 19  KBDCHRDN    EQU     $28                     ; DOWN KEY
+00000000                            20  
+00000000                            21  ; --- KEYBOARD MAPPING --------------------------------------------------------
+00000000                            22  
+00000000  =00000025                 23  KBDLEFT     EQU     KBDCHRLF                ; LEFT BUTTON
+00000000  =00000026                 24  KBDUP       EQU     KBDCHRUP                ; UP BUTTON
+00000000  =00000027                 25  KBDRIGHT    EQU     KBDCHRRT                ; RIGHT BUTTON
+00000000  =00000028                 26  KBDDOWN     EQU     KBDCHRDN                ; DOWN BUTTON
+00000000  =00000020                 27  KBDFIRE1    EQU     KBDCHRSP                ; FIRE 1 BUTTON
+00000000  =0000004D                 28  KBDFIRE2    EQU     KBDCHRMK                ; FIRE 2 BUTTON
+00000000  =00000010                 29  KBDFIRE3    EQU     KBDCHRSH                ; FIRE 3 BUTTON
+00000000  =00000050                 30  KBDPAUSE    EQU     KBDCHRPK                ; PAUSE BUTTON
+00000000                            31  
+00000000                            32  ; --- KEYBOARD BITFIELD MASKS -------------------------------------------------
+00000000                            33  ; CONVENIENCE CONSTANTS TO ACCESS THE FOLLOWING BIT-FIELD.
+00000000                            34  ; THIS BIT-FIELD IS USED BY SYSTEM VARS (KBDVAL) AND (KBDEDGE).
+00000000                            35  ; +---+---+---+---+---+---+---+---+
+00000000                            36  ; | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
+00000000                            37  ; +---+---+---+---+---+---+---+---+
+00000000                            38  ;   |   |   |   |   |   |   |   |
+00000000                            39  ;   |   |   |   |   |   |   |   +---------- LEFT BUTTON
+00000000                            40  ;   |   |   |   |   |   |   +-------------- UP BUTTON
+00000000                            41  ;   |   |   |   |   |   +------------------ RIGHT BUTTON
+00000000                            42  ;   |   |   |   |   +---------------------- DOWN BUTTON
+00000000                            43  ;   |   |   |   +-------------------------- FIRE 1 BUTTON
+00000000                            44  ;   |   |   +------------------------------ FIRE 2 BUTTON
+00000000                            45  ;   |   +---------------------------------- FIRE 3 BUTTON
+00000000                            46  ;   +-------------------------------------- PAUSE BUTTON
+00000000                            47  
+00000000  =00000001                 48  KBDMSKLF    EQU     %00000001
+00000000  =00000002                 49  KBDMSKUP    EQU     %00000010
+00000000  =00000004                 50  KBDMSKRT    EQU     %00000100
+00000000  =00000008                 51  KBDMSKDN    EQU     %00001000
+00000000  =00000010                 52  KBDMSKF1    EQU     %00010000
+00000000  =00000020                 53  KBDMSKF2    EQU     %00100000
+00000000  =00000040                 54  KBDMSKF3    EQU     %01000000
+00000000  =00000080                 55  KBDMSKPS    EQU     %10000000
+00000000                            56  
+00000000                            57  ; --- KEYBOARD BITFIELD POSITIONS ---------------------------------------------
+00000000                            58  
+00000000  =00000000                 59  KBDBITLF    EQU     0
+00000000  =00000001                 60  KBDBITUP    EQU     1
+00000000  =00000002                 61  KBDBITRT    EQU     2
+00000000  =00000003                 62  KBDBITDN    EQU     3
+00000000  =00000004                 63  KBDBITF1    EQU     4
+00000000  =00000005                 64  KBDBITF2    EQU     5
+00000000  =00000006                 65  KBDBITF3    EQU     6
+00000000  =00000007                 66  KBDBITPS    EQU     7
+00000000                            67  
+00000000                            68  ; --- SCREEN RELATED CONSTANTS ------------------------------------------------
+00000000                            69  
+00000000  =00000280                 70  SCRWIDTH    EQU     640                     ; SCREEN WIDTH (PIXELS)
+00000000  =000001E0                 71  SCRHEIGH    EQU     480                     ; SCREEN HEIGHT (PIXELS)
+00000000  =00000001                 72  SCRIRQ      EQU     1                       ; SCREEN INTERRUPT NUMBER
+00000000  =00000014                 73  SCRTIM      EQU     20                      ; SCREEN TIMER (MS)
+00000000                            74  
+00000000                            75  ; --- DYNAMIC MEMORY CONSTANTS ------------------------------------------------
+00000000                            76  
+00000000  =00000040                 77  DMMBSIZE    EQU     64                      ; BLOCK SIZE (BYTES). POWER OF TWO
+00000000  =00000032                 78  DMMBNUM     EQU     50                      ; NUMBER OF BLOCKS
+00000000  =00000000                 79  DMMSYSID    EQU     0                       ; SYSTEM OWNER ID (MUST BE 0)
+Line 80 WARNING: END directive missing, starting address not set
+
+No errors detected
+1 warning generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+DMMBNUM             32
+DMMBSIZE            40
+DMMSYSID            0
+KBDBITDN            3
+KBDBITF1            4
+KBDBITF2            5
+KBDBITF3            6
+KBDBITLF            0
+KBDBITPS            7
+KBDBITRT            2
+KBDBITUP            1
+KBDCHRDN            28
+KBDCHRLF            25
+KBDCHRMK            4D
+KBDCHRPK            50
+KBDCHRRT            27
+KBDCHRSH            10
+KBDCHRSP            20
+KBDCHRUP            26
+KBDDOWN             28
+KBDFIRE1            20
+KBDFIRE2            4D
+KBDFIRE3            10
+KBDLEFT             25
+KBDMSKDN            8
+KBDMSKF1            10
+KBDMSKF2            20
+KBDMSKF3            40
+KBDMSKLF            1
+KBDMSKPS            80
+KBDMSKRT            4
+KBDMSKUP            2
+KBDPAUSE            50
+KBDRIGHT            27
+KBDTRAP             0
+KBDUP               26
+SCRHEIGH            1E0
+SCRIRQ              1
+SCRTIM              14
+SCRTRAP             1
+SCRWIDTH            280
