@@ -17,7 +17,7 @@ PLRINIT
 
             ;MOVE.W  #PLRINIEN,(PLRENER)
             CLR.W   (PLRSCORE)
-            CLR.W   (PLRDMG)
+            ;CLR.W   (PLRDMG)
             RTS
 
 ; -----------------------------------------------------------------------------
@@ -29,34 +29,31 @@ PLRUPD
 ; -----------------------------------------------------------------------------
             MOVEM.L D0-D3,-(A7)
 
-            ;BTST.B  #KBDBITF1,(KBDEDGE)
-            BTST.B  #KBDBITF1,(KBDVAL)
-            BEQ     END
+            TST.B   (PLRJUMP)
+            BNE     .JUMP
 
-            MOVE.B  (KBDVAL),D0             ; PREPARE MOTION COMMAND BY
-            OR.B    (KBDEDGE),D0            ; AND UP FROM KBDEDGE.
+            BTST.B  #KBDBITF1,(KBDEDGE)
+            BEQ     .END
 
-            MOVE.W  #STAJUMP,(STANEXT)      ; NI IDEA XDDD, LA IDEA ES QUE CUANDO SALTES SE PASE A UN
-                                            ; ESTADO DE SALTO Y CUANDO TOQUE EL SUELO VUELVA AL ESTADO NORMAL
-                                            
-            BSR     INCPLRSPEED
+            MOVE.B  #1,(PLRJUMP)
+
+.JUMP       BSR     INCPLRSPEED
             BSR     MOVEPLR
             BSR     FLOORCOL
-            ;BSR     TOPCOL
 
-END         MOVEM.L (A7)+,D0-D3
+.END        MOVEM.L (A7)+,D0-D3
             RTS
 
 *******************************************************************************
 *******************************************************************************
 INCPLRSPEED
-            MOVE.W  PLRAC,D2                ; move acceleration rate to D2 for comparison
-            ADD.W   #1,COUNT                ; Add 1 to the count
+            ;MOVE.W  PLRAC,D2                ; move acceleration rate to D2 for comparison
+            ;ADD.W   #1,COUNT                ; Add 1 to the count
  	*; IF COUNT = BALL ACCELERATION RATE
-            IF.W COUNT <EQ> D2 THEN
+            ;IF.W COUNT <EQ> D2 THEN
                 ADD.W   #1,PLRVS            ; add 1 to PLAYER vertical speed
-                MOVE.W  #0,COUNT            ; reset count to 0
-            ENDI
+                ;MOVE.W  #0,COUNT            ; reset count to 0
+            ;ENDI
                 RTS
 
 *******************************************************************************
@@ -75,26 +72,14 @@ MOVEPLR     *UPDATE PLAYER POSITION
 FLOORCOL
             MOVE.W          (PLRPOSY),D2           ; Move PLAYER bottom to D2
             * If PLRPOSY > FLOORY
-            IF.W D2 <GT> FLOORY THEN
-
+            IF.W D2 <GE> FLOORY THEN
+            
+              MOVE.W          #15,(PLRVS)
               NEG.W           PLRVS                   ; Reverse ball vertical direction
               MOVE.W          FLOORY,D3               ; Move court top to D3
               ;SUB.W           #1,D3                   ; Get new ball top position
               MOVE.W          D3,(PLRPOSY)            ; Move ball top to new position
-
-            ENDI
-            RTS
-
-*******************************************************************************
-*******************************************************************************
-TOPCOL
-            MOVE.W          (PLRPOSY),D2           ; Move PLAYER bottom to D2
-            SUB.W           #PLRHEIGH,D2
-            * If PLRTOP < 320
-            IF.W D2 <LT> #0 THEN
-
-              NEG.W           PLRVS                   ; Reverse ball vertical direction
-              MOVE.W          #0,(PLRPOSY)            ; Move ball top to new position
+              CLR.B           (PLRJUMP)
 
             ENDI
             RTS
@@ -162,6 +147,7 @@ DRAWTREX
             PLRPIX 165,-25,180,-15,YELLOW
             MOVEM.L (SP)+,D0-D5
             RTS
+
 
 
 *~Font name~Courier New~
