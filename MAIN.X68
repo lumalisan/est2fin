@@ -19,6 +19,7 @@
             INCLUDE "SPAWNER.X68"           ; SPAWNER (CREATES ENEMIES)
             INCLUDE "STATES.X68"            ; GAME STATES MANAGEMENT
             INCLUDE "AUDIO.X68"             ; AUDIO MANAGEMENT
+            INCLUDE "DRAWPIXELS.X68"        ; DRAW MANAGEMENT
             ; TO DO: PUT YOUR GAME-RELATED INCLUDES HERE
 
 ; --- INITIALIZE --------------------------------------------------------------
@@ -51,10 +52,11 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM CODE
 
             INCLUDE "SYSVAR.X68"
             INCLUDE "VAR.X68"
+GAMEOVERIMG
+    INCBIN "GAMEOVER.BMP"
+TITLESCREEN
+    INCBIN "TITLE.BMP"
             END    START
-
-
-
 
 
 

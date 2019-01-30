@@ -79,7 +79,6 @@ GREEN       EQU     $00008000
 RED         EQU     $000000FF
 BROWN       EQU     $00424554
 
-
 *~Font name~Courier New~
 *~Font size~10~
 *~Tab type~1~

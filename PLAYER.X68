@@ -2,6 +2,8 @@
 ; PLAYER MANAGEMENT
 ; =============================================================================
 
+
+
 ; -----------------------------------------------------------------------------
 PLRINIT
 ; INITIALIZES THE PLAYER
@@ -31,6 +33,9 @@ PLRUPD
             BNE     .JUMP
             BTST.B  #KBDBITF1,(KBDEDGE)
             BEQ     .END
+            MOVE.B  #0,D1
+            MOVE.B  #75,D0
+            TRAP    #15
             MOVE.B  #1,(PLRJUMP)              ;
 .JUMP       BSR     PLRSPINC
             BSR     PLRMOVE
