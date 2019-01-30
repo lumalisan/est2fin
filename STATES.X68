@@ -180,12 +180,33 @@ STAGOVRP
             MOVE.L  #3,D2
             TRAP    #15
 
-            UTLLOCT GOVSTRX,GOVSTRY
-            UTLSPEN #GOVSTRC
-            UTLSFIL #$00000000
-            LEA     .GOVSTR,A1
-            MOVE.B  #14,D0
-            TRAP    #15
+            ;UTLLOCT GOVSTRX,GOVSTRY
+            ;UTLSPEN #GOVSTRC
+            ;UTLSFIL #$00000000
+            ;LEA     .GOVSTR,A1
+            ;MOVE.B  #14,D0
+            ;TRAP    #15
+
+    *LOAD IN THE LOADING IMAGE FIRST AND USE THE DRAW ROUTINE
+            ;LEA     GAMEOVERIMG, A0
+            ;MOVE.L  #320, D1        ; WIDTH IN D1
+            ;MOVE.L  #288, D2        ; HEIGHT IN D2
+            ;MOVE.L  #200, D3        ; BEGINNING PRINT LOCATION FOR X AXIS ON STACK
+            ;MOVE.L  #100, D4        ; BEGINNING PRINT LOCATION FOR Y AXIS ON STACK
+            ;MOVE.L  #0, D5          ; TOP LEFT X TO DRAW IMAGE
+            ;MOVE.L  #0, D6          ; TOP LEFT Y TO DRAW IMAGE
+            ;JSR     DRAWIMAGE
+
+            *DRAW THE TITLE SCREEN AND CALL THE DRAW ROUTINE
+            LEA     TITLESCREEN, A0
+            MOVE.L  #700, D1
+            MOVE.L  #600, D2
+            MOVE.L  #0, D3
+            MOVE.L  #0, D4
+            MOVE.L  #0, D5
+            MOVE.L  #0, D6
+            JSR     DRAWIMAGE
+
             MOVEM.L (A7)+,A1/D0-D1
             RTS
 
