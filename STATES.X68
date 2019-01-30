@@ -116,6 +116,8 @@ STAINTRU
 ; OUTPUT   - NONE
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
+            BTST.B  #KBDBITF1,(KBDVAL)
+            BEQ     .END
             BTST.B  #KBDBITF1,(KBDEDGE)
             BEQ     .END
             MOVE.W  #STAPLAY,(STANEXT)
@@ -169,6 +171,9 @@ STAGOVRP
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
             MOVEM.L A1/D0-D1,-(A7)
+            MOVE.B  #76,D0
+            MOVE.L  #3,D2
+            TRAP    #15                       ; STOP ALL SOUNDS
             UTLLOCT GOVSTRX,GOVSTRY
             UTLSPEN #GOVSTRC
             UTLSFIL #$00000000

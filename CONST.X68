@@ -29,6 +29,12 @@ PLRPMDMG    EQU     %00000010               ; PLOT DAMAGE MASK
 PLRUBDMG    EQU     0                       ; UPDATE DAMAGE BIT
 PLRPBDMG    EQU     1                       ; PLOT DAMAGE BIT
 
+; --- AUDIO RELATED CONSTANTS ------------------------------------------------
+
+ID0         EQU     0
+ID1         EQU     1
+ID2         EQU     2
+
 ; --- ENEMY RELATED CONSTANTS -------------------------------------------------
 
 ENEHEIGH    EQU     90                      ; ENEMY HEIGHT

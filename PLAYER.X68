@@ -12,6 +12,8 @@ PLRINIT
             MOVE.W  #150,(PLRPOSX)
             MOVE.W  #(SCRHEIGH-FLOORHGT),(PLRPOSY)
             CLR.W   (PLRSCORE)
+            MOVE.B  #ID0|%10000000,D1    ; PLAY MAIN MUSIC1 LOOP
+            JSR     AUDPLAY
             RTS
 
 ; -----------------------------------------------------------------------------

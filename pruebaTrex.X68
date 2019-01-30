@@ -38,7 +38,7 @@ UTPLRPIX     MACRO
             ENDM
 
 ; -----------------------------------------------------------------------------
-DRAWSQ      MACRO
+UTDRAWSQ      MACRO
 ; Draw a rectangle on the specified coordenates
 ; Input     - \1 Left X
 ;           - \2 Upper Y
@@ -82,7 +82,7 @@ TAKEINPUT:
             TRAP    #15
             BTST.L  #24,D1
             IF <NE> THEN                    ;if ' '
-              DRAWSQ  0,0,640,480,WHITE
+              UTDRAWSQ  0,0,640,480,WHITE
               BSR     DRAWFLOOR
               ADD.W   #10,D5
             ENDI
@@ -184,7 +184,7 @@ DRAWCACT
 DRAWFLOOR:
             MOVEM.L D0-D4,-(SP)
             ;Draw the floor rectangle
-            DRAWSQ  -1,470,640,480,BLACK
+            UTDRAWSQ  -1,470,640,480,BLACK
             MOVEM.L (SP)+,D0-D4
             RTS
 
@@ -204,7 +204,7 @@ START:
             MOVE.B  #92, D0
             TRAP    #15
             ;Set the screen color to white
-            DRAWSQ  0,0,640,480,WHITE
+            UTDRAWSQ  0,0,640,480,WHITE
             ;Draw the floor
             BSR     DRAWFLOOR
 .GAMELOOP

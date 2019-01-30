@@ -13,13 +13,10 @@ ENINIT
 ; OUTPUT   - NONE
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
-            MOVE.W  D0,-(A7)
+            MOVE.L  D0,-(A7)
             MOVE.W  #SCRWIDTH,(A0)              ; X POSITION EN (A0)
             MOVE.W  #(SCRHEIGH-FLOORHGT),2(A0)  ; Y POSITION EN 2(A0)
-            ;JSR     UTLRAND
-            ;AND.W   #$000F,D0                   ; X SPEED (PSEUDO-RANDOM)
-            ;MOVE.W  (SPEED),4(A0)                ; X SPEED EN 4(A0)
-            MOVE.W  (A7)+,D0
+            MOVE.L  (A7)+,D0
             RTS
 
 ; -----------------------------------------------------------------------------
@@ -29,14 +26,14 @@ ENUPD
 ; OUTPUT   - NONE
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
-            MOVE.W  D0,-(A7)
+            MOVE.L  D0,-(A7)
             MOVE.W  (SPEED),D0                ; UPDATE COORDINATES IN X
             SUB.W   D0,(A0)
             ;SUB.W   #10,(A0)
             CMP.W   #-ENEHEIGH,(A0)           ; KILL ENEMY WHEN OUT OF SCREEN
             BLT     .KILL
-.COLPLAY    MOVE.W  (A0),D0                 ;X POS EN D0
-            MOVE.W  2(A0),D1                ;Y POS EN D1
+.COLPLAY    MOVE.W  (A0),D0                   ;X POS EN D0
+            MOVE.W  2(A0),D1                  ;Y POS EN D1
             MOVE.W  (PLRPOSX),D2
             MOVE.W  (PLRPOSY),D3
             MOVE.W  #ENEWIDTH,D4
@@ -45,10 +42,10 @@ ENUPD
             MOVE.W  #PLRHEIGH,D7
             JSR     UTLCHCOL
             TST.B   D0
-            BEQ     .END                    ;SI NO HAY COLISION NO HACEMOS NADA
-            MOVE.W  #STAGOVR,(STANEXT)      ; IF COLLISION, GAME OVER
+            BEQ     .END                   ; SI NO HAY COLISION NO HACEMOS NADA
+            MOVE.W  #STAGOVR,(STANEXT)        ; IF COLLISION, GAME OVER
 
-.END        MOVE.W  (A7)+,D0
+.END        MOVE.L  (A7)+,D0
             RTS
 .KILL       JSR     AGLKILL
             ;SUMAR UNO A SCORE BY FREE SYNC
@@ -63,7 +60,19 @@ ENPLOT
 ; OUTPUT   - NONE
 ; MODIFIES - D0.B, D1.W, D2.W, D3.W, D4.W, D5.W
 ; -----------------------------------------------------------------------------
-            MOVEM.W D0-D5,-(A7)
+            MOVEM.L D0-D5,-(A7)
+            BSR     CACTDRAW
+            ;BSR     BATDRAW
+            MOVEM.L (A7)+,D0-D5
+            RTS
+
+; -----------------------------------------------------------------------------
+CACTDRAW
+; DRAWS A CACT
+; INPUT    - (A0) POS IN X
+; OUTPUT   - NONE
+; MODIFIES - D0.B, D1.W, D2.W, D3.W, D4.W, D5.W
+; -----------------------------------------------------------------------------
             UTENEPIX 0,390,5,420,GREEN
             UTENEPIX 5,420,10,425,GREEN
             UTENEPIX 10,425,15,430,GREEN
@@ -90,7 +99,21 @@ ENPLOT
             UTENEPIX 50,395,55,400,GREEN
             UTENEPIX 45,400,50,420,GREEN
             UTENEPIX 45,420,50,430,OLIVE
-            MOVEM.W (A7)+,D0-D5
+            RTS
+
+; -----------------------------------------------------------------------------
+BATDRAW
+; DRAWS A BAT
+; INPUT    - (A0) POS IN X
+; OUTPUT   - NONE
+; MODIFIES - D0.B, D1.W, D2.W, D3.W, D4.W, D5.W
+; -----------------------------------------------------------------------------
+            UTENEPIX 0,390,5,400,BLACK
+            UTENEPIX 5,385,10,390,BLACK
+            UTENEPIX 10,390,15,395,BLACK
+            UTENEPIX 15,395,20,400,BLACK
+            UTENEPIX 5,400,20,405,BLACK
+            UTENEPIX 15,390,55,400,BLACK
             RTS
 
 ; -----------------------------------------------------------------------------

@@ -18,6 +18,7 @@
             INCLUDE "ENEMY.X68"             ; ENEMY AGENT MANAGEMENT
             INCLUDE "SPAWNER.X68"           ; SPAWNER (CREATES ENEMIES)
             INCLUDE "STATES.X68"            ; GAME STATES MANAGEMENT
+            INCLUDE "AUDIO.X68"             ; AUDIO MANAGEMENT
             ; TO DO: PUT YOUR GAME-RELATED INCLUDES HERE
 
 ; --- INITIALIZE --------------------------------------------------------------
@@ -51,6 +52,7 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM CODE
             INCLUDE "SYSVAR.X68"
             INCLUDE "VAR.X68"
             END    START
+
 
 
 

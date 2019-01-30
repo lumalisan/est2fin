@@ -13,6 +13,7 @@ SYSINIT
             JSR     KBDINIT                 ; INIT KEYBOARD
             JSR     SCRINIT                 ; INIT SCREEN
             JSR     DMMINIT                 ; INIT DYNAMIC MEMORY
+            JSR     AUDINIT                 ; INIT AUDIO
             ANDI.W  #$DFFF,SR               ; SWITCH TO USER
             MOVE.L  A0,-(A7)                ; PUT RETURN ADDRESS
             RTS
@@ -65,7 +66,7 @@ SCRINIT
 
             MOVE.B  #92,D0
             MOVE.B  #17,D1
-            TRAP    #15                     ;AHORA DIBUJAMOS EN EL HIDD. BUFF.
+            TRAP    #15
 
             ; - CLEAR HIDDEN BUFFER
 
@@ -118,8 +119,6 @@ SCRUPD
 ; OUTPUT   - NONE
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
-            ; TO DO: UPDATE DOUBLE BUFFER AND CLEAR HIDDEN BUFFER
-
             MOVEM.L D0-D1,-(SP)             ; SAVE REGISTERS
 
             MOVE.B  #94,D0                  ; DISPLAY HIDDEN BUFFER
@@ -158,8 +157,6 @@ KBDREAD
 ; OUTPUT   - (KBDVAL) AND (KBDEDGE)
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
-            ; TO DO: UPDATE KBDVAL AND KBDEDGE
-
             MOVEM.L D0-D3,-(SP)             ; SAVE REGISTERS
 
             CLR.L   D2                      ; USE D2 TO STORE BITS

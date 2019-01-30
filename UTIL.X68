@@ -69,7 +69,7 @@ UTENEPIX      MACRO
             ENDM
 
 ; -----------------------------------------------------------------------------
-DRAWSQ      MACRO
+UTDRAWSQ      MACRO
 ; DRAW A RECTANGLE ON THE SPECIFIED COORDENATES
 ; INPUT     - \1 LEFT X
 ;           - \2 UPPER Y

@@ -10,7 +10,7 @@ BACKPLOT
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
             MOVEM.L D0-D4,-(SP)
-            DRAWSQ  0,0,640,480,WHITE
+            UTDRAWSQ  0,0,640,480,WHITE
             BSR     FLRPLOT
             MOVEM.L (SP)+,D0-D4
             RTS
@@ -24,7 +24,7 @@ FLRPLOT
 ; -----------------------------------------------------------------------------
             MOVEM.L D0-D4,-(SP)
             ;DRAW THE FLOOR RECTANGLE
-            DRAWSQ  -1,470,640,480,BLACK
+            UTDRAWSQ  -1,470,640,480,BLACK
             MOVEM.L (SP)+,D0-D4
             RTS
 
