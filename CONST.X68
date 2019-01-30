@@ -76,7 +76,8 @@ OLIVE       EQU     $000E9274
 LIME        EQU     $001BBF9A
 YELLOW      EQU     $0058F5D8
 GREEN       EQU     $00008000
-RANDOM      EQU     $00424554
+RED         EQU     $000000FF
+BROWN       EQU     $00424554
 
 
 *~Font name~Courier New~

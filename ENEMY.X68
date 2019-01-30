@@ -61,8 +61,8 @@ ENPLOT
 ; MODIFIES - D0.B, D1.W, D2.W, D3.W, D4.W, D5.W
 ; -----------------------------------------------------------------------------
             MOVEM.L D0-D5,-(A7)
-            BSR     CACTDRAW
-            ;BSR     BATDRAW
+            ;BSR     CACTDRAW
+            BSR     BATDRAW
             MOVEM.L (A7)+,D0-D5
             RTS
 
@@ -112,8 +112,22 @@ BATDRAW
             UTENEPIX 5,385,10,390,BLACK
             UTENEPIX 10,390,15,395,BLACK
             UTENEPIX 15,395,20,400,BLACK
-            UTENEPIX 5,400,20,405,BLACK
-            UTENEPIX 15,390,55,400,BLACK
+            UTENEPIX 5,400,25,405,BLACK
+            UTENEPIX 25,400,30,405,RED
+            UTENEPIX 30,395,40,415,BLACK
+            UTENEPIX 40,400,45,405,RED
+            UTENEPIX 15,405,55,410,BLACK
+            UTENEPIX 25,390,30,400,BLACK
+            UTENEPIX 40,390,45,400,BLACK
+            UTENEPIX 65,390,70,400,BLACK
+            UTENEPIX 45,400,65,405,BLACK
+            UTENEPIX 50,395,55,400,BLACK
+            UTENEPIX 55,390,60,395,BLACK
+            UTENEPIX 60,385,65,390,BLACK
+            UTENEPIX 5,390,10,395,BROWN
+            UTENEPIX 5,395,15,400,BROWN
+            UTENEPIX 60,390,65,395,BROWN
+            UTENEPIX 55,395,65,400,BROWN
             RTS
 
 ; -----------------------------------------------------------------------------
