@@ -33,6 +33,9 @@ UTLRNDIX    DS.B    1                       ; NEXT INDEX TO RANDOM NUMBER
 SPEED       DC.W    10                      ; GAME SPEED: CONTROLS DIFFICULTY
             DS.W    0                       ;             AND SCROLL
 
+JUMPSOUND   DC.B    'SOUND/JUMP.WAV',0
+            DS.W    0
+
 
 
 *~Font name~Courier New~

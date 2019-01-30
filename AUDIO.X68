@@ -19,18 +19,11 @@ AUDINIT
             MOVE.B  #71,D0
             TRAP    #15
             BRA     .LOOP
-            LEA     .JUMP,A0
-            MOVE.L  (A0)+,D0
-            MOVE.L  D0,A1
-            MOVE.B  #0,D1
-            MOVE.B  #74,D0
-            TRAP    #15
 .END        MOVEM.L (A7)+,D0-D1/A0-A2
             RTS
 .AUDLIST    DC.L    .MUSIC1,.MUSIC2,0
 .MUSIC1     DC.B    'SOUND/MUSIC1.WAV',0
 .MUSIC2     DC.B    'SOUND/MUSIC2.WAV',0
-.JUMP       DC.B    'SOUND/JUMP.WAV',0
 .IDLIST     DC.B    ID0, ID1
             DS.W    0
 
