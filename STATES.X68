@@ -131,6 +131,13 @@ STAINTRP
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
             MOVEM.L A1/D0-D1,-(A7)
+
+            MOVE.B  #76,D0
+            MOVE.L  #3,D2
+            TRAP    #15                       ; STOP ALL SOUNDS
+            MOVE.B  #ID1|%10000000,D1         ; PLAY MENU MUSIC2 LOOP
+            JSR     AUDPLAY
+
             UTLLOCT INTTITX,INTTITY
             UTLSPEN #INTTITC
             UTLSFIL #$00000000
