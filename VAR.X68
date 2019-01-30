@@ -13,22 +13,19 @@ STANEXT     DS.W    1                       ; NEXT GAME STATE
 
 PLRPOSX     DS.W    1                       ; PLAYER X POSITION (PIXELS)
 PLRPOSY     DS.W    1                       ; PLAYER Y POSITION (PIXELS)
-
 PLRVS       DC.W    15                      ; PLAYER VERTICAL SPEED
 PLRAC       DC.W    4                       ; PLAYER ACCELERATION
-
 COUNT       DC.W    0                       ; PLAYER ACCELERATION LOOP COUNTER
-
 PLRSCORE    DS.W    1                       ; PLAYER SCORE
 PLRJUMP     DC.B    0                       ; BIT0: TO CHECK JUMP STATE
             DS.W    0
 
 ; --- FLOOR RELATED VARIABLES ------------------------------------------------
 
-FLOORX      DC.W    0                       ; Court x postion
-FLOORY      DC.W    470                     ; Court y postion
-FLOORW      DC.W    640                     ; Court width
-FLOORH      DC.W    10                      ; Court height
+FLOORX      DC.W    0                       ; FLOOR X POSTION
+FLOORY      DC.W    470                     ; FLOOR Y POSTION
+FLOORW      DC.W    640                     ; FLOOR WIDTH
+FLOORH      DC.W    10                      ; FLOOR HEIGHT
 
 ; --- UTILITY VARIABLES ------------------------------------------------------
 

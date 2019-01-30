@@ -28,7 +28,7 @@ SCRINIT
 ; OUTPUT   - NONE
 ; MODIFIES - D0,D1,D2,D3
 ; -----------------------------------------------------------------------------
-           
+
             ; - DISABLE INTS (SET INT BITS IN SR TO 111)
 
             OR.W    #%0000011100000000,SR
@@ -96,7 +96,7 @@ SCRINIT
             ; - ENABLE INTS (SET INT BITS IN SR TO 000)
 
             AND.W #%1111100011111111,SR
-            
+
             RTS
 
 ; -----------------------------------------------------------------------------
@@ -167,7 +167,7 @@ KBDREAD
             MOVE.B  (KBDVAL),D3
 
             MOVE.B  #19,D0                  ; SET TASK NUMBER
-            
+
 .READSET1   ; MONITOR FIRST 4 KEYS
             MOVE.L  #KBDCHRSP<<24+KBDCHRMK<<16+KBDCHRSH<<8+KBDCHRPK,D1
             ;MOVE.L  #$20<<24+'M'<<16+$10<<8+'P',D1
@@ -201,10 +201,10 @@ KBDREAD
 .READDOWN   BTST.L  #0,D1                   ; TEST FOR DOWN
             BEQ     .CONT
             BSET.L  #KBDBITDN,D2
-            
+
 .CONT       MOVE.B  D2,(KBDVAL)             ; STORE KEYBOARD VALUES
             EOR.B   D2,D3                   ; CHECK FOR CHANGES
-            MOVE.B  D3,(KBDEDGE) 
+            MOVE.B  D3,(KBDEDGE)
 
             MOVEM.L (SP)+,D0-D3             ; RESTORE REGISTERS
             RTE
@@ -333,17 +333,6 @@ DMMFREE
             CLR.W   (A0)
             MOVEM.L (A7)+,D0/A0
             RTS
-
-
-
-
-
-
-
-
-
-
-
 
 *~Font name~Courier New~
 *~Font size~10~

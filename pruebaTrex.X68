@@ -7,7 +7,7 @@
     ORG    $1000
 
 ; -----------------------------------------------------------------------------
-PLRPIX     MACRO
+UTPLRPIX     MACRO
 ; Draw a pixel on the specified coordenates
 ; Input     - \1 Left X
 ;           - \2 Upper Y
@@ -110,32 +110,32 @@ DRAWTREX:
             MOVEM.L D0-D4,-(SP)
             ;Draw t-rex with 5x5 pixels
             ;Patita izq.
-            PLRPIX 150,455,155,470,BLACK
-            PLRPIX 150,450,155,455,OLIVE
-            PLRPIX 150,415,155,450,BLACK
+            UTPLRPIX 150,455,155,470,BLACK
+            UTPLRPIX 150,450,155,455,OLIVE
+            UTPLRPIX 150,415,155,450,BLACK
             ;Colita
-            PLRPIX 145,450,150,455,BLACK
-            PLRPIX 145,445,150,450,OLIVE
-            PLRPIX 140,445,145,450,BLACK
-            PLRPIX 140,440,150,445,BLACK
+            UTPLRPIX 145,450,150,455,BLACK
+            UTPLRPIX 145,445,150,450,OLIVE
+            UTPLRPIX 140,445,145,450,BLACK
+            UTPLRPIX 140,440,150,445,BLACK
             ;Parte sombra
-            PLRPIX 155,415,160,460,OLIVE
+            UTPLRPIX 155,415,160,460,OLIVE
             ;Parte contorno
-            PLRPIX 155,460,160,465,BLACK
-            PLRPIX 160,455,185,460,BLACK
-            PLRPIX 170,460,180,465,BLACK
-            PLRPIX 170,465,175,470,BLACK
-            PLRPIX 180,450,185,455,BLACK
-            PLRPIX 180,445,200,450,BLACK
-            PLRPIX 200,415,205,445,BLACK
-            PLRPIX 155,410,200,415,BLACK
-            PLRPIX 160,420,170,430,BLACK
+            UTPLRPIX 155,460,160,465,BLACK
+            UTPLRPIX 160,455,185,460,BLACK
+            UTPLRPIX 170,460,180,465,BLACK
+            UTPLRPIX 170,465,175,470,BLACK
+            UTPLRPIX 180,450,185,455,BLACK
+            UTPLRPIX 180,445,200,450,BLACK
+            UTPLRPIX 200,415,205,445,BLACK
+            UTPLRPIX 155,410,200,415,BLACK
+            UTPLRPIX 160,420,170,430,BLACK
             ;Parte interior
-            PLRPIX 160,415,170,420,LIME
-            PLRPIX 170,415,200,445,LIME
-            PLRPIX 160,430,170,445,LIME
-            PLRPIX 160,445,165,455,LIME
-            PLRPIX 165,445,180,455,YELLOW
+            UTPLRPIX 160,415,170,420,LIME
+            UTPLRPIX 170,415,200,445,LIME
+            UTPLRPIX 160,430,170,445,LIME
+            UTPLRPIX 160,445,165,455,LIME
+            UTPLRPIX 165,445,180,455,YELLOW
             MOVEM.L (SP)+,D0-D4
             RTS
 
@@ -149,34 +149,34 @@ DRAWCACT
             MOVEM.L D0-D4,-(SP)
 
             ; BRAZO IZQ.
-            PLRPIX 0,390,5,420,GREEN
-            PLRPIX 5,420,10,425,GREEN
-            PLRPIX 10,425,15,430,GREEN
-            PLRPIX 5,385,10,390,GREEN
-            PLRPIX 5,390,10,420,OLIVE
-            PLRPIX 10,415,15,425,OLIVE
-            PLRPIX 15,420,25,430,OLIVE
-            PLRPIX 10,390,15,415,GREEN
-            PLRPIX 15,415,20,420,GREEN
+            UTPLRPIX 0,390,5,420,GREEN
+            UTPLRPIX 5,420,10,425,GREEN
+            UTPLRPIX 10,425,15,430,GREEN
+            UTPLRPIX 5,385,10,390,GREEN
+            UTPLRPIX 5,390,10,420,OLIVE
+            UTPLRPIX 10,415,15,425,OLIVE
+            UTPLRPIX 15,420,25,430,OLIVE
+            UTPLRPIX 10,390,15,415,GREEN
+            UTPLRPIX 15,415,20,420,GREEN
             ; PUNTITA MEDIO
-            PLRPIX 20,420,25,385,GREEN
-            PLRPIX 20,430,25,470,GREEN
-            PLRPIX 15,430,20,435,GREEN
-            PLRPIX 25,385,35,470,OLIVE
-            PLRPIX 25,380,35,385,GREEN
-            PLRPIX 35,385,40,425,GREEN
-            PLRPIX 35,395,40,470,GREEN
+            UTPLRPIX 20,420,25,385,GREEN
+            UTPLRPIX 20,430,25,470,GREEN
+            UTPLRPIX 15,430,20,435,GREEN
+            UTPLRPIX 25,385,35,470,OLIVE
+            UTPLRPIX 25,380,35,385,GREEN
+            UTPLRPIX 35,385,40,425,GREEN
+            UTPLRPIX 35,395,40,470,GREEN
             ; BRAZO DERECHO
-            PLRPIX 35,425,45,435,OLIVE
-            PLRPIX 40,420,45,425,GREEN
-            PLRPIX 40,435,45,440,GREEN
-            PLRPIX 45,430,50,435,GREEN
-            PLRPIX 50,425,55,430,GREEN
-            PLRPIX 55,400,60,425,GREEN
-            PLRPIX 50,400,55,425,OLIVE
-            PLRPIX 50,395,55,400,GREEN
-            PLRPIX 45,400,50,420,GREEN
-            PLRPIX 45,420,50,430,OLIVE
+            UTPLRPIX 35,425,45,435,OLIVE
+            UTPLRPIX 40,420,45,425,GREEN
+            UTPLRPIX 40,435,45,440,GREEN
+            UTPLRPIX 45,430,50,435,GREEN
+            UTPLRPIX 50,425,55,430,GREEN
+            UTPLRPIX 55,400,60,425,GREEN
+            UTPLRPIX 50,400,55,425,OLIVE
+            UTPLRPIX 50,395,55,400,GREEN
+            UTPLRPIX 45,400,50,420,GREEN
+            UTPLRPIX 45,420,50,430,OLIVE
 
             MOVEM.L (SP)+,D0-D4
             RTS

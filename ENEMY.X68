@@ -59,40 +59,37 @@ ENUPD
 ; -----------------------------------------------------------------------------
 ENPLOT
 ; PLOTS AN ENEMY
-; INPUT    - (A0) Pos in X
+; INPUT    - (A0) POS IN X
 ; OUTPUT   - NONE
 ; MODIFIES - D0.B, D1.W, D2.W, D3.W, D4.W, D5.W
 ; -----------------------------------------------------------------------------
             MOVEM.W D0-D5,-(A7)
-            ; BRAZO IZQ.
-            ENEPIX 0,390,5,420,GREEN
-            ENEPIX 5,420,10,425,GREEN
-            ENEPIX 10,425,15,430,GREEN
-            ENEPIX 5,385,10,390,GREEN
-            ENEPIX 5,390,10,420,OLIVE
-            ENEPIX 10,415,15,425,OLIVE
-            ENEPIX 15,420,25,430,OLIVE
-            ENEPIX 10,390,15,415,GREEN
-            ENEPIX 15,415,20,420,GREEN
-            ; PUNTITA MEDIO
-            ENEPIX 20,420,25,385,GREEN
-            ENEPIX 20,430,25,470,GREEN
-            ENEPIX 15,430,20,435,GREEN
-            ENEPIX 25,385,35,470,OLIVE
-            ENEPIX 25,380,35,385,GREEN
-            ENEPIX 35,385,40,425,GREEN
-            ENEPIX 35,395,40,470,GREEN
-            ; BRAZO DERECHO
-            ENEPIX 35,425,45,435,OLIVE
-            ENEPIX 40,420,45,425,GREEN
-            ENEPIX 40,435,45,440,GREEN
-            ENEPIX 45,430,50,435,GREEN
-            ENEPIX 50,425,55,430,GREEN
-            ENEPIX 55,400,60,425,GREEN
-            ENEPIX 50,400,55,425,OLIVE
-            ENEPIX 50,395,55,400,GREEN
-            ENEPIX 45,400,50,420,GREEN
-            ENEPIX 45,420,50,430,OLIVE
+            UTENEPIX 0,390,5,420,GREEN
+            UTENEPIX 5,420,10,425,GREEN
+            UTENEPIX 10,425,15,430,GREEN
+            UTENEPIX 5,385,10,390,GREEN
+            UTENEPIX 5,390,10,420,OLIVE
+            UTENEPIX 10,415,15,425,OLIVE
+            UTENEPIX 15,420,25,430,OLIVE
+            UTENEPIX 10,390,15,415,GREEN
+            UTENEPIX 15,415,20,420,GREEN
+            UTENEPIX 20,420,25,385,GREEN
+            UTENEPIX 20,430,25,470,GREEN
+            UTENEPIX 15,430,20,435,GREEN
+            UTENEPIX 25,385,35,470,OLIVE
+            UTENEPIX 25,380,35,385,GREEN
+            UTENEPIX 35,385,40,425,GREEN
+            UTENEPIX 35,395,40,470,GREEN
+            UTENEPIX 35,425,45,435,OLIVE
+            UTENEPIX 40,420,45,425,GREEN
+            UTENEPIX 40,435,45,440,GREEN
+            UTENEPIX 45,430,50,435,GREEN
+            UTENEPIX 50,425,55,430,GREEN
+            UTENEPIX 55,400,60,425,GREEN
+            UTENEPIX 50,400,55,425,OLIVE
+            UTENEPIX 50,395,55,400,GREEN
+            UTENEPIX 45,400,50,420,GREEN
+            UTENEPIX 45,420,50,430,OLIVE
             MOVEM.W (A7)+,D0-D5
             RTS
 

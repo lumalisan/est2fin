@@ -12,7 +12,6 @@ BACKPLOT
             MOVEM.L D0-D4,-(SP)
             DRAWSQ  0,0,640,480,WHITE
             BSR     FLRPLOT
-            PLRPIX  140,410,205,470,RANDOM     ;Esto es para debuggear
             MOVEM.L (SP)+,D0-D4
             RTS
 
@@ -24,7 +23,7 @@ FLRPLOT
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
             MOVEM.L D0-D4,-(SP)
-            ;Draw the floor rectangle
+            ;DRAW THE FLOOR RECTANGLE
             DRAWSQ  -1,470,640,480,BLACK
             MOVEM.L (SP)+,D0-D4
             RTS

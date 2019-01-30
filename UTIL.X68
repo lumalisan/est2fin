@@ -3,28 +3,28 @@
 ; =============================================================================
 
 ; -----------------------------------------------------------------------------
-PLRPIX      MACRO
-; Draw a pixel for the player on the specified coordenates
-; Input     - \1 Left X
-;           - \2 Upper Y
-;           - \3 Right X
-;           - \4 Lower Y
-;           - \5 Color in format $00BBGGRR
-;           - (PLRPOSY) Pos in Y
-; Output    - None
-; Modifies  - D0.B, D1.W, D2.W, D3.W, D4.W, D5.W
+UTPLRPIX      MACRO
+; DRAW A PIXEL FOR THE PLAYER ON THE SPECIFIED COORDENATES
+; INPUT     - \1 LEFT X
+;           - \2 UPPER Y
+;           - \3 RIGHT X
+;           - \4 LOWER Y
+;           - \5 COLOR IN FORMAT $00BBGGRR
+;           - (PLRPOSY) POS IN Y
+; OUTPUT    - NONE
+; MODIFIES  - D0.B, D1.W, D2.W, D3.W, D4.W, D5.W
 ; -----------------------------------------------------------------------------
-            ;Get player Y
+            ;GET PLAYER Y
             MOVE.W  (PLRPOSY),D5
-            ;Set the color in D1
+            ;SET THE COLOR IN D1
             MOVE.L  #\5,D1
-            ;Set pen color
+            ;SET PEN COLOR
             MOVE.B  #80,D0
             TRAP    #15
-            ;Set fill color
+            ;SET FILL COLOR
             MOVE.B  #81,D0
             TRAP    #15
-            ;Draw the pixel
+            ;DRAW THE PIXEL
             MOVE.W  #\1,D1
             MOVE.W  #\2,D2
             ADD.W   D5,D2
@@ -36,28 +36,28 @@ PLRPIX      MACRO
             ENDM
 
 ; -----------------------------------------------------------------------------
-ENEPIX      MACRO
-; Draw a pixel for the enemy on the specified coordenates
-; Input     - \1 Left X
-;           - \2 Upper Y
-;           - \3 Right X
-;           - \4 Lower Y
-;           - \5 Color in format $00BBGGRR
-;           - (A0) Pos in X
-; Output    - None
-; Modifies  - D0.B, D1.W, D2.W, D3.W, D4.W, D5.W
+UTENEPIX      MACRO
+; DRAW A PIXEL FOR THE ENEMY ON THE SPECIFIED COORDENATES
+; INPUT     - \1 LEFT X
+;           - \2 UPPER Y
+;           - \3 RIGHT X
+;           - \4 LOWER Y
+;           - \5 COLOR IN FORMAT $00BBGGRR
+;           - (A0) POS IN X
+; OUTPUT    - NONE
+; MODIFIES  - D0.B, D1.W, D2.W, D3.W, D4.W, D5.W
 ; -----------------------------------------------------------------------------
-            ;Get enemy X
+            ;GET ENEMY X
             MOVE.W  (A0),D5
-            ;Set the color in D1
+            ;SET THE COLOR IN D1
             MOVE.L  #\5,D1
-            ;Set pen color
+            ;SET PEN COLOR
             MOVE.B  #80,D0
             TRAP    #15
-            ;Set fill color
+            ;SET FILL COLOR
             MOVE.B  #81,D0
             TRAP    #15
-            ;Draw the pixel
+            ;DRAW THE PIXEL
             MOVE.W  #\1,D1
             ADD.W   D5,D1
             MOVE.W  #\2,D2
@@ -70,24 +70,24 @@ ENEPIX      MACRO
 
 ; -----------------------------------------------------------------------------
 DRAWSQ      MACRO
-; Draw a rectangle on the specified coordenates
-; Input     - \1 Left X
-;           - \2 Upper Y
-;           - \3 Right X
-;           - \4 Lower Y
-;           - \5 Color in format $00BBGGRR
-; Output    - None
-; Modifies  - D0.B, D1.W, D2.W, D3.W, D4.W
+; DRAW A RECTANGLE ON THE SPECIFIED COORDENATES
+; INPUT     - \1 LEFT X
+;           - \2 UPPER Y
+;           - \3 RIGHT X
+;           - \4 LOWER Y
+;           - \5 COLOR IN FORMAT $00BBGGRR
+; OUTPUT    - NONE
+; MODIFIES  - D0.B, D1.W, D2.W, D3.W, D4.W
 ; -----------------------------------------------------------------------------
-            ;Set the color in D1
+            ;SET THE COLOR IN D1
             MOVE.L  #\5,D1
-            ;Set pen color
+            ;SET PEN COLOR
             MOVE.B  #80,D0
             TRAP    #15
-            ;Set fill color
+            ;SET FILL COLOR
             MOVE.B  #81,D0
             TRAP    #15
-            ;Draw the pixel
+            ;DRAW THE PIXEL
             MOVE.W  #\1,D1
             MOVE.W  #\2,D2
             MOVE.W  #\3,D3
