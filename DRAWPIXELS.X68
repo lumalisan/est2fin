@@ -1,9 +1,6 @@
-*-----------------------------------------------------------
-* WRITTEN BY    :JACOB EDELEN
-* DATE CREATED  :9/7/2016
-* DESCRIPTION   :TAKES IN 7 ARGUMENTS TO A SUBROUTINE AND RUNS THE METHOD TO
-*                DRAW A SECTION OF AN IMAGE IN THE CONSOLE
-*-----------------------------------------------------------
+; =============================================================================
+; IMAGE MANAGEMENT
+; =============================================================================
 
 ;EQUS FOR TRAP CODE CALLS
 PENCOLORCODE      EQU     80
@@ -190,6 +187,13 @@ RUNPROGRAM
         RTS
 
 PADDING     DC.L    0
+
+GAMEOVERIMG
+    INCBIN "GAMEOVER.BMP"
+LOADINGIMG
+    INCBIN "LOADING.BMP"
+TITLEIMG
+    INCBIN "TITLE.BMP"
 
 *~font name~courier new~
 *~font size~10~

@@ -2,8 +2,6 @@
 ; PLAYER MANAGEMENT
 ; =============================================================================
 
-
-
 ; -----------------------------------------------------------------------------
 PLRINIT
 ; INITIALIZES THE PLAYER
@@ -36,7 +34,7 @@ PLRUPD
             LEA     JUMPSOUND,A1
             MOVE.B  #73,D0
             TRAP    #15
-            MOVE.B  #1,(PLRJUMP)              ;
+            MOVE.B  #1,(PLRJUMP)
 .JUMP       BSR     PLRSPINC
             BSR     PLRMOVE
             BSR     PLRFLCOL

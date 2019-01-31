@@ -132,22 +132,43 @@ STAINTRP
 ; -----------------------------------------------------------------------------
             MOVEM.L A1/D0-D1,-(A7)
 
+            ;UTLLOCT INTTITX,INTTITY
+            ;UTLSPEN #INTTITC
+            ;UTLSFIL #$00000000
+            ;LEA     .TITSTR,A1
+            ;MOVE.B  #14,D0
+            ;TRAP    #15
+
+            ;UTLLOCT INTPRSX,INTPRSY
+            ;UTLSPEN #INTPRSC
+            ;UTLSFIL #$00000000
+            ;LEA     .PRSSTR,A1
+            ;MOVE.B  #14,D0
+            ;TRAP    #15
+
+            *LOAD IN THE LOADING IMAGE FIRST
+            LEA     LOADINGIMG, A0
+            MOVE.L  #160, D1
+            MOVE.L  #170, D2
+            MOVE.L  #100, D3
+            MOVE.L  #200, D4
+            MOVE.L  #0, D5
+            MOVE.L  #0, D6
+            JSR     DRAWIMAGE
+
+            *LOAD IN THE TITLE IMAGE
+            LEA     TITLEIMG, A0
+            MOVE.L  #640, D1
+            MOVE.L  #480, D2
+            MOVE.L  #0, D3
+            MOVE.L  #0, D4
+            MOVE.L  #0, D5
+            MOVE.L  #0, D6
+            JSR     DRAWIMAGE
+
             MOVE.B  #ID1|%10000000,D1         ; PLAY MENU MUSIC2 LOOP
             JSR     AUDPLAY
 
-            UTLLOCT INTTITX,INTTITY
-            UTLSPEN #INTTITC
-            UTLSFIL #$00000000
-            LEA     .TITSTR,A1
-            MOVE.B  #14,D0
-            TRAP    #15
-
-            UTLLOCT INTPRSX,INTPRSY
-            UTLSPEN #INTPRSC
-            UTLSFIL #$00000000
-            LEA     .PRSSTR,A1
-            MOVE.B  #14,D0
-            TRAP    #15
             MOVEM.L (A7)+,A1/D0-D1
             RTS
 
@@ -188,23 +209,13 @@ STAGOVRP
             ;TRAP    #15
 
     *LOAD IN THE LOADING IMAGE FIRST AND USE THE DRAW ROUTINE
-            ;LEA     GAMEOVERIMG, A0
-            ;MOVE.L  #320, D1        ; WIDTH IN D1
-            ;MOVE.L  #288, D2        ; HEIGHT IN D2
-            ;MOVE.L  #200, D3        ; BEGINNING PRINT LOCATION FOR X AXIS ON STACK
-            ;MOVE.L  #100, D4        ; BEGINNING PRINT LOCATION FOR Y AXIS ON STACK
-            ;MOVE.L  #0, D5          ; TOP LEFT X TO DRAW IMAGE
-            ;MOVE.L  #0, D6          ; TOP LEFT Y TO DRAW IMAGE
-            ;JSR     DRAWIMAGE
-
-            *DRAW THE TITLE SCREEN AND CALL THE DRAW ROUTINE
-            LEA     TITLESCREEN, A0
-            MOVE.L  #700, D1
-            MOVE.L  #600, D2
-            MOVE.L  #0, D3
-            MOVE.L  #0, D4
-            MOVE.L  #0, D5
-            MOVE.L  #0, D6
+            LEA     GAMEOVERIMG, A0
+            MOVE.L  #500, D1        ; WIDTH IN D1
+            MOVE.L  #100, D2        ; HEIGHT IN D2
+            MOVE.L  #100, D3        ; BEGINNING PRINT LOCATION FOR X AXIS ON STACK
+            MOVE.L  #200, D4        ; BEGINNING PRINT LOCATION FOR Y AXIS ON STACK
+            MOVE.L  #0, D5          ; TOP LEFT X TO DRAW IMAGE
+            MOVE.L  #0, D6          ; TOP LEFT Y TO DRAW IMAGE
             JSR     DRAWIMAGE
 
             MOVEM.L (A7)+,A1/D0-D1

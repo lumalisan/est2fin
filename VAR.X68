@@ -15,28 +15,27 @@ PLRPOSX     DS.W    1                       ; PLAYER X POSITION (PIXELS)
 PLRPOSY     DS.W    1                       ; PLAYER Y POSITION (PIXELS)
 PLRVS       DC.W    15                      ; PLAYER VERTICAL SPEED
 PLRAC       DC.W    4                       ; PLAYER ACCELERATION
-COUNT       DC.W    0                       ; PLAYER ACCELERATION LOOP COUNTER
 PLRSCORE    DS.W    1                       ; PLAYER SCORE
 PLRJUMP     DC.B    0                       ; BIT0: TO CHECK JUMP STATE
             DS.W    0
 
-; --- FLOOR RELATED VARIABLES ------------------------------------------------
+; --- FLOOR RELATED VARIABLES -------------------------------------------------
 
 FLOORX      DC.W    0                       ; FLOOR X POSTION
 FLOORY      DC.W    470                     ; FLOOR Y POSTION
 FLOORW      DC.W    640                     ; FLOOR WIDTH
 FLOORH      DC.W    10                      ; FLOOR HEIGHT
 
-; --- UTILITY VARIABLES ------------------------------------------------------
+; --- UTILITY VARIABLES -------------------------------------------------------
 
 UTLRNDIX    DS.B    1                       ; NEXT INDEX TO RANDOM NUMBER
 SPEED       DC.W    10                      ; GAME SPEED: CONTROLS DIFFICULTY
             DS.W    0                       ;             AND SCROLL
 
+; --- SOUND VARIABLES ---------------------------------------------------------
+
 JUMPSOUND   DC.B    'SOUND/JUMP.WAV',0
             DS.W    0
-
-
 
 *~Font name~Courier New~
 *~Font size~10~
