@@ -12,6 +12,13 @@ Some people do fucking Crysis and DOOM in 68K... We do Google Chrome's dinosaur.
   - ~~Create start and game over screen~~ YEET.
   - Implement background parallax :sunrise_over_mountains:
   - FPS Counter :six::zero:
-  - Create music and SFX :collision:
+  - ~~Create music and SFX~~ :collision: YEET.
   - Multiplayer maybe? :two_men_holding_hands:
+  
+# IMPORTANTE:
+  Las imagenes cuando se pintan cargan demasiado el programa y deja de recibir inputs por teclado dado que se esta ejecutando la             subrutina de dibujado. Pasos a seguir:
+  - Cuando la imagen se haya dibujado, dejar de ejecutar la subrutina de dibujado.
+  - Comentar todo el código al estilo Burguera.
+  - Para hacer parallax lo veo chungo pero almenos podemos poner alguna imagen de fondo asi no queda tan soso.
+  - Para hacer que los pixeles sean "invisibles" simplemente hay que pintarlos de rosa y la subrutina los va a ignorar.
 
