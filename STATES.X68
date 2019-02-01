@@ -199,7 +199,7 @@ STAGOVRU
 ; OUTPUT   - NONE
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
-            BTST.B  #KBDBITF1,(KBDEDGE)
+            BTST.B  #KBDBITF1,(KBDVAL)
             BEQ     .END
             MOVE.W  #STAINTR,(STANEXT)
             ; CLEAN CHECK VARS
