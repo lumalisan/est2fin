@@ -11,7 +11,6 @@
 
 KBDVAL      DS.B    1                       ; KEY PRESSED=1
 KBDEDGE     DS.B    1                       ; KEY CHANGED=1
-
             DS.W    0
 
 ; --- SCREEN RELATED VARIABLES ------------------------------------------------

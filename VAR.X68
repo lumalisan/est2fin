@@ -28,9 +28,12 @@ FLOORH      DC.W    10                      ; FLOOR HEIGHT
 
 ; --- UTILITY VARIABLES -------------------------------------------------------
 
-UTLRNDIX    DS.B    1                       ; NEXT INDEX TO RANDOM NUMBER
 SPEED       DC.W    10                      ; GAME SPEED: CONTROLS DIFFICULTY
-            DS.W    0                       ;             AND SCROLL
+CHECKTIT    DC.B    0                       ; CHECK IF THE TITLE HAS BEEN DRAWN
+CHECKLOA    DC.B    0                     ; CHECK IF THE LOADING HAS BEEN DRAWN
+CHECKGOV    DC.B    0                     ; CHECK IF THE GAME OV HAS BEEN DRAWN
+UTLRNDIX    DS.B    1                       ; NEXT INDEX TO RANDOM NUMBER
+            DS.W    0
 
 ; --- SOUND VARIABLES ---------------------------------------------------------
 

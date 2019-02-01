@@ -202,6 +202,23 @@ UTLCHCOL
             RTS
 
 ; -----------------------------------------------------------------------------
+UTCLEAN
+; CLEAN THE BUFFER
+; INPUT    - NONE
+; OUTPUT   - NONE
+; MODIFIES - NONE
+; -----------------------------------------------------------------------------
+            MOVEM.W D0-D1,-(A7)
+            MOVE.B  #94,D0                  ; DISPLAY HIDDEN BUFFER
+            TRAP    #15
+
+            MOVE.B  #11,D0                  ; CLEAR HIDDEN BUFFER
+            MOVE.W  #$FF00,D1
+            TRAP    #15
+            MOVEM.W (A7)+,D0-D1
+            RTS
+
+; -----------------------------------------------------------------------------
 UTLRAND
 ; PROVIDES A PSEUDO-RANDOM BYTE
 ; INPUT    - NONE

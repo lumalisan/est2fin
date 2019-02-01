@@ -17,6 +17,8 @@ PLRINIT
             TRAP    #15
             MOVE.B  #ID0|%10000000,D1    ; PLAY MAIN MUSIC1 LOOP
             JSR     AUDPLAY
+            MOVE.B   #1,(CHECKTIT)
+            MOVE.B   #0,(CHECKLOA)
             RTS
 
 ; -----------------------------------------------------------------------------

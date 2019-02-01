@@ -146,17 +146,10 @@ STAINTRP
             ;MOVE.B  #14,D0
             ;TRAP    #15
 
-            *LOAD IN THE LOADING IMAGE FIRST
-            LEA     LOADINGIMG, A0
-            MOVE.L  #160, D1
-            MOVE.L  #170, D2
-            MOVE.L  #100, D3
-            MOVE.L  #200, D4
-            MOVE.L  #0, D5
-            MOVE.L  #0, D6
-            JSR     DRAWIMAGE
+            TST.B   (CHECKTIT)
+            BEQ     .LOADING
 
-            *LOAD IN THE TITLE IMAGE
+            ; LOAD IN THE TITLE IMAGE
             LEA     TITLEIMG, A0
             MOVE.L  #640, D1
             MOVE.L  #480, D2
@@ -169,7 +162,30 @@ STAINTRP
             MOVE.B  #ID1|%10000000,D1         ; PLAY MENU MUSIC2 LOOP
             JSR     AUDPLAY
 
-            MOVEM.L (A7)+,A1/D0-D1
+            ; CLEAN THE BUFFER
+            JSR     UTCLEAN
+
+            MOVE.B  #0,(CHECKTIT)
+
+.LOADING    TST.B   (CHECKLOA)
+            BNE     .END
+            MOVE.B  #1,(CHECKLOA)     ; DON'T DRAW THE LOADING IMAGE ANYMORE
+            MOVE.B  #1,(CHECKTIT)     ; DRAW THE TITLE IMAGE ON THE NEXT CYCLE
+
+            ; LOAD IN THE LOADING IMAGE FIRST
+            LEA     LOADINGIMG, A0
+            MOVE.L  #160, D1
+            MOVE.L  #170, D2
+            MOVE.L  #240, D3
+            MOVE.L  #170, D4
+            MOVE.L  #0, D5
+            MOVE.L  #0, D6
+            JSR     DRAWIMAGE
+
+            ; CLEAN THE BUFFER
+            JSR     UTCLEAN
+
+.END        MOVEM.L (A7)+,A1/D0-D1
             RTS
 
 .TITSTR     DC.B    'WELCOME TO THE T-REX GAME!',0
@@ -186,6 +202,10 @@ STAGOVRU
             BTST.B  #KBDBITF1,(KBDEDGE)
             BEQ     .END
             MOVE.W  #STAINTR,(STANEXT)
+            ; CLEAN CHECK VARS
+            CLR.B   (CHECKTIT)
+            CLR.B   (CHECKLOA)
+            CLR.B   (CHECKGOV)
 .END        RTS
 
 ; -----------------------------------------------------------------------------
@@ -197,6 +217,7 @@ STAGOVRP
 ; -----------------------------------------------------------------------------
             MOVEM.L A1/D0-D1,-(A7)
 
+            ; STOP MAIN MUSIC
             MOVE.B  #76,D0
             MOVE.L  #3,D2
             TRAP    #15
@@ -208,7 +229,11 @@ STAGOVRP
             ;MOVE.B  #14,D0
             ;TRAP    #15
 
-    *LOAD IN THE LOADING IMAGE FIRST AND USE THE DRAW ROUTINE
+            TST.B   (CHECKGOV)
+            BNE     .END
+            MOVE.B  #1,(CHECKGOV)     ; DON'T DRAW THE GAME OVER IMAGE ANYMORE
+
+            ; LOAD IN THE GAME OVER IMAGE
             LEA     GAMEOVERIMG, A0
             MOVE.L  #500, D1        ; WIDTH IN D1
             MOVE.L  #100, D2        ; HEIGHT IN D2
@@ -218,7 +243,10 @@ STAGOVRP
             MOVE.L  #0, D6          ; TOP LEFT Y TO DRAW IMAGE
             JSR     DRAWIMAGE
 
-            MOVEM.L (A7)+,A1/D0-D1
+            ; CLEAN THE BUFFER
+            JSR     UTCLEAN
+
+.END        MOVEM.L (A7)+,A1/D0-D1
             RTS
 
 .GOVSTR     DC.B    'GAME  OVER',0

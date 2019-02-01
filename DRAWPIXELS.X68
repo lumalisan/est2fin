@@ -118,9 +118,11 @@ DRAWPIXEL
         BRA     INCREMENT               ;INCREMENT POSITION
 
 ENDROUTINE
+        ;MOVEM.L (A7)+,A0/D0-D7
         RTS                             ;BRANCH BACK TO END OF PROGRAM
 
 DRAWIMAGE
+        ;MOVEM.L A0/D0-D7,-(A7)
 *...
 *SETUP BEFORE SUBROUTINE
 *...'
@@ -183,7 +185,7 @@ RUNPROGRAM
         ADD.L   D0, SP                  ;FIX STACK
 
         CLR.L   D7
-
+        ;MOVEM.L (A7)+,A0/D0-D7
         RTS
 
 PADDING     DC.L    0

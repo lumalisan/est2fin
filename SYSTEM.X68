@@ -121,6 +121,13 @@ SCRUPD
 ; -----------------------------------------------------------------------------
             MOVEM.L D0-D1,-(SP)             ; SAVE REGISTERS
 
+            TST.B   (CHECKTIT)
+            BEQ     .END
+            TST.B   (CHECKLOA)
+            BNE     .END
+            TST.B   (CHECKGOV)
+            BNE     .END
+
             MOVE.B  #94,D0                  ; DISPLAY HIDDEN BUFFER
             TRAP    #15
 
@@ -128,7 +135,7 @@ SCRUPD
             MOVE.W  #$FF00,D1
             TRAP    #15
 
-            MOVEM.L (SP)+,D0-D1             ; RESTORE REGISTERS
+.END        MOVEM.L (SP)+,D0-D1             ; RESTORE REGISTERS
             RTE
 
 ; =============================================================================
