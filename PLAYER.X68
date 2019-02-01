@@ -9,6 +9,10 @@ PLRINIT
 ; OUTPUT   - NONE
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
+            ; CLEAN CHECK VARS
+            CLR.B   (CHECKTIT)
+            CLR.B   (CHECKLOA)
+            CLR.B   (CHECKGOV)
             MOVE.W  #150,(PLRPOSX)
             MOVE.W  #(SCRHEIGH-FLOORHGT),(PLRPOSY)
             CLR.W   (PLRSCORE)
@@ -18,7 +22,6 @@ PLRINIT
             MOVE.B  #ID0|%10000000,D1    ; PLAY MAIN MUSIC1 LOOP
             JSR     AUDPLAY
             MOVE.B   #1,(CHECKTIT)
-            MOVE.B   #0,(CHECKLOA)
             RTS
 
 ; -----------------------------------------------------------------------------
