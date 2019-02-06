@@ -17,6 +17,7 @@ PLRVS       DC.W    15                      ; PLAYER VERTICAL SPEED
 PLRAC       DC.W    4                       ; PLAYER ACCELERATION
 PLRSCORE    DS.W    1                       ; PLAYER SCORE
 PLRJUMP     DC.B    0                       ; BIT0: TO CHECK JUMP STATE
+RANDENTY    DC.B    0
             DS.W    0
 
 ; --- FLOOR RELATED VARIABLES -------------------------------------------------
@@ -39,6 +40,7 @@ UTLRNDIX    DS.B    1                       ; NEXT INDEX TO RANDOM NUMBER
 ; --- SOUND VARIABLES ---------------------------------------------------------
 
 JUMPSOUND   DC.B    'SOUND/JUMP.WAV',0
+OOF         DC.B    'SOUND/OOF.WAV',0
             DS.W    0
 
 *~Font name~Courier New~

@@ -16,6 +16,8 @@ ENINIT
             MOVE.L  D0,-(A7)
             MOVE.W  #SCRWIDTH,(A0)              ; X POSITION EN (A0)
             MOVE.W  #(SCRHEIGH-FLOORHGT),2(A0)  ; Y POSITION EN 2(A0)
+            JSR     UTLRAND
+            MOVE.B  D0,(RANDENTY)
             MOVE.L  (A7)+,D0
             RTS
 
@@ -32,8 +34,8 @@ ENUPD
             ;SUB.W   #10,(A0)
             CMP.W   #-ENEHEIGH,(A0)           ; KILL ENEMY WHEN OUT OF SCREEN
             BLT     .KILL
-.COLPLAY    MOVE.W  (A0),D0                   ;X POS EN D0
-            MOVE.W  2(A0),D1                  ;Y POS EN D1
+.COLPLAY    MOVE.W  (A0),D0                   ; X POS EN D0
+            MOVE.W  2(A0),D1                  ; Y POS EN D1
             MOVE.W  (PLRPOSX),D2
             MOVE.W  (PLRPOSY),D3
             MOVE.W  #ENEWIDTH,D4
@@ -42,7 +44,7 @@ ENUPD
             MOVE.W  #PLRHEIGH,D7
             JSR     UTLCHCOL
             TST.B   D0
-            BEQ     .END                   ; SI NO HAY COLISION NO HACEMOS NADA
+            BEQ     .END
             MOVE.W  #STAGOVR,(STANEXT)        ; IF COLLISION, GAME OVER
 
 .END        MOVE.L  (A7)+,D0
@@ -50,7 +52,7 @@ ENUPD
 .KILL       JSR     AGLKILL
             ;SUMAR UNO A SCORE BY FREE SYNC
             ADDQ.W  #1,(PLRSCORE)
-            JSR     UTLUPDS
+            JSR     UTLUPDS                   ; UPDATE GAME SPEED
             BRA     .COLPLAY
 
 ; -----------------------------------------------------------------------------
@@ -61,9 +63,12 @@ ENPLOT
 ; MODIFIES - D0.B, D1.W, D2.W, D3.W, D4.W, D5.W
 ; -----------------------------------------------------------------------------
             MOVEM.L D0-D5,-(A7)
-            ;BSR     CACTDRAW
+            TST.B   RANDENTY
+            BEQ     .CACT     ; IF 1, DRAW BAT, IF 0, DRAW CACTUS
             BSR     BATDRAW
-            MOVEM.L (A7)+,D0-D5
+            BRA     .END
+.CACT       BSR     CACTDRAW
+.END        MOVEM.L (A7)+,D0-D5
             RTS
 
 ; -----------------------------------------------------------------------------

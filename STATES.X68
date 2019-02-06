@@ -189,6 +189,8 @@ STAGOVRU
             CLR.B   (CHECKTIT)
             CLR.B   (CHECKLOA)
             CLR.B   (CHECKGOV)
+            ; RESET GAME SPEED
+            MOVE.W  #10,(SPEED)
 .END        RTS
 
 ; -----------------------------------------------------------------------------
@@ -198,7 +200,7 @@ STAGOVRP
 ; OUTPUT   - NONE
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
-            MOVEM.L A1/D0-D1,-(A7)
+            MOVEM.L A0-A1/D0-D1,-(A7)
 
             ; STOP MAIN MUSIC
             MOVE.B  #76,D0
@@ -208,6 +210,11 @@ STAGOVRP
             TST.B   (CHECKGOV)
             BNE     .END
             MOVE.B  #1,(CHECKGOV)     ; DON'T DRAW THE GAME OVER IMAGE ANYMORE
+
+            ; PLAY GAME OVER MUSIC
+            LEA     OOF,A1
+            MOVE.B  #73,D0
+            TRAP    #15
 
             ; LOAD IN THE GAME OVER IMAGE
             LEA     GAMEOVERIMG, A0
@@ -222,5 +229,5 @@ STAGOVRP
             ; CLEAN THE BUFFER
             JSR     UTCLEAN
 
-.END        MOVEM.L (A7)+,A1/D0-D1
+.END        MOVEM.L (A7)+,A0-A1/D0-D1
             RTS
