@@ -132,20 +132,6 @@ STAINTRP
 ; -----------------------------------------------------------------------------
             MOVEM.L A1/D0-D1,-(A7)
 
-            ;UTLLOCT INTTITX,INTTITY
-            ;UTLSPEN #INTTITC
-            ;UTLSFIL #$00000000
-            ;LEA     .TITSTR,A1
-            ;MOVE.B  #14,D0
-            ;TRAP    #15
-
-            ;UTLLOCT INTPRSX,INTPRSY
-            ;UTLSPEN #INTPRSC
-            ;UTLSFIL #$00000000
-            ;LEA     .PRSSTR,A1
-            ;MOVE.B  #14,D0
-            ;TRAP    #15
-
             TST.B   (CHECKTIT)
             BEQ     .LOADING
 
@@ -188,10 +174,6 @@ STAINTRP
 .END        MOVEM.L (A7)+,A1/D0-D1
             RTS
 
-.TITSTR     DC.B    'WELCOME TO THE T-REX GAME!',0
-.PRSSTR     DC.B    'PRESS SPACEBAR TO START',0
-            DS.W    0
-
 ; -----------------------------------------------------------------------------
 STAGOVRU
 ; GAME OVER STATE UPDATE
@@ -222,13 +204,6 @@ STAGOVRP
             MOVE.L  #3,D2
             TRAP    #15
 
-            ;UTLLOCT GOVSTRX,GOVSTRY
-            ;UTLSPEN #GOVSTRC
-            ;UTLSFIL #$00000000
-            ;LEA     .GOVSTR,A1
-            ;MOVE.B  #14,D0
-            ;TRAP    #15
-
             TST.B   (CHECKGOV)
             BNE     .END
             MOVE.B  #1,(CHECKGOV)     ; DON'T DRAW THE GAME OVER IMAGE ANYMORE
@@ -248,6 +223,3 @@ STAGOVRP
 
 .END        MOVEM.L (A7)+,A1/D0-D1
             RTS
-
-.GOVSTR     DC.B    'GAME  OVER',0
-            DS.W    0

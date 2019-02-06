@@ -3,9 +3,7 @@
 ; =============================================================================
 
 ;EQUS FOR TRAP CODE CALLS
-PENCOLORCODE      EQU     80
-DRAWPIXELCODE     EQU     82
-SCREENCHANGECODE  EQU     33
+
 
 DRAWCHUNK
 ;READS IN FILE INFORMATION AND USER INPUT
@@ -104,7 +102,7 @@ INCREMENTY
 
 DRAWPIXEL
         MOVE.L  D5, D1                  ;MOVE PIXEL DATA INTO D1 FOR PEN COLOR
-        MOVE.L  #PENCOLORCODE, D0       ;SET TRAP CODE FOR SETTING THE PEN COLOR
+        MOVE.L  #80, D0       ;SET TRAP CODE FOR SETTING THE PEN COLOR
         TRAP    #15                     ;SET PEN COLOR
 
         MOVE.L   24(SP), D1             ;STORE THE STARTING X POSITION OF THE CHUNK
@@ -112,7 +110,7 @@ DRAWPIXEL
 
         MOVE.L  28(SP), D2              ;START AT TOP OF CHUNK TO FLIP IMAGE
         ADD.L   D3, D2                  ;SUBTRACT CURRENT Y POSITION
-        MOVE.L  #DRAWPIXELCODE, D0      ;SET TRAP CODE TO DRAW PIXEL AT POSITION
+        MOVE.L  #82, D0      ;SET TRAP CODE TO DRAW PIXEL AT POSITION
         TRAP    #15                     ;DRAW PIXEL AT POSITION
 
         BRA     INCREMENT               ;INCREMENT POSITION
@@ -187,8 +185,6 @@ RUNPROGRAM
         CLR.L   D7
         ;MOVEM.L (A7)+,A0/D0-D7
         RTS
-
-PADDING     DC.L    0
 
 GAMEOVERIMG
     INCBIN "GAMEOVER.BMP"

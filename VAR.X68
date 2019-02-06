@@ -32,6 +32,7 @@ SPEED       DC.W    10                      ; GAME SPEED: CONTROLS DIFFICULTY
 CHECKTIT    DC.B    0                       ; CHECK IF THE TITLE HAS BEEN DRAWN
 CHECKLOA    DC.B    0                     ; CHECK IF THE LOADING HAS BEEN DRAWN
 CHECKGOV    DC.B    0                     ; CHECK IF THE GAME OV HAS BEEN DRAWN
+PADDING     DC.L    0                       ; CHECK PADDING WHEN DRAWING IMAGES
 UTLRNDIX    DS.B    1                       ; NEXT INDEX TO RANDOM NUMBER
             DS.W    0
 

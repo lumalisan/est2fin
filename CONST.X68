@@ -47,12 +47,6 @@ ENDMG       EQU     10                      ; ENEMY DAMAGE TO PLAYER
 
 FLOORHGT    EQU     10                      ; FLOOR HEIGHT IN PIXELS
 
-; --- DESTRUCTION RELATED CONSTANTS -------------------------------------------
-
-DESTSIZE    EQU     20                      ; DESTRUCTION ITEM DIAMETER (PIXELS)
-DESTPENCL   EQU     $00DDDDDD               ; DESTRUCTION ITEM PEN COLOR
-DESTFILCL   EQU     $00CCCCCC               ; DESTRUCTION ITEM FIL COLOR
-
 ; --- INTRO STATE RELATED CONSTANTS -------------------------------------------
 
 INTTITX     EQU     31                      ; TITLE X COORDINATE

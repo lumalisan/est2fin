@@ -121,6 +121,8 @@ SCRUPD
 ; -----------------------------------------------------------------------------
             MOVEM.L D0-D1,-(SP)             ; SAVE REGISTERS
 
+            ; WHEN WE DRAW THE TITTLE, LOADING OR GAME OVER SCREEN
+            ; DISABLE BUFFER CLEANING
             TST.B   (CHECKTIT)
             BEQ     .END
             TST.B   (CHECKLOA)
