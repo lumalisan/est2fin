@@ -26,13 +26,20 @@
 
 START       JSR     SYSINIT                 ; INITIALIZE SYSTEM CODE
             JSR     STAINIT                 ; INITIALIZE GAME STATE
-            ; TO DO: CALL GAME INITIALIZATION CODE HERE
 
 ; --- UPDATE ------------------------------------------------------------------
 
-.LOOP       TRAP    #KBDTRAP                ; READ KEYBOARD
+.LOOP       TST.B   (PRESSED)
+            BNE     .CONT
+            JSR     UTLGETC                 ; IF PRESSED, GET CYCLES
+
+.CONT       TRAP    #KBDTRAP                ; READ KEYBOARD
             JSR     STAUPD                  ; UPDATE DEPENDING ON THE STATE
-            ; TO DO: CALL GAME UPDATE CODE HERE
+            TST.B   (PRESSED)
+            BNE     .WINT
+            JSR     UTLCOUNT                ; IF PRESSED, CALCULATE CYCLES
+            JSR     UTLHW
+            BRA     .WINT
 
 ; --- WAIT SYNCH --------------------------------------------------------------
 
@@ -42,9 +49,16 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM CODE
 
 ; --- PLOT --------------------------------------------------------------------
 
-            ; TO DO: CALL GAME PLOT CODE HERE
-            JSR     STAPLOT                 ; PLOT DEPENDING ON THE STATE
+            TST.B   (PRESSED)
+            BEQ     .CONT2
+            JSR     UTLGETC                 ; IF NOT PRESSED, GET CYCLES
+
+.CONT2      JSR     STAPLOT                 ; PLOT DEPENDING ON THE STATE
             TRAP    #SCRTRAP                ; SHOW GRAPHICS
+            TST.B   (PRESSED)
+            BEQ     .LOOP
+            JSR     UTLCOUNT                ; IF NOT PRESSED, CALCULATE CYCLES
+            JSR     UTLHW
             BRA     .LOOP
             SIMHALT
 
@@ -53,6 +67,7 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM CODE
             INCLUDE "SYSVAR.X68"
             INCLUDE "VAR.X68"
             END    START
+
 
 
 

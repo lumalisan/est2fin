@@ -10,12 +10,44 @@ SYSINIT
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
             MOVE.L  (A7)+,A0                ; GET RETURN ADDRESS
+            JSR     HWINIT                  ; INIT HARDWARE WINDOW
             JSR     KBDINIT                 ; INIT KEYBOARD
             JSR     SCRINIT                 ; INIT SCREEN
             JSR     DMMINIT                 ; INIT DYNAMIC MEMORY
             JSR     AUDINIT                 ; INIT AUDIO
             ANDI.W  #$DFFF,SR               ; SWITCH TO USER
             MOVE.L  A0,-(A7)                ; PUT RETURN ADDRESS
+            RTS
+
+; =============================================================================
+; HARDWARE WINDOW MANAGEMENT (SYSTEM CODE)
+; =============================================================================
+
+; -----------------------------------------------------------------------------
+HWINIT
+; INITIALIZES THE HARDWARE WINDOW AND THE COMPONENTS ADDRESSES
+; INPUT    - NONE
+; OUTPUT   - NONE
+; MODIFIES - NONE
+; -----------------------------------------------------------------------------
+            MOVEM.L D0-D1,-(A7)
+
+            MOVE.B #32,D0
+            CLR.B  D1
+            TRAP   #15                      ; SHOW HW WINDOW
+
+            MOVE.B #1,D1
+            TRAP #15
+            MOVE.L D1,(DISPADDR)            ; SAVE 7-SEGMENT DISPLAY ADDRESS
+
+            MOVE.B #3,D1
+            TRAP #15
+            MOVE.L D1,(SWADDR)              ; SAVE SWITCHES ADDRESS
+
+            CLR.L   (CYCLES)                ; CLEAR CYCLES COUNTER
+            CLR.B   (PRESSED)               ; CLEAR BUTTON PRESS VARIABLE
+
+            MOVEM.L (SP)+, D0-D1
             RTS
 
 ; =============================================================================

@@ -19,6 +19,15 @@ SCRINTCT    DS.B    1                       ; INTERRUPT COUNTER/FLAG
 SCRCYCCT    DS.B    1                       ; CYCLE COUNTER
             DS.W    0
 
+; --- HW RELATED VARIABLES ------------------------------------------------
+
+DISPADDR    DS.L    1                       ; 7 SEGMENT DISPLAY ADRESS
+SWADDR      DS.L    1                       ; SWITCHES ADRESS
+CYCLES      DS.L    1                       ; CYCLES COUNTER
+PRESSED     DS.B    1                       ; SHOWS IF SWITCH HAS BEEN PRESSED
+            DS.W    0
+
+
 ; --- DYNAMIC MEMORY VARIABLES ------------------------------------------------
 
             ORG     (*+DMMBSIZE-1)&-DMMBSIZE ; ALIGN TO DMMBSIZE

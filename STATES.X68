@@ -36,6 +36,7 @@ STAUPD
             MOVE.L  D0,A0
             MOVE.L  .UPDTBL(A0),A0
             JSR     (A0)
+            JSR     UTLHW
             MOVEM.L (A7)+,D0/A0
             RTS
 .INITBL     DC.L    STAINTRI,STAPLAYI,STAEMPTY
