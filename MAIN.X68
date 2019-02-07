@@ -19,7 +19,7 @@
             INCLUDE "SPAWNER.X68"           ; SPAWNER (CREATES ENEMIES)
             INCLUDE "STATES.X68"            ; GAME STATES MANAGEMENT
             INCLUDE "AUDIO.X68"             ; AUDIO MANAGEMENT
-            INCLUDE "DRAWPIXELS.X68"        ; IMAGE MANAGEMENT
+            INCLUDE "DRAWIMAGES.X68"        ; IMAGE MANAGEMENT
             ; TO DO: PUT YOUR GAME-RELATED INCLUDES HERE
 
 ; --- INITIALIZE --------------------------------------------------------------
