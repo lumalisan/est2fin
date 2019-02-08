@@ -17,8 +17,8 @@ Some people do fucking Crysis and DOOM in 68K... We do Google Chrome's dinosaur.
   
 # IMPORTANTE:
   Las imagenes cuando se pintan cargan demasiado el programa y deja de recibir inputs por teclado dado que se esta ejecutando la             subrutina de dibujado. Pasos a seguir:
-  - Cuando la imagen se haya dibujado, dejar de ejecutar la subrutina de dibujado.
-  - Comentar todo el código al estilo Burguera.
+  - ~~Cuando la imagen se haya dibujado, dejar de ejecutar la subrutina de dibujado.~~ YEET.
+  - ~~Comentar todo el código al estilo Burguera.~~ YEET
   - Para hacer parallax lo veo chungo pero almenos podemos poner alguna imagen de fondo asi no queda tan soso.
   - Para hacer que los pixeles sean "invisibles" simplemente hay que pintarlos de rosa y la subrutina los va a ignorar.
 
