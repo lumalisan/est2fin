@@ -17,7 +17,7 @@ PLRVS       DC.W    15                      ; PLAYER VERTICAL SPEED
 PLRAC       DC.W    4                       ; PLAYER ACCELERATION
 PLRSCORE    DS.W    1                       ; PLAYER SCORE
 PLRJUMP     DC.B    0                       ; BIT0: TO CHECK JUMP STATE
-RANDENTY    DC.B    0
+RANDENTY    DC.B    0                       ; RANDOM ENEMY TYPE
             DS.W    0
 
 ; --- FLOOR RELATED VARIABLES -------------------------------------------------
@@ -32,15 +32,15 @@ FLOORH      DC.W    10                      ; FLOOR HEIGHT
 SPEED       DC.W    10                      ; GAME SPEED: CONTROLS DIFFICULTY
 CHECKTIT    DC.B    0                       ; CHECK IF THE TITLE HAS BEEN DRAWN
 CHECKLOA    DC.B    0                     ; CHECK IF THE LOADING HAS BEEN DRAWN
-CHECKGOV    DC.B    0                     ; CHECK IF THE GAME OV HAS BEEN DRAWN
+CHECKGOV    DC.B    0                     ; CHECK IF THE GAMEOVR HAS BEEN DRAWN
 PADDING     DC.L    0                       ; CHECK PADDING WHEN DRAWING IMAGES
 UTLRNDIX    DS.B    1                       ; NEXT INDEX TO RANDOM NUMBER
             DS.W    0
 
 ; --- SOUND VARIABLES ---------------------------------------------------------
 
-JUMPSOUND   DC.B    'SOUND/JUMP.WAV',0
-OOF         DC.B    'SOUND/OOF.WAV',0
+JUMPSOUND   DC.B    'SOUND/JUMP.WAV',0      ; JUMPING SOUND FILE
+OOF         DC.B    'SOUND/OOF.WAV',0       ; OOF.
             DS.W    0
 
 *~Font name~Courier New~

@@ -110,7 +110,7 @@ UTLSPEN     MACRO
 
 ; -----------------------------------------------------------------------------
 UTLSFIL     MACRO
-; WRAPPER FOR SET FIL TRAP 15 TASK.
+; WRAPPER FOR SET FILL TRAP 15 TASK.
 ; INPUT    - \1 COLOR IN FORMAT $00BBGGRR
 ; OUTPUT   - NONE
 ; MODIFIES - D0,D1
@@ -122,7 +122,7 @@ UTLSFIL     MACRO
 
 ; -----------------------------------------------------------------------------
 UTLLOCT     MACRO
-; WRAPPER TO TEXT POSITIONNING FROM TRAP 15
+; WRAPPER TO TEXT POSITIONING FROM TRAP 15
 ; INPUT    - \1 X, \2 Y
 ; OUTPUT   - NONE
 ; MODIFIES - D0,D1
@@ -138,7 +138,7 @@ UTLLOCT     MACRO
 
 ; -----------------------------------------------------------------------------
 UTLUPDS
-; UPDATES GAME SPEED DEPENDING ON PLAYER SCORE/10
+; UPDATES GAME SPEED DEPENDING ON PLAYER SCORE
 ; INPUT    - NONE
 ; OUTPUT   - NONE
 ; MODIFIES - NONE
@@ -146,13 +146,13 @@ UTLUPDS
             MOVEM.L D0,-(SP)                ; SAVE REGISTER
 
             MOVE.W  (PLRSCORE),D0
-            ;DIVU.W  #10,D0                   ; DIVIDE BY 10
+            ;DIVU.W  #10,D0                 ; DIVIDE BY 10
             ADD.W   #10,D0
-            CMP.W   #50,D0                  ; COMPARE IF >= 30
+            CMP.W   #50,D0                  ; COMPARE IF >= 50
             BGE     .MAX
-            MOVE.W  D0,(SPEED)              ; IF < 30, SET AS GAME SPEED
+            MOVE.W  D0,(SPEED)              ; IF < 50, SET AS GAME SPEED
             BRA     .END
-.MAX        MOVE.W  #50,(SPEED)             ; IF >=30, SET AS 30
+.MAX        MOVE.W  #50,(SPEED)             ; IF >=50, SET AS 50
 
 .END        MOVEM.L (SP)+,D0                ; RESTORE REGISTERS
             RTS
@@ -237,7 +237,7 @@ UTLCOUNT
             SUB.L   D2,D1
             MOVE.L  D1,(CYCLES)             ; SAVE DIFFERENCE
             MOVE.B  #30,D0
-            TRAP    #15                     ; RESET CYCLE COUNTER TO AVOID OF
+            TRAP    #15                     ; RESET CYCLE COUNTER TO AVOID O.F.
 
             MOVEM.L (A7)+,D0-D2
             RTS
@@ -251,90 +251,96 @@ UTLHW
 ; -----------------------------------------------------------------------------
             MOVEM.L  D0-D1/A0-A2,-(A7)
 
-            MOVE.L DISPADDR,A0
-            MOVE.L SWADDR,A2                ; COGEMOS LA DIRECCION DE LOS PULSADORES
-            MOVE.L (A2),D1                  ; PONEMOS LOS VALORES DE LOS PULSADORES EN D1
-            NOT D1                          ; NEGAMOS D1 (1 = APAGADO)
-            BTST.L #24,D1                   ; TEST DEL SWITCH MAS A LA DERECHA
-            BNE .PRESSED                    ; SI = 0, AÑADE 1, SI NO, NO HACES NADA
+            MOVE.L DISPADDR,A0          ; TAKE 7-SEGMENT DISPLAY ADDRESS
+            MOVE.L SWADDR,A2            ; TAKE SWITCHES ADDRESS
+            MOVE.L (A2),D1              ; PUT SWITCHES VALUES IN D1
+            NOT D1                      ; (1 = OFF)
+            BTST.L #24,D1               ; TEST RIGHTMOST SWITCH
+            BNE .PRESSED                ; IF = 0, SET PRESSED TO 1
 
-.NOTPRESSED                                 ; CYCLES DRAWING
+.NOTPRESSED                             ; DRAWING ROUTINES CYCLES
             MOVE.B  #0,(PRESSED)
             BRA .END
-.PRESSED                                    ; CYCLES UPDATE
+.PRESSED                                ; UPDATE ROUTINES CYCLES
             MOVE.B  #1,(PRESSED)
             BRA .END
 
 
 .END        LEA.L   CYCLES,A1
-            BSR     MWRTSEGM
+            BSR     MWRTSEGM            ; WRITE CYCLES NUMBER TO 7-SEGMENT DISP
 
             MOVEM.L  (A7)+,D0-D1/A0-A2
             RTS
 
-; -------
+; -----------------------------------------------------------------------------
 MWRTSEGM:
+; WRITES GIVEN NUMBER STORED IN (A1) TO 7 SEGMENT DISPLAY
+; INPUT    - (A1)
+; OUTPUT   - NONE
+; MODIFIES - (DISPADDR)
+; -----------------------------------------------------------------------------
+
 
             MOVEM.L D0, -(SP)
 
-            MOVE.L (A1),D0                  ; NUMERO EN HEXADECIMAL
+            MOVE.L (A1),D0                  ; HEXADECIMAL NUMBER
             AND.L #$0000000F,D0
             BSR WRTSEGM
-            MOVE.B D0,14(A0)                ; CIFRA 0 (DERECHA)
+            MOVE.B D0,14(A0)                ; DIGIT #0 (RIGHT)
 
-            MOVE.L (A1),D0                  ; NUMERO EN HEXADECIMAL
+            MOVE.L (A1),D0                  ; HEXADECIMAL NUMBER
             AND.L #$000000F0,D0
             LSR.L #4,D0
             BSR WRTSEGM
-            MOVE.B D0,12(A0)                ; CIFRA 1 (DERECHA)
+            MOVE.B D0,12(A0)                ; DIGIT #1 (RIGHT)
 
-            MOVE.L (A1),D0                  ; NUMERO EN HEXADECIMAL
+            MOVE.L (A1),D0                  ; HEXADECIMAL NUMBER
             AND.L #$00000F00,D0
             LSR.L #8,D0
             BSR WRTSEGM
-            MOVE.B D0,10(A0)                ; CIFRA 2 (DERECHA)
+            MOVE.B D0,10(A0)                ; DIGIT #2 (RIGHT)
 
-            MOVE.L (A1),D0                  ; NUMERO EN HEXADECIMAL
+            MOVE.L (A1),D0                  ; HEXADECIMAL NUMBER
             AND.L #$0000F000,D0
             LSR.L #8,D0
             LSR.L #4,D0
             BSR WRTSEGM
-            MOVE.B D0,8(A0)                 ; CIFRA 3 (DERECHA)
+            MOVE.B D0,8(A0)                 ; DIGIT #3 (RIGHT)
 
-            MOVE.L (A1),D0                  ; NUMERO EN HEXADECIMAL
+            MOVE.L (A1),D0                  ; HEXADECIMAL NUMBER
             AND.L #$000F0000,D0
             LSR.L #8,D0
             LSR.L #8,D0
             BSR WRTSEGM
-            MOVE.B D0,6(A0)                 ; CIFRA 4 (DERECHA)
+            MOVE.B D0,6(A0)                 ; DIGIT #4 (RIGHT)
 
-            MOVE.L (A1),D0                  ; NUMERO EN HEXADECIMAL
+            MOVE.L (A1),D0                  ; HEXADECIMAL NUMBER
             AND.L #$00F00000,D0
             LSR.L #8,D0
             LSR.L #8,D0
             LSR.L #4,D0
             BSR WRTSEGM
-            MOVE.B D0,4(A0)                 ; CIFRA 5 (DERECHA)
+            MOVE.B D0,4(A0)                 ; DIGIT #5 (RIGHT)
 
-            MOVE.L (A1),D0                  ; NUMERO EN HEXADECIMAL
+            MOVE.L (A1),D0                  ; HEXADECIMAL NUMBER
             AND.L #$0F000000,D0
             LSR.L #8,D0
             LSR.L #8,D0
             LSR.L #8,D0
             BSR WRTSEGM
-            MOVE.B D0,2(A0)                 ; CIFRA 6 (DERECHA)
+            MOVE.B D0,2(A0)                 ; DIGIT #6 (RIGHT)
 
-            MOVE.L (A1),D0                  ; NUMERO EN HEXADECIMAL
+            MOVE.L (A1),D0                  ; HEXADECIMAL NUMBER
             AND.L #$F0000000,D0
             LSR.L #8,D0
             LSR.L #8,D0
             LSR.L #8,D0
             LSR.L #4,D0
             BSR WRTSEGM
-            MOVE.B D0,(A0)                  ; CIFRA 7 (DERECHA)
+            MOVE.B D0,(A0)                  ; DIGIT #7 (RIGHT)
 
 
-            MOVEM.L (SP)+, D0
+            MOVEM.L (SP)+, D0               ; RESTORE REGISTER
             RTS
 
 WRTSEGM:

@@ -19,7 +19,7 @@ DESTTYPE    EQU     3
 
 PLRWIDTH    EQU     65                      ; PLAYER WIDTH (PIXELS)
 PLRHEIGH    EQU     60                      ; PLAYER HEIGHT (PIXELS)
-PLRSPEED    EQU     5                       ; PLAYER SPEED (PIXELS PER INT)
+PLRSPEED    EQU     5                       ; PLAYER SPEED (PIXELS PER IRQ)
 PLRTXTX     EQU     2                       ; SCORE X COORDINATE
 PLRTXTY     EQU     1                       ; SCORE Y COORDINATE
 PLRNRMCL    EQU     $000E9274               ; PLAYER NORMAL COLOR (OLIVE)
@@ -31,9 +31,9 @@ PLRPBDMG    EQU     1                       ; PLOT DAMAGE BIT
 
 ; --- AUDIO RELATED CONSTANTS ------------------------------------------------
 
-ID0         EQU     0
-ID1         EQU     1
-ID2         EQU     2
+ID0         EQU     0                       ; 'MUSIC1' ID
+ID1         EQU     1                       ; 'MUSIC2' ID
+ID2         EQU     2                       ; CURRENTLY UNUSED
 
 ; --- ENEMY RELATED CONSTANTS -------------------------------------------------
 
@@ -45,21 +45,6 @@ ENFILCL     EQU     $0000FF00               ; ENEMY FIL COLOR
 ; --- GAME FIELD RELATED CONSTANTS --------------------------------------------
 
 FLOORHGT    EQU     10                      ; FLOOR HEIGHT IN PIXELS
-
-; --- INTRO STATE RELATED CONSTANTS -------------------------------------------
-
-INTTITX     EQU     31                      ; TITLE X COORDINATE
-INTTITY     EQU     5                       ; TITLE Y COORDINATE
-INTTITC     EQU     $000000FF               ; TITLE COLOR
-INTPRSX     EQU     31                      ; PRESS FIRE X COORDINATE
-INTPRSY     EQU     26                      ; PRESS FIRE Y COORDINATE
-INTPRSC     EQU     $00FFFFFF               ; PRESS FIRE COLOR
-
-; --- GAME OVER STATE RELATED CONSTANTS ---------------------------------------
-
-GOVSTRX     EQU     35                      ; TITLE X COORDINATE
-GOVSTRY     EQU     15                      ; TITLE Y COORDINATE
-GOVSTRC     EQU     $00FFFFFF               ; TITLE COLOR
 
 ; --- COLOR CONSTANTS ---------------------------------------------------------
 

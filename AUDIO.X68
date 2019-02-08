@@ -12,7 +12,7 @@ AUDINIT
             MOVEM.L D0-D1/A0-A2,-(A7)
             LEA     .AUDLIST,A0
             LEA     .IDLIST,A2
-.LOOP       MOVE.L  (A0)+,D0                ; LOAD ALL AUDIO FILES
+.LOOP       MOVE.L  (A0)+,D0                ; LOAD AUDIO MUSIC FILES
             BEQ     .END
             MOVE.B  (A2)+,D1
             MOVE.L  D0,A1
@@ -29,7 +29,7 @@ AUDINIT
 
 ; -----------------------------------------------------------------------------
 AUDPLAY
-; CHANGES AUDIO TO PLAY
+; CHANGES AUDIO TO PLAY (USES DIRECTX PLAYER)
 ; INPUT    - D1.B   BIT 7 = 1 LOOP, BIT 7 = 0 PLAY ONLY ONCE
 ;                   BITS 6-0 SOUND ID
 ; OUTPUT   - NONE

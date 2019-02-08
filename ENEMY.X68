@@ -16,8 +16,8 @@ ENINIT
             MOVE.L  D0,-(A7)
             MOVE.W  #SCRWIDTH,(A0)              ; X POSITION EN (A0)
             MOVE.W  #(SCRHEIGH-FLOORHGT),2(A0)  ; Y POSITION EN 2(A0)
-            JSR     UTLRAND
-            MOVE.B  D0,(RANDENTY)
+            JSR     UTLRAND                     ; RANDOM ENEMY TYPE
+            MOVE.B  D0,(RANDENTY)               ; STORE TYPE OF ENEMY ON SCREEN
             MOVE.L  (A7)+,D0
             RTS
 
@@ -50,7 +50,7 @@ ENUPD
 .END        MOVE.L  (A7)+,D0
             RTS
 .KILL       JSR     AGLKILL
-            ;SUMAR UNO A SCORE BY FREE SYNC
+            ; WHEN ENEMY IS REMOVED, ADD 1 TO PLAYER SCORE
             ADDQ.W  #1,(PLRSCORE)
             JSR     UTLUPDS                   ; UPDATE GAME SPEED
             BRA     .COLPLAY
@@ -73,7 +73,7 @@ ENPLOT
 
 ; -----------------------------------------------------------------------------
 CACTDRAW
-; DRAWS A CACT
+; DRAWS A CACTUS
 ; INPUT    - (A0) POS IN X
 ; OUTPUT   - NONE
 ; MODIFIES - D0.B, D1.W, D2.W, D3.W, D4.W, D5.W

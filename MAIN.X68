@@ -11,7 +11,7 @@
             INCLUDE "SYSCONST.X68"          ; SYSTEM CONSTANTS
             INCLUDE "SYSTEM.X68"            ; SYSTEM CODE
             INCLUDE "CONST.X68"             ; USER CONSTANTS
-            INCLUDE "UTIL.X68"              ; UTILITY MACRO AND SUBROUTINES
+            INCLUDE "UTIL.X68"              ; UTILITIES MACROS AND SUBROUTINES
             INCLUDE "PLAYER.X68"            ; PLAYER MANAGEMENT
             INCLUDE "AGENTLST.X68"          ; AGENT LIST MANAGEMENT
             INCLUDE "BACKGRND.X68"          ; BACKGROUND SUBROUTINES
@@ -20,7 +20,6 @@
             INCLUDE "STATES.X68"            ; GAME STATES MANAGEMENT
             INCLUDE "AUDIO.X68"             ; AUDIO MANAGEMENT
             INCLUDE "DRAWIMAGES.X68"        ; IMAGE MANAGEMENT
-            ; TO DO: PUT YOUR GAME-RELATED INCLUDES HERE
 
 ; --- INITIALIZE --------------------------------------------------------------
 
@@ -29,7 +28,7 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM CODE
 
 ; --- UPDATE ------------------------------------------------------------------
 
-.LOOP       TST.B   (PRESSED)
+.LOOP       TST.B   (PRESSED)               ; TEST RIGHTMOST SWITCH IN HW WIN.
             BNE     .CONT
             JSR     UTLGETC                 ; IF PRESSED, GET CYCLES
 
@@ -49,7 +48,7 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM CODE
 
 ; --- PLOT --------------------------------------------------------------------
 
-            TST.B   (PRESSED)
+            TST.B   (PRESSED)               ; TEST RIGHTMOST SWITCH IN HW WIN.
             BEQ     .CONT2
             JSR     UTLGETC                 ; IF NOT PRESSED, GET CYCLES
 
@@ -67,10 +66,7 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM CODE
             INCLUDE "SYSVAR.X68"
             INCLUDE "VAR.X68"
             END    START
-
-
-
-
+            
 
 *~Font name~Courier New~
 *~Font size~10~

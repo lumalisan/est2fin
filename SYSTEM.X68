@@ -32,22 +32,22 @@ HWINIT
 ; -----------------------------------------------------------------------------
             MOVEM.L D0-D1,-(A7)
 
-            MOVE.B #32,D0
-            CLR.B  D1
-            TRAP   #15                      ; SHOW HW WINDOW
+            MOVE.B  #32,D0
+            CLR.B   D1
+            TRAP    #15                      ; SHOW HW WINDOW
 
-            MOVE.B #1,D1
-            TRAP #15
-            MOVE.L D1,(DISPADDR)            ; SAVE 7-SEGMENT DISPLAY ADDRESS
+            MOVE.B  #1,D1
+            TRAP    #15
+            MOVE.L  D1,(DISPADDR)            ; SAVE 7-SEGMENT DISPLAY ADDRESS
 
-            MOVE.B #3,D1
-            TRAP #15
-            MOVE.L D1,(SWADDR)              ; SAVE SWITCHES ADDRESS
+            MOVE.B  #3,D1
+            TRAP    #15
+            MOVE.L  D1,(SWADDR)              ; SAVE SWITCHES ADDRESS
 
             CLR.L   (CYCLES)                ; CLEAR CYCLES COUNTER
             CLR.B   (PRESSED)               ; CLEAR BUTTON PRESS VARIABLE
 
-            MOVEM.L (SP)+, D0-D1
+            MOVEM.L (SP)+,D0-D1
             RTS
 
 ; =============================================================================
@@ -67,10 +67,11 @@ SCRINIT
             OR.W    #%0000011100000000,SR
 
             ; - DISABLE ALL AUTO-IRQ (SEE TRAP #15 TASK 32)
+            ; **DISABLED**, IT CAUSED BLACK SCREEN ON STARTUP!
 
-            MOVE.B  #32,D0
-            MOVE.B  #6,D1
-            MOVE.B  #0,D2
+            ;MOVE.B  #32,D0
+            ;MOVE.B  #6,D1
+            ;MOVE.B  #0,D2
             ;TRAP    #15
 
             ; - INSTALL SCRUPD INTO TRAP SCRTRAP
@@ -153,7 +154,7 @@ SCRUPD
 ; -----------------------------------------------------------------------------
             MOVEM.L D0-D1,-(SP)             ; SAVE REGISTERS
 
-            ; WHEN WE DRAW THE TITTLE, LOADING OR GAME OVER SCREEN
+            ; WHEN WE DRAW THE TITLE, LOADING OR GAME OVER SCREEN
             ; DISABLE BUFFER CLEANING
             TST.B   (CHECKTIT)
             BEQ     .END
@@ -183,9 +184,9 @@ KBDINIT
 ; OUTPUT   - NONE
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
-            CLR.B   (KBDVAL)                ; INIT VARS
+            CLR.B   (KBDVAL)                  ; INIT VARS
             CLR.B   (KBDEDGE)
-            MOVE.L  #KBDREAD,($80+KBDTRAP*4) ; INSTALL
+            MOVE.L  #KBDREAD,($80+KBDTRAP*4)  ; INSTALL
             RTS
 
 ; -----------------------------------------------------------------------------
@@ -208,12 +209,10 @@ KBDREAD
 
 .READSET1   ; MONITOR SPACE KEY
             MOVE.L  #KBDCHRSP<<24,D1
-            ;MOVE.L  #$20<<24+'M'<<16+$10<<8+'P',D1
             TRAP    #15
 .READSP     BTST.L  #24,D1                  ; TEST FOR SPACE
             BEQ     .CONT
             BSET.L  #KBDBITF1,D2
-
 
 .CONT       MOVE.B  D2,(KBDVAL)             ; STORE KEYBOARD VALUES
             EOR.B   D2,D3                   ; CHECK FOR CHANGES

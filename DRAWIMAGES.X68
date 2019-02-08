@@ -1,5 +1,5 @@
 ; =============================================================================
-; IMAGE MANAGEMENT
+; BITMAPPED IMAGE MANAGEMENT
 ; =============================================================================
 
 ; -----------------------------------------------------------------------------
@@ -16,7 +16,7 @@ DRAWIMAGE
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
             MOVE.L  #0, PADDING
-            MOVE.L  #36, D0                 ; NUMBER OF 7 ARGUMENTS
+            MOVE.L  #36, D0                ; NUMBER OF 7 ARGUMENTS
             SUB.L   D0, SP                 ; PREPARE STACK TO RECEIVE ARGUMENTS
             MOVE.L  A0, (SP)
             MOVE.L  D1, 4(SP)
@@ -76,30 +76,30 @@ DRAWIMAGE
             ADD.L   D5, A0
             MOVE.L  12(SP), D3
 .OUTERLOOP
-            MOVE.W  #0, D6                 ;SET OR RESET X COUNTER FOR FOR LOOP
+            MOVE.W  #0, D6             ; SET OR RESET X COUNTER FOR FOR LOOP
             MOVE.L  16(SP), D4
             MULU.W  #3, D4
-            ADD.W   D4, A0                  ; ADD START OF X TO 0
+            ADD.W   D4, A0             ; ADD START OF X TO 0
 .INNERLOOP
             CLR.L   D4
-            MOVE.B  (A0)+,D4                ; GRAB THE FIRST PIXEL
+            MOVE.B  (A0)+,D4           ; GRAB THE FIRST PIXEL
             SWAP.W  D4
             CLR.L   D5
             MOVE.L  D4, D5
             CLR.L   D4
-            MOVE.B  (A0)+, D4               ; GRAB NEXT MEMORY BIT
-            LSL     #8, D4                  ; SHIFT LEFT TO GET PIXEL IN TOP
-            ADD.L   D4, D5                  ; COMBINE THE DATA
+            MOVE.B  (A0)+, D4          ; GRAB NEXT MEMORY BIT
+            LSL     #8, D4             ; SHIFT LEFT TO GET PIXEL IN TOP
+            ADD.L   D4, D5             ; COMBINE THE DATA
             CLR.L   D4
-            MOVE.B  (A0)+, D4               ; GET LAST BIT NEEDED
-            ADD.L   D4, D5                  ; GET THE PIXEL VALUE
-            CLR.L   D4                      ; IF PIXEL IS PINK, DO NOT DRAW IT
+            MOVE.B  (A0)+, D4          ; GET LAST BIT NEEDED
+            ADD.L   D4, D5             ; GET THE PIXEL VALUE
+            CLR.L   D4                 ; IF PIXEL IS PINK, DO NOT DRAW IT
             MOVE.B  $FF, D4
             SWAP    D4
             MOVE.B  $FF, D4
             CMP     D4, D5
             BEQ     .INCREMENT
-            BRA     .DRAWPIXEL              ; PIXEL CAN BE PRINTED
+            BRA     .DRAWPIXEL         ; PIXEL CAN BE PRINTED
 .INCREMENT
             CLR.L   D4
             ADD.W   #1,D6
@@ -109,9 +109,9 @@ DRAWIMAGE
             MOVE.L  32(SP), D5
             CMP     D5, D4
             BEQ     .INCREMENTY
-            MOVE.L  8(SP), D4               ; STORE WIDTH OF IMAGE
-            CMP     D4, D6                  ; SEE IF COUNTER IS BEYOND X BOUNDS
-            BNE     .INNERLOOP              ; IF IT IS NOT, LOOP AGAIN
+            MOVE.L  8(SP), D4           ; STORE WIDTH OF IMAGE
+            CMP     D4, D6              ; SEE IF COUNTER IS BEYOND X BOUNDS
+            BNE     .INNERLOOP          ; IF IT IS NOT, LOOP AGAIN
             ; SKIP AFTER OUTSIDE OF BOX ON X AXIS
             CLR.L   D4
             MOVE.L  16(SP), D4
