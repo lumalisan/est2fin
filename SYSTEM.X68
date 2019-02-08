@@ -170,6 +170,11 @@ SCRUPD
             MOVE.W  #$FF00,D1
             TRAP    #15
 
+            TST.B   (PRESSED)
+            BEQ     .END
+            JSR     UTLCOUNT                ; IF NOT PRESSED, CALCULATE CYCLES
+            JSR     UTLHW
+
 .END        MOVEM.L (SP)+,D0-D1             ; RESTORE REGISTERS
             RTE
 
@@ -194,14 +199,19 @@ KBDREAD
 ; TRAP SERVICE ROUTINE.
 ; UPDATES THE SYSTEM VARIABLES KBDEDGE AND KBDVAL ACCORDING TO THE BITFIELD
 ; DESCRIBED IN SYSCONST. KBDVAL HOLDS THE CURRENT VALUES AND KBDEFGE HOLDS
-; RISING EDGES FROM PREVIOUS CALL TO THE CURRENT ONE.
+; RISING EDGES FROM PREVIOUS CALL TO THE CURRENT ONE. ALSO PERFORMS
+; CYCLES COUNT IF THE SWITCH IS PRESSED.
 ; INPUT    - NONE
 ; OUTPUT   - (KBDVAL) AND (KBDEDGE)
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
             MOVEM.L D0-D3,-(SP)             ; SAVE REGISTERS
 
-            CLR.L   D2                      ; USE D2 TO STORE BITS
+            TST.B   (PRESSED)               ; TEST RIGHTMOST SWITCH IN HW WIN.
+            BNE     .BEGIN
+            JSR     UTLGETC                 ; IF PRESSED, GET CYCLES
+
+.BEGIN      CLR.L   D2                      ; USE D2 TO STORE BITS
             CLR.L   D3                      ; USE D3 TO STORE OLD VALUES
             MOVE.B  (KBDVAL),D3
 

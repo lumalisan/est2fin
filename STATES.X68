@@ -36,7 +36,13 @@ STAUPD
             MOVE.L  D0,A0
             MOVE.L  .UPDTBL(A0),A0
             JSR     (A0)
-            MOVEM.L (A7)+,D0/A0
+
+            TST.B   (PRESSED)
+            BNE     .END
+            JSR     UTLCOUNT                ; IF PRESSED, CALCULATE CYCLES
+            JSR     UTLHW
+
+.END        MOVEM.L (A7)+,D0/A0
             RTS
 .INITBL     DC.L    STAINTRI,STAPLAYI,STAEMPTY
 .UPDTBL     DC.L    STAINTRU,STAPLAYU,STAGOVRU
@@ -49,7 +55,12 @@ STAPLOT
 ; MODIFIES - NONE
 ; -----------------------------------------------------------------------------
             MOVEM.L D0/A0,-(A7)
-            CLR.L   D0
+
+            TST.B   (PRESSED)               ; TEST RIGHTMOST SWITCH IN HW WIN.
+            BEQ     .CONT
+            JSR     UTLGETC                 ; IF NOT PRESSED, GET CYCLES
+
+.CONT       CLR.L   D0
             MOVE.W  (STACUR),D0
             LSL.L   #2,D0
             MOVE.L  D0,A0
