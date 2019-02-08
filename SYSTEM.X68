@@ -206,39 +206,14 @@ KBDREAD
 
             MOVE.B  #19,D0                  ; SET TASK NUMBER
 
-.READSET1   ; MONITOR FIRST 4 KEYS
-            MOVE.L  #KBDCHRSP<<24+KBDCHRMK<<16+KBDCHRSH<<8+KBDCHRPK,D1
+.READSET1   ; MONITOR SPACE KEY
+            MOVE.L  #KBDCHRSP<<24,D1
             ;MOVE.L  #$20<<24+'M'<<16+$10<<8+'P',D1
             TRAP    #15
 .READSP     BTST.L  #24,D1                  ; TEST FOR SPACE
-            BEQ     .READM
-            BSET.L  #KBDBITF1,D2
-.READM      BTST.L  #16,D1                  ; TEST FOR M
-            BEQ     .READSH
-            BSET.L  #KBDBITF2,D2
-.READSH     BTST.L  #8,D1                   ; TEST FOR SHIFT
-            BEQ     .READP
-            BSET.L  #KBDBITF3,D2
-.READP      BTST.L  #0,D1                   ; TEST FOR P
-            BEQ     .READSET2
-            BSET.L  #KBDBITPS,D2
-
-.READSET2   ; MONITOR SECOND 4 KEYS
-            MOVE.L  #KBDCHRLF<<24+KBDCHRUP<<16+KBDCHRRT<<8+KBDCHRDN,D1
-            ;MOVE.L  #$25<<24+$26<<16+$27<<8+$28,D1
-            TRAP    #15
-.READLEFT   BTST.L  #24,D1                   ; TEST FOR LEFT
-            BEQ     .READUP
-            BSET.L  #KBDBITLF,D2
-.READUP     BTST.L  #16,D1                  ; TEST FOR UP
-            BEQ     .READRIGH
-            BSET.L  #KBDBITUP,D2
-.READRIGH   BTST.L  #8,D1                   ; TEST FOR RIGHT
-            BEQ     .READDOWN
-            BSET.L  #KBDBITRT,D2
-.READDOWN   BTST.L  #0,D1                   ; TEST FOR DOWN
             BEQ     .CONT
-            BSET.L  #KBDBITDN,D2
+            BSET.L  #KBDBITF1,D2
+
 
 .CONT       MOVE.B  D2,(KBDVAL)             ; STORE KEYBOARD VALUES
             EOR.B   D2,D3                   ; CHECK FOR CHANGES
